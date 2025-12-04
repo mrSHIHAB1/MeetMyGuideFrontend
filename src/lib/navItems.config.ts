@@ -43,8 +43,8 @@ export const GUIDENavItems: NavSection[] = [
         title: "TOURIST Management",
         items: [
             {
-                title: "Appointments",
-                href: "/guide/dashboard/appoinments",
+                title: "Tours",
+                href: "/guide/dashboard/tours-management",
                 icon: "Calendar", 
                 badge: "3",
                 roles: ["GUIDE"],

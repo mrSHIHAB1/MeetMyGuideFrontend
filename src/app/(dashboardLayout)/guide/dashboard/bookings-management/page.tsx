@@ -1,7 +1,6 @@
 import AdminsFilter from "@/components/modules/Admin/AdminsManagement/AdminsFilter";
 import AdminsManagementHeader from "@/components/modules/Admin/AdminsManagement/AdminsManagementHeader";
 import AdminsTable from "@/components/modules/Admin/AdminsManagement/AdminsTable";
-import BookingManagementHeader from "@/components/modules/Admin/BookingManagement/ToursManagement/AdminsManagementHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
@@ -19,7 +18,7 @@ const AdminTouristsManagementPage = async ({
 
   return (
     <div className="space-y-6">
-      <BookingManagementHeader></BookingManagementHeader>
+      <AdminsManagementHeader />
 
       {/* Search, Filters */}
       <AdminsFilter />

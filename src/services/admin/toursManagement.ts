@@ -3,47 +3,29 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { ITour } from "@/types/tour.interface";
+import { getUserInfo } from "../auth/getUserInfo";
 
 /**
  * CREATE TOUR
  */
 export async function createTour(_prevState: any, formData: FormData) {
-  // Build validation payload
-  const validationPayload = {
-    title: formData.get("title") as string,
-    description: formData.get("description") as string,
-    itinerary: formData.get("itinerary") as string,
-    fee: Number(formData.get("fee")),
-    duration: Number(formData.get("duration")),
-    meetingPoint: formData.get("meetingPoint") as string,
-    maxGroupSize: Number(formData.get("maxGroupSize")),
-    guide: formData.get("guide") as string, // ID of guide
-    images: formData.getAll("images") as File[], // multiple files
-    status: formData.get("status") as string,
-  };
-
-  const newFormData = new FormData();
-  newFormData.append("data", JSON.stringify(validationPayload));
-
-  // Append images if any
-  const files = formData.getAll("images") as File[];
-  files.forEach((file) => {
-    newFormData.append("images", file);
-  });
-
+  let user=await getUserInfo();
+user=user.id;
+console.log(user)
+formData.append("guide", user)
+console.log(formData)
   try {
-    const response = await serverFetch.post("/tour", {
-      body: newFormData,
+    const response = await serverFetch.post("/tour/create", {
+      body: formData, // VERY IMPORTANT
     });
+
     const result = await response.json();
+   
     return result;
   } catch (error: any) {
-    console.error("Create tour error:", error);
     return {
       success: false,
-      message:
-        process.env.NODE_ENV === "development" ? error.message : "Failed to create tour",
-      formData: validationPayload,
+      message: "Failed to create tour",
     };
   }
 }

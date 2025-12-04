@@ -5,15 +5,27 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import LogoutButton from "./LogoutButton";
 import { cookies } from "next/headers";
+import { getUserInfo } from "@/services/auth/getUserInfo";
 
 const PublicNavbar = async () => {
   const navItems = [
+    { href: "/explore", label: "Explore Tours" },
+    { href: "#", label: "Become a Guide" },
+ 
+  ];
+  const adminnavItems = [
+    { href: "#", label: "Explore Tours" },
+    { href: "#", label: "Become a Guide" },
+ 
+  ];
+  const guidenavItems = [
     { href: "#", label: "Explore Tours" },
     { href: "#", label: "Become a Guide" },
  
   ];
 
   const accessToken = (await cookies()).get("accessToken")?.value;
+  const user=await getUserInfo();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">

@@ -192,16 +192,6 @@ const TourFormDialog = ({ open, onClose, onSuccess, tour }: ITourFormDialogProps
               />
             </Field>
 
-            {/* Guide ID */}
-            <Field>
-              <FieldLabel htmlFor="guide">Guide ID (Optional)</FieldLabel>
-              <Input
-                id="guide"
-                name="guide"
-                placeholder="Guide ObjectId"
-                defaultValue={tour?.guide || ""}
-              />
-            </Field>
           </div>
 
           <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
