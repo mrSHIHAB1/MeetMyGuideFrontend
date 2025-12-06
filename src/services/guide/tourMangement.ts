@@ -42,6 +42,7 @@ export async function getAllToursByFilter(filters?: TourFilterParams) {
         };
     }
 }
+
 export async function getTourById(id: string) {
     try {
         const response = await serverFetch.get(`/tour/${id}`);
@@ -78,12 +79,15 @@ export async function createTour(_prevState: any, formData: FormData) {
         };
     }
 }
+
 export async function updateTour(id: string, _prevState: any, formData: FormData) {
     const validationPayload: any = {
         title: formData.get("title") as string,
         description: formData.get("description") as string,
+        destination: formData.get("destination") as string,
         itinerary: formData.get("itinerary") as string,
         fee: Number(formData.get("fee")),
+        category: formData.get("category") as string,
         duration: Number(formData.get("duration")),
         meetingPoint: formData.get("meetingPoint") as string,
         maxGroupSize: Number(formData.get("maxGroupSize")),
@@ -105,6 +109,24 @@ export async function updateTour(id: string, _prevState: any, formData: FormData
             message:
                 process.env.NODE_ENV === "development" ? error.message : "Failed to update tour",
             formData: validationPayload,
+        };
+    }
+}
+
+export async function deleteTour(id: string) {
+    try {
+        const response = await serverFetch.patch(`/tour/deactivate/${id}`, {
+            headers: { "Content-Type": "application/json" },
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.error("Delete tour error:", error);
+        return {
+            success: false,
+            message:
+                process.env.NODE_ENV === "development" ? error.message : "Failed to delete tour",
         };
     }
 }

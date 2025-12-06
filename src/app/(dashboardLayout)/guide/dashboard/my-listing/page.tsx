@@ -1,3 +1,4 @@
+import ToursManagementHeader from "@/components/modules/Admin/ToursManagement/AdminsManagementHeader";
 import TourFilter from "@/components/modules/guide/TourFilter";
 import { ToursList } from "@/components/modules/guide/ToursList";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
@@ -26,7 +27,7 @@ const MyToursListingPage = async ({
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">My Tours</h1>
       </div>
-
+      <ToursManagementHeader></ToursManagementHeader>
       {/* Search and Filters */}
       <TourFilter />
 
