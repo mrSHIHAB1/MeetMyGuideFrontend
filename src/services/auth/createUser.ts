@@ -29,12 +29,11 @@ export async function register(_currentState: any, formData: FormData) {
     if (file) fd.append("file", file);
 
     // Call backend API
-    const response = await serverFetch.post("/user/register/guide", {
-      body: fd,
-    });
+    const response = await serverFetch.post("/user/register/guide", { body: fd });
 
     // Parse JSON from the response
     const result = await response.json();
+
 
     // Now you can access success/message
     if (result.success) {

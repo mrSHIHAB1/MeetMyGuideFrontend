@@ -7,15 +7,16 @@ import { toast } from "sonner";
 import { Metadata } from "next";
 import { register } from "@/services/auth/createUser";
 import { useRouter } from "next/navigation";
+import { registertourist } from "@/services/tourist/touristManagement";
 
 export const metadata: Metadata = {
   title: "Sign Up Page | Free Next.js Template for Startup and SaaS",
   description: "This is Sign Up Page for Startup Nextjs Template",
 };
 
-const Signup= () => {
+const TouristSignup= () => {
   const router = useRouter();
-  const [state, formAction] = useActionState(register, null);
+  const [state, formAction] = useActionState(registertourist, null);
 
   useEffect(() => {
     if (!state) return;
@@ -120,15 +121,6 @@ const Signup= () => {
                   />
                 </div>
 
-                <div className="mb-8">
-                  <label className="mb-3 block text-sm">Daily Rate</label>
-                  <input
-                    type="number"
-                    name="dailyrate"
-                    placeholder="1500"
-                    className="input-field"
-                  />
-                </div>
 
                 <div className="mb-8">
                   <label className="mb-3 block text-sm">
@@ -144,12 +136,12 @@ const Signup= () => {
 
                 <div className="mb-8">
                   <label className="mb-3 block text-sm">
-                    Expertise (comma separated)
+                  travelpreferences(comma separated)
                   </label>
                   <input
                     type="text"
-                    name="expertise"
-                    placeholder="History, Culture"
+                    name="travelpreferences"
+                    placeholder="travelpreferences"
                     className="input-field"
                   />
                 </div>
@@ -175,4 +167,4 @@ const Signup= () => {
   );
 };
 
-export default Signup;
+export default TouristSignup;

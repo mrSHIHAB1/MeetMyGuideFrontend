@@ -1,9 +1,10 @@
-import Signup from "@/components/Signup";
+
+import TouristSignup from "@/components/ToursitSignUp";
 
 const RegisterPage = () => {
     return (
         <div>
-            <Signup />
+            <TouristSignup />
         </div>
     );
 };

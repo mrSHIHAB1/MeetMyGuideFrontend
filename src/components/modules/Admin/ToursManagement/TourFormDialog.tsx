@@ -15,7 +15,8 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { ITour } from "@/types/tour.interface";
-import { createTour, updateTour } from "@/services/admin/toursManagement";
+import { createTour, updateTour } from "@/services/guide/tourMangement";
+
 
 interface ITourFormDialogProps {
   open: boolean;

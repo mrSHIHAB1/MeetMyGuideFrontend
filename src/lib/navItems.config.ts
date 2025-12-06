@@ -43,24 +43,32 @@ export const GUIDENavItems: NavSection[] = [
         title: "TOURIST Management",
         items: [
             {
-                title: "Tours",
+                title: "TOURS",
                 href: "/guide/dashboard/tours-management",
                 icon: "Calendar", 
                 badge: "3",
                 roles: ["GUIDE"],
             },
-            {
-                title: "My Schedules",
-                href: "/guide/dashboard/my-schedules",
-                icon: "Clock", // ✅ String
-                roles: ["GUIDE"],
-            },
-            {
-                title: "Prescriptions",
-                href: "/guide/dashboard/prescriptions",
-                icon: "FileText",
-                roles: ["GUIDE"],
-            },
+            
+                {
+                    title: "My Listing",
+                    href: "/guide/dashboard/my-listing",
+                    icon: "Calendar", 
+                    badge: "3",
+                    roles: ["GUIDE"],
+                },
+                {
+                    title: "Upcoming Booking",
+                    href: "/guide/dashboard/upcomming-booking",
+                    icon: "Clock", // ✅ String
+                    roles: ["GUIDE"],
+                },
+                {
+                    title: "Pending Requests",
+                    href: "/guide/dashboard/pending-requests",
+                    icon: "FileText",
+                    roles: ["GUIDE"],
+                },
         ],
     }
 ]
@@ -71,35 +79,19 @@ export const TOURISTNavItems: NavSection[] = [
         items: [
             {
                 title: "Tours",
-                href: "/dashboard/my-tours",
+                href: "/tourist/dashboard/my-tours",
                 icon: "Calendar", 
                 roles: ["TOURIST"],
             },
             {
-                title: "Book Appointment",
-                href: "/consultation",
+                title: "Bookings",
+                href: "/bookings",
                 icon: "ClipboardList", 
                 roles: ["TOURIST"],
             },
         ],
-    },
-    {
-        title: "Medical Records",
-        items: [
-            {
-                title: "My Prescriptions",
-                href: "/dashboard/my-prescriptions",
-                icon: "FileText", 
-                roles: ["TOURIST"],
-            },
-            {
-                title: "Health Records",
-                href: "/dashboard/health-records",
-                icon: "Activity", 
-                roles: ["TOURIST"],
-            },
-        ],
-    },
+    }
+   
 
 ]
 

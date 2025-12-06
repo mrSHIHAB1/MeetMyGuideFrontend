@@ -8,22 +8,25 @@ import { cookies } from "next/headers";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 
 const PublicNavbar = async () => {
+  const currentUser=await getUserInfo();
+  const role=currentUser.role;
   const navItems = [
     { href: "/explore", label: "Explore Tours" },
-    { href: "#", label: "Become a Guide" },
+    { href: "/BecomeGuide", label: "Become a Guide" },
  
   ];
-  const adminnavItems = [
-    { href: "#", label: "Explore Tours" },
-    { href: "#", label: "Become a Guide" },
  
-  ];
-  const guidenavItems = [
-    { href: "#", label: "Explore Tours" },
-    { href: "#", label: "Become a Guide" },
- 
-  ];
+  if (role === "ADMIN") {
+    navItems.push({ href: "/admin/dashboard", label: "Dashboard" });
+  }
 
+  if (role === "GUIDE") {
+    navItems.push({ href: "/guide/dashboard", label: "Dashboard" });
+  }
+
+  if (role === "TOURIST") {
+    navItems.push({ href: "/tourist/dashboard", label: "Dashboard" });
+  }
   const accessToken = (await cookies()).get("accessToken")?.value;
   const user=await getUserInfo();
   return (

@@ -71,9 +71,7 @@ const DashboardSidebarContent = ({
                   );
                 })}
               </div>
-              {sectionIdx < navItems.length - 1 && (
-                <Separator className="my-4" />
-              )}
+              
             </div>
           ))}
         </nav>
