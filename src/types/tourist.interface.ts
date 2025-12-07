@@ -1,4 +1,4 @@
-export interface IAdmin {
+export interface ITourist {
     _id?: string;
     id?: string; // Keep for backward compatibility
     email: string;

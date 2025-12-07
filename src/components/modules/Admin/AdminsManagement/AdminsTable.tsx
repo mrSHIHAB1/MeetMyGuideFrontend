@@ -45,8 +45,14 @@ const AdminsTable = ({ admins }: AdminsTableProps) => {
     if (!deletingAdmin) return;
 
     setIsDeleting(true);
-    const result = await softDeleteAdmin(deletingAdmin.id!);
-    setIsDeleting(false);
+    // Use _id if available, fallback to id
+    const adminId = deletingAdmin._id || deletingAdmin.id;
+    if (!adminId) {
+      toast.error("Admin ID not found");
+      return;
+    }
+
+    const result = await softDeleteAdmin(adminId);
 
     if (result.success) {
       toast.success(result.message || "Admin deleted successfully");
@@ -65,7 +71,7 @@ const AdminsTable = ({ admins }: AdminsTableProps) => {
         onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        getRowKey={(admin) => admin.id!}
+        getRowKey={(admin) => admin._id || admin.id!}
         emptyMessage="No admins found"
       />
 

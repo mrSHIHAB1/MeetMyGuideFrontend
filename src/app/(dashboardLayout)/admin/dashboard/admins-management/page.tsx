@@ -13,7 +13,14 @@ const AdminAdminsManagementPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const searchParamsObj = await searchParams;
-  const queryString = queryStringFormatter(searchParamsObj);
+
+  // Add role=ADMIN to always filter only admin users
+  const paramsWithRole = {
+    ...searchParamsObj,
+    role: "ADMIN"
+  };
+
+  const queryString = queryStringFormatter(paramsWithRole);
   const adminsResult = await getAdmins(queryString);
 
   return (
@@ -25,7 +32,7 @@ const AdminAdminsManagementPage = async ({
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
         <AdminsTable admins={adminsResult?.data || []} />
-      
+
       </Suspense>
     </div>
   );

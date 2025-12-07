@@ -1,11 +1,10 @@
 import AdminsFilter from "@/components/modules/Admin/AdminsManagement/AdminsFilter";
-import AdminsManagementHeader from "@/components/modules/Admin/AdminsManagement/AdminsManagementHeader";
-import AdminsTable from "@/components/modules/Admin/AdminsManagement/AdminsTable";
-import GuidesManagementHeader from "@/components/modules/Admin/GuidesManagement/AdminsManagementHeader";
-import TablePagination from "@/components/shared/TablePagination";
+import GuidesFilter from "@/components/modules/Admin/GuidesManagement/GuidesFilter";
+import GuidesManagementHeader from "@/components/modules/Admin/GuidesManagement/GuidesManagementHeader";
+import GuidesTable from "@/components/modules/Admin/GuidesManagement/GuidesTable";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getAdmins } from "@/services/admin/adminsManagement";
+import { getGuides } from "@/services/admin/guidesManagement";
 import { Suspense } from "react";
 
 const AdminGuidesManagementPage = async ({
@@ -14,19 +13,26 @@ const AdminGuidesManagementPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const searchParamsObj = await searchParams;
-  const queryString = queryStringFormatter(searchParamsObj);
-  const adminsResult = await getAdmins(queryString);
+
+  // Add role=GUIDE to always filter only guide users
+  const paramsWithRole = {
+    ...searchParamsObj,
+    role: "GUIDE"
+  };
+
+  const queryString = queryStringFormatter(paramsWithRole);
+  const guidesResult = await getGuides(queryString);
 
   return (
     <div className="space-y-6">
-      <GuidesManagementHeader></GuidesManagementHeader>
+      <GuidesManagementHeader />
 
       {/* Search, Filters */}
-      <AdminsFilter />
+      <GuidesFilter />
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
-        <AdminsTable admins={adminsResult?.data || []} />
-      
+        <GuidesTable guides={guidesResult?.data || []} />
+
       </Suspense>
     </div>
   );

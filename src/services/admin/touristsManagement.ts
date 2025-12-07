@@ -2,9 +2,8 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
-import { zodValidator } from "@/lib/zodValidator";
 
-export async function createAdmin(_prevState: any, formData: FormData) {
+export async function createTourist(_prevState: any, formData: FormData) {
     // Build validation payload
     const validationPayload = {
         name: formData.get("name") as string,
@@ -14,36 +13,31 @@ export async function createAdmin(_prevState: any, formData: FormData) {
         picture: formData.get("file") as File,
     };
 
-
-
-
     const newFormData = new FormData()
     newFormData.append("data", JSON.stringify(validationPayload))
     newFormData.append("file", formData.get("file") as Blob)
     try {
-
-
-        const response = await serverFetch.post("/user/register/admin", {
+        const response = await serverFetch.post("/user/register/tourist", {
             body: newFormData,
         });
 
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.error("Create admin error:", error);
+        console.error("Create tourist error:", error);
         return {
             success: false,
-            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to create admin',
+            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to create tourist',
             formData: validationPayload
         };
     }
 }
 
 /**
- * GET ALL ADMINS
+ * GET ALL TOURISTS
  * API: GET /user/all-users?queryParams
  */
-export async function getAdmins(queryString?: string) {
+export async function getTourists(queryString?: string) {
     try {
         const endpoint = queryString ? `/user/all-users?${queryString}` : "/user/all-users";
         const response = await serverFetch.get(endpoint);
@@ -59,12 +53,12 @@ export async function getAdmins(queryString?: string) {
 }
 
 /**
- * GET ADMIN BY ID
- * API: GET /admin/:id
+ * GET TOURIST BY ID
+ * API: GET /user/:id
  */
-export async function getAdminById(id: string) {
+export async function getTouristById(id: string) {
     try {
-        const response = await serverFetch.get(`/admin/${id}`)
+        const response = await serverFetch.get(`/user/${id}`)
         const result = await response.json();
         return result;
     } catch (error: any) {
@@ -77,31 +71,14 @@ export async function getAdminById(id: string) {
 }
 
 /**
- * UPDATE ADMIN
- * API: PATCH /admin/:id
+ * UPDATE TOURIST
+ * API: PATCH /user/updateUsers/:id
  */
-export async function updateAdmin(id: string, _prevState: any, formData: FormData) {
+export async function updateTourist(id: string, _prevState: any, formData: FormData) {
     const validationPayload: any = {
         name: formData.get("name") as string,
         contactNumber: formData.get("contactNumber") as string,
     };
-
-    /*
-    // Server-side validation
-        const validation = updateAdminZodSchema.safeParse(validationPayload);
-        if (!validation.success) {
-            const errors = validation.error.issues.map((err: any) => ({
-                field: err.path[0] as string,
-                message: err.message,
-            }));
-            return {
-                success: false,
-                message: "Validation failed",
-                formData: validationPayload,
-                errors,
-            };
-        }
-    */
 
     try {
         const response = await serverFetch.patch(`/user/updateUsers/${id}`, {
@@ -112,20 +89,20 @@ export async function updateAdmin(id: string, _prevState: any, formData: FormDat
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.error("Update admin error:", error);
+        console.error("Update tourist error:", error);
         return {
             success: false,
-            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to update admin',
+            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to update tourist',
             formData: validationPayload
         };
     }
 }
 
 /**
- * SOFT DELETE ADMIN
- * API: DELETE /admin/soft/:id
+ * SOFT DELETE TOURIST
+ * API: DELETE /user/:id
  */
-export async function softDeleteAdmin(id: string) {
+export async function softDeleteTourist(id: string) {
     try {
         const response = await serverFetch.delete(`/user/${id}`)
         const result = await response.json();
@@ -140,10 +117,10 @@ export async function softDeleteAdmin(id: string) {
 }
 
 /**
- * HARD DELETE ADMIN
- * API: DELETE /admin/:id
+ * HARD DELETE TOURIST
+ * API: DELETE /user/:id
  */
-export async function deleteAdmin(id: string) {
+export async function deleteTourist(id: string) {
     try {
         const response = await serverFetch.delete(`/user/${id}`)
         const result = await response.json();

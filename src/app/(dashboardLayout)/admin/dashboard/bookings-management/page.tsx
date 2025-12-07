@@ -1,35 +1,33 @@
-import AdminsFilter from "@/components/modules/Admin/AdminsManagement/AdminsFilter";
-import AdminsManagementHeader from "@/components/modules/Admin/AdminsManagement/AdminsManagementHeader";
-import AdminsTable from "@/components/modules/Admin/AdminsManagement/AdminsTable";
-import BookingManagementHeader from "@/components/modules/Admin/BookingManagement/ToursManagement/AdminsManagementHeader";
-import TablePagination from "@/components/shared/TablePagination";
+import BookingsFilter from "@/components/modules/Admin/BookingsManagement/BookingsFilter";
+import BookingsManagementHeader from "@/components/modules/Admin/BookingsManagement/BookingsManagementHeader";
+import BookingsTable from "@/components/modules/Admin/BookingsManagement/BookingsTable";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getAdmins } from "@/services/admin/adminsManagement";
+import { getAllBookings } from "@/services/admin/bookingsManagement";
 import { Suspense } from "react";
 
-const AdminTouristsManagementPage = async ({
+const AdminBookingsManagementPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
-  const adminsResult = await getAdmins(queryString);
+  const bookingsResult = await getAllBookings(queryString);
 
   return (
     <div className="space-y-6">
-      <BookingManagementHeader></BookingManagementHeader>
+      <BookingsManagementHeader />
 
       {/* Search, Filters */}
-      <AdminsFilter />
+      <BookingsFilter />
 
-      <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
-        <AdminsTable admins={adminsResult?.data || []} />
-      
+      <Suspense fallback={<TableSkeleton columns={7} rows={10} />}>
+        <BookingsTable bookings={bookingsResult?.data || []} />
+
       </Suspense>
     </div>
   );
 };
 
-export default AdminTouristsManagementPage;
+export default AdminBookingsManagementPage;

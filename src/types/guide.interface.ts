@@ -1,4 +1,4 @@
-export interface IAdmin {
+export interface IGuide {
     _id?: string;
     id?: string; // Keep for backward compatibility
     email: string;

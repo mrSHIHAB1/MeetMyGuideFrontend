@@ -1,11 +1,36 @@
+export enum BookingStatus {
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
 export interface IBooking {
-    _id?: string;                // Booking ObjectId (optional on creation)
-    user: string;                // User ObjectId (who booked)
-    tour: string;     
-    guide:string;           // Tour ObjectId (which tour is booked)
-    numberOfPeople: number;      // Total people in booking
-    totalPrice: number;          // Calculated price
-    bookingDate: string;         // ISO date string (when booking was made)
-    status: "pending" | "confirmed" | "cancelled";  // current state
-  }
-  
+  _id?: string;
+  id?: string; // Backward compatibility
+  tourist: {
+    _id: string;
+    name: string;
+    email: string;
+    phone?: string;
+  } | string;
+  guide: {
+    _id: string;
+    name: string;
+    email: string;
+    phone?: string;
+  } | string;
+  tour: {
+    _id: string;
+    title: string;
+    price: number;
+  } | string;
+  requestedDate: string;
+  requestedTime?: string;
+  status: BookingStatus;
+  numberOfPeople?: number;
+  specialRequests?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

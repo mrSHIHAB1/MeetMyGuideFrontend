@@ -29,11 +29,11 @@ const AdminFormDialog = ({
 }: IAdminFormDialogProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isEdit = !!admin?.id;
+  const isEdit = !!(admin?._id || admin?.id);
   //   const { isEditMode, state, formAction, isPending } = useAdminForm(admin);
 
   const [state, formAction, isPending] = useActionState(
-    isEdit ? updateAdmin.bind(null, admin?.id as string) : createAdmin,
+    isEdit ? updateAdmin.bind(null, (admin?._id || admin?.id) as string) : createAdmin,
     null
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

@@ -1,7 +1,6 @@
 "use client";
 
-import InputFieldError from "@/components/shared/InputFieldError";
-import { Button } from "@/components/ui/button";
+import { useActionState, useEffect, useRef, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,13 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-
-import { ITour } from "@/types/tour.interface";
-import { createTour, updateTour } from "@/services/guide/tourMangement";
-
+import { createTour, updateTour } from "@/services/admin/toursManagement";
+import { ITour, TourCategory, TourStatus } from "@/types/tour.interface";
 
 interface ITourFormDialogProps {
   open: boolean;
@@ -25,181 +23,184 @@ interface ITourFormDialogProps {
   tour?: ITour;
 }
 
-const TourFormDialog = ({ open, onClose, onSuccess, tour }: ITourFormDialogProps) => {
+const TourFormDialog = ({
+  open,
+  onClose,
+  onSuccess,
+  tour,
+}: ITourFormDialogProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const isEdit = Boolean(tour?._id);
 
-  const isEdit = !!tour?._id;
+  const actionHandler = isEdit
+    ? updateTour.bind(null, tour!._id!)
+    : createTour;
 
-  const [state, formAction, isPending] = useActionState(
-    isEdit ? updateTour.bind(null, tour?._id as string) : createTour,
-    null
-  );
+  const [state, formAction, isPending] = useActionState(actionHandler, null);
 
-  const [images, setImages] = useState<File[]>([]);
-  const hasHandledSuccessRef = useRef(false);
+  const handleSuccess = useCallback(() => {
+    onSuccess();
+  }, [onSuccess]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files ? Array.from(e.target.files) : [];
-    setImages(files);
-  };
-
-  useEffect(() => {
-    if (open) {
-      hasHandledSuccessRef.current = false;
-    }
-  }, [open]);
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
-    if (state?.success && !hasHandledSuccessRef.current) {
-      hasHandledSuccessRef.current = true;
+    if (!state) return;
 
-      toast.success(state.message || "Tour saved successfully");
-
+    if (state.success) {
+      toast.success(state.message || `Tour ${isEdit ? 'updated' : 'created'} successfully!`);
       formRef.current?.reset();
-      setImages([]);
-
-      onSuccess();
-      onClose();
-    } else if (state?.message && !state.success) {
+      handleSuccess();
+      handleClose();
+    } else if (state.message) {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, isEdit, handleSuccess, handleClose]);
 
-  const handleClose = () => {
-    setImages([]);
+  const handleDialogClose = () => {
     formRef.current?.reset();
-    onClose();
+    handleClose();
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-h-[90vh] flex flex-col p-0">
-        <DialogHeader className="px-6 pt-6 pb-4">
-          <DialogTitle>{isEdit ? "Edit Tour" : "Create New Tour"}</DialogTitle>
+    <Dialog open={open} onOpenChange={handleDialogClose}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{isEdit ? "Edit Tour" : "Add New Tour"}</DialogTitle>
         </DialogHeader>
 
-        <form ref={formRef} action={formAction} className="flex flex-col flex-1">
-          <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
+        <form ref={formRef} action={formAction} className="space-y-4">
+          <Field>
+            <FieldLabel htmlFor="title">Title *</FieldLabel>
+            <Input
+              id="title"
+              name="title"
+              defaultValue={tour?.title}
+              placeholder="Amazing City Tour"
+              required
+            />
+          </Field>
 
-            {/* Title */}
+          <Field>
+            <FieldLabel htmlFor="description">Description</FieldLabel>
+            <Textarea
+              id="description"
+              name="description"
+              defaultValue={tour?.description}
+              placeholder="Describe your tour..."
+              rows={3}
+            />
+          </Field>
+
+          <div className="grid grid-cols-2 gap-4">
             <Field>
-              <FieldLabel htmlFor="title">Title</FieldLabel>
+              <FieldLabel htmlFor="destination">Destination</FieldLabel>
               <Input
-                id="title"
-                name="title"
-                placeholder="Sundarban Adventure Tour"
-                defaultValue={tour?.title || ""}
+                id="destination"
+                name="destination"
+                defaultValue={tour?.destination}
+                placeholder="Paris, France"
               />
             </Field>
 
-            {/* Description */}
             <Field>
-              <FieldLabel htmlFor="description">Description</FieldLabel>
-              <Input
-                id="description"
-                name="description"
-                placeholder="Describe the tour"
-                defaultValue={tour?.description || ""}
-              />
+              <FieldLabel htmlFor="category">Category</FieldLabel>
+              <Select name="category" defaultValue={tour?.category || TourCategory.ALL}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(TourCategory).map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
+          </div>
 
-            {/* Itinerary */}
+          <div className="grid grid-cols-2 gap-4">
             <Field>
-              <FieldLabel htmlFor="itinerary">Itinerary</FieldLabel>
-              <Input
-                id="itinerary"
-                name="itinerary"
-                placeholder="Day 1..., Day 2..."
-                defaultValue={tour?.itinerary || ""}
-              />
-            </Field>
-
-            {/* Fee */}
-            <Field>
-              <FieldLabel htmlFor="fee">Fee (৳)</FieldLabel>
+              <FieldLabel htmlFor="fee">Fee ($) *</FieldLabel>
               <Input
                 id="fee"
                 name="fee"
                 type="number"
-                placeholder="1500"
-                defaultValue={tour?.fee || ""}
+                step="0.01"
+                defaultValue={tour?.fee}
+                placeholder="99.99"
+                required
               />
             </Field>
 
-            {/* Duration */}
             <Field>
-              <FieldLabel htmlFor="duration">Duration (hours)</FieldLabel>
+              <FieldLabel htmlFor="duration">Duration (hours) *</FieldLabel>
               <Input
                 id="duration"
                 name="duration"
                 type="number"
+                step="0.5"
+                defaultValue={tour?.duration}
                 placeholder="3"
-                defaultValue={tour?.duration || ""}
+                required
               />
             </Field>
+          </div>
 
-            {/* Meeting Point */}
+          <div className="grid grid-cols-2 gap-4">
             <Field>
               <FieldLabel htmlFor="meetingPoint">Meeting Point</FieldLabel>
               <Input
                 id="meetingPoint"
                 name="meetingPoint"
-                placeholder="Dhaka Airport"
-                defaultValue={tour?.meetingPoint || ""}
+                defaultValue={tour?.meetingPoint}
+                placeholder="Central Station"
               />
             </Field>
 
-            {/* Max Group Size */}
             <Field>
               <FieldLabel htmlFor="maxGroupSize">Max Group Size</FieldLabel>
               <Input
                 id="maxGroupSize"
                 name="maxGroupSize"
                 type="number"
+                defaultValue={tour?.maxGroupSize}
                 placeholder="10"
-                defaultValue={tour?.maxGroupSize || ""}
               />
             </Field>
-
-            {/* Images */}
-            <Field>
-              <FieldLabel htmlFor="images">Tour Images</FieldLabel>
-
-              {/* Preview */}
-              {images.length > 0 && (
-                <div className="flex gap-2 flex-wrap mb-2">
-                  {images.map((img, i) => (
-                    <Image
-                      key={i}
-                      src={URL.createObjectURL(img)}
-                      width={60}
-                      height={60}
-                      alt="preview"
-                      className="rounded-md"
-                    />
-                  ))}
-                </div>
-              )}
-
-              <Input
-                id="images"
-                name="images"
-                type="file"
-                multiple
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleImageChange}
-              />
-            </Field>
-
           </div>
 
-          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
-            <Button type="button" variant="outline" onClick={handleClose}>
+          <Field>
+            <FieldLabel htmlFor="itinerary">Itinerary</FieldLabel>
+            <Textarea
+              id="itinerary"
+              name="itinerary"
+              defaultValue={tour?.itinerary}
+              placeholder="Day-by-day schedule..."
+              rows={4}
+            />
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="status">Status</FieldLabel>
+            <Select name="status" defaultValue={tour?.status || TourStatus.ACTIVE}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={TourStatus.ACTIVE}>Active</SelectItem>
+                <SelectItem value={TourStatus.INACTIVE}>Inactive</SelectItem>
+              </SelectContent>
+            </Select>
+          </Field>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={handleDialogClose}>
               Cancel
             </Button>
-
             <Button type="submit" disabled={isPending}>
               {isPending ? "Saving..." : isEdit ? "Update Tour" : "Create Tour"}
             </Button>
