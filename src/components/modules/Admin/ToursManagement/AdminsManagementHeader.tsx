@@ -3,7 +3,7 @@
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
 import TourFormDialog from "./TourFormDialog";
 
 
@@ -12,11 +12,11 @@ const ToursManagementHeader = () => {
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSuccess = () => {
+  const handleSuccess = useCallback(() => {
     startTransition(() => {
       router.refresh();
     });
-  };
+  }, [router]);
 
   //force remount to reset state of form
   const [dialogKey, setDialogKey] = useState(0);
@@ -26,9 +26,9 @@ const ToursManagementHeader = () => {
     setIsDialogOpen(true);
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = useCallback(() => {
     setIsDialogOpen(false);
-  };
+  }, []);
 
   return (
     <>

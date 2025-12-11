@@ -75,17 +75,7 @@ const AdminsManagementHeader = () => {
           icon: Plus,
           onClick: handleOpenDialog,
         }}
-        secondaryAction={
-          <Button
-            variant="outline"
-            onClick={handleViewAllEmails}
-            disabled={loadingEmails}
-            className="gap-2"
-          >
-            <Mail className="w-4 h-4" />
-            {loadingEmails ? "Loading..." : "View All Emails"}
-          </Button>
-        }
+
       />
     </>
   );

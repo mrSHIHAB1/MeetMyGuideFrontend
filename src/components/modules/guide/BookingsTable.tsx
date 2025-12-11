@@ -1,5 +1,8 @@
 "use client";
 
+import { completeBooking } from "@/services/guide/guideBookingsManagement";
+import { toast } from "sonner";
+
 interface Booking {
     _id: string;
     tourist: any;
@@ -32,6 +35,14 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
             month: "short",
             day: "numeric",
         });
+    };
+    const handleConfirmBooking = async (bookingId: string) => {
+        try {
+            await completeBooking(bookingId);
+            toast.success("Booking confirmed successfully");
+        } catch (error) {
+            toast.error("Failed to confirm booking");
+        }
     };
 
     if (!bookings || bookings.length === 0) {
@@ -79,10 +90,20 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
                             <td>{booking.requestedTime || "N/A"}</td>
                             <td>{booking.numberOfPeople || 1}</td>
                             <td>
-                                <span className={`badge ${getStatusBadge(booking.status)}`}>
-                                    {booking.status}
-                                </span>
+                                {booking.status !== "CONFIRMED" ? (
+                                    <span className="badge badge-info">{booking.status}</span>
+                                ) : (<div>
+                                    <span className="badge badge-info">{booking.status}</span>
+                                    <button
+                                        className="btn btn-primary btn-xs"
+                                        onClick={() => handleConfirmBooking(booking._id)}
+                                    >
+                                        COMPLETED?
+                                    </button>
+                                </div>
+                                )}
                             </td>
+
                             <td className="max-w-xs truncate">
                                 {booking.specialRequests || "None"}
                             </td>

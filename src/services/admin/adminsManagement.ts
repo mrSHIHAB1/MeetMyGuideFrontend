@@ -83,7 +83,8 @@ export async function getAdminById(id: string) {
 export async function updateAdmin(id: string, _prevState: any, formData: FormData) {
     const validationPayload: any = {
         name: formData.get("name") as string,
-        contactNumber: formData.get("contactNumber") as string,
+        address: formData.get("address") as string,
+        phone: formData.get("phone") as string,
     };
 
     /*

@@ -1,12 +1,8 @@
 import AdminsFilter from "@/components/modules/Admin/AdminsManagement/AdminsFilter";
-import AdminsManagementHeader from "@/components/modules/Admin/AdminsManagement/AdminsManagementHeader";
-import AdminsTable from "@/components/modules/Admin/AdminsManagement/AdminsTable";
-import ToursManagementHeader from "@/components/modules/Admin/ToursManagement/AdminsManagementHeader";
+import ToursManagementHeader from "@/components/modules/Admin/ToursManagement/ToursManagementHeader";
 import ToursTable from "@/components/modules/tourist/ToursManagement/ToursTable";
-import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getTours } from "@/services/admin/toursManagement";
 import { getAllTour } from "@/services/tourist/toursManagement";
 import { Suspense } from "react";
 
@@ -18,10 +14,10 @@ const AdminTouristsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const toursResult = await getAllTour(queryString);
-console.log(toursResult)
+  console.log(toursResult)
   return (
     <div className="space-y-6">
-     <ToursManagementHeader></ToursManagementHeader>
+      <ToursManagementHeader></ToursManagementHeader>
 
       {/* Search, Filters */}
       <AdminsFilter />

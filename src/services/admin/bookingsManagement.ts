@@ -107,3 +107,21 @@ export async function deleteBooking(id: string) {
     };
   }
 }
+
+export const updateBookingAdmin = async (id: string, payload: any) => {
+  try {
+    const response = await serverFetch.patch(`/booking/${id}/update`, {
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Update booking admin error:", error);
+    return {
+      success: false,
+      message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to update booking admin',
+    };
+  }
+}

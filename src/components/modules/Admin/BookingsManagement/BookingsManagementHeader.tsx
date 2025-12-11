@@ -8,14 +8,7 @@ const BookingsManagementHeader = () => {
         <ManagementPageHeader
             title="Bookings Management"
             description="View and manage all tour bookings"
-            action={{
-                label: "Export Bookings",
-                icon: Calendar,
-                onClick: () => {
-                    // TODO: Implement export functionality
-                    console.log("Export bookings");
-                },
-            }}
+
         />
     );
 };

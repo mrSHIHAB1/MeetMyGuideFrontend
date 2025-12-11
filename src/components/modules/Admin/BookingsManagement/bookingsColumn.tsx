@@ -53,23 +53,8 @@ export const bookingsColumns: Column<IBooking>[] = [
             );
         },
     },
-    {
-        header: "Date & Time",
-        accessor: (booking) => (
-            <div className="flex flex-col">
-                <span className="text-sm">{new Date(booking.requestedDate).toLocaleDateString()}</span>
-                {booking.requestedTime && (
-                    <span className="text-xs text-muted-foreground">{booking.requestedTime}</span>
-                )}
-            </div>
-        ),
-    },
-    {
-        header: "People",
-        accessor: (booking) => (
-            <span className="text-sm">{booking.numberOfPeople || 1}</span>
-        ),
-    },
+
+
     {
         header: "Status",
         accessor: (booking) => getStatusBadge(booking.status),

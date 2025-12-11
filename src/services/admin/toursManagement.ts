@@ -2,6 +2,7 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
+import { getUserInfo } from "../auth/getUserInfo";
 
 /**
  * GET ALL TOURS (Admin) with filtering
@@ -43,8 +44,11 @@ export async function getTourById(id: string) {
 /**
  * CREATE TOUR
  * API: POST /tour/create
+ * this for guide
  */
 export async function createTour(_prevState: any, formData: FormData) {
+    const userid = (await getUserInfo())?.id;
+    formData.append("guide", userid!);
     try {
         const response = await serverFetch.post("/tour/create", {
             body: formData,
@@ -60,7 +64,23 @@ export async function createTour(_prevState: any, formData: FormData) {
         };
     }
 }
+export async function createTouradmin(_prevState: any, formData: FormData) {
 
+    try {
+        const response = await serverFetch.post("/tour/create", {
+            body: formData,
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.error("Create tour error:", error);
+        return {
+            success: false,
+            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to create tour',
+        };
+    }
+}
 /**
  * UPDATE TOUR
  * API: PATCH /tour/:id

@@ -42,7 +42,40 @@ export async function getAllToursByFilter(filters?: TourFilterParams) {
         };
     }
 }
+export async function getAllToursByFilterForGuide(filters?: TourFilterParams) {
+    try {
+        // Build query string from filters
+        const queryParams = new URLSearchParams();
 
+        if (filters?.destination) {
+            queryParams.append('destination', filters.destination);
+        }
+        if (filters?.category) {
+            queryParams.append('category', filters.category);
+        }
+        if (filters?.minPrice !== undefined) {
+            queryParams.append('minPrice', filters.minPrice.toString());
+        }
+        if (filters?.maxPrice !== undefined) {
+            queryParams.append('maxPrice', filters.maxPrice.toString());
+        }
+
+        const queryString = queryParams.toString();
+        const endpoint = queryString
+            ? `/tour/filter/guide?${queryString}`
+            : '/tour/filter/guide';
+
+        const res = await serverFetch.get(endpoint);
+        const result = await res.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
 export async function getTourById(id: string) {
     try {
         const response = await serverFetch.get(`/tour/${id}`);

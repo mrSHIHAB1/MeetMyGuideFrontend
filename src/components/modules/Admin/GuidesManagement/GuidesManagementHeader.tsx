@@ -61,11 +61,6 @@ const GuidesManagementHeader = () => {
                 onSuccess={handleSuccess}
             />
 
-            <ViewAllEmailsDialog
-                open={isEmailsDialogOpen}
-                onClose={() => setIsEmailsDialogOpen(false)}
-                emails={guideEmails}
-            />
 
             <ManagementPageHeader
                 title="Guides Management"
@@ -75,17 +70,7 @@ const GuidesManagementHeader = () => {
                     icon: Plus,
                     onClick: handleOpenDialog,
                 }}
-                secondaryAction={
-                    <Button
-                        variant="outline"
-                        onClick={handleViewAllEmails}
-                        disabled={loadingEmails}
-                        className="gap-2"
-                    >
-                        <Mail className="w-4 h-4" />
-                        {loadingEmails ? "Loading..." : "View All Emails"}
-                    </Button>
-                }
+
             />
         </>
     );

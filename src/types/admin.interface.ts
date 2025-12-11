@@ -7,6 +7,7 @@ export interface IAdmin {
     profilePhoto?: string | null; // Alternative field name
     contactNumber?: string;
     phone?: string; // Alternative field name
+    address?: string;
     isDeleted?: boolean;
     createdAt?: string;
     updatedAt?: string;

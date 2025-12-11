@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { createTour, updateTour } from "@/services/admin/toursManagement";
+import { createTouradmin, updateTour } from "@/services/admin/toursManagement";
 import { ITour, TourCategory, TourStatus } from "@/types/tour.interface";
 
 interface ITourFormDialogProps {
@@ -34,7 +34,7 @@ const TourFormDialog = ({
 
   const actionHandler = isEdit
     ? updateTour.bind(null, tour!._id!)
-    : createTour;
+    : createTouradmin;
 
   const [state, formAction, isPending] = useActionState(actionHandler, null);
 
@@ -46,7 +46,16 @@ const TourFormDialog = ({
     onClose();
   }, [onClose]);
 
+  /* 
+     Prevents infinite loop because state persists but dependencies (handleSuccess/handleClose) 
+     might change or component re-renders. 
+  */
+  const prevStateRef = useRef(state);
+
   useEffect(() => {
+    if (state === prevStateRef.current) return;
+    prevStateRef.current = state;
+
     if (!state) return;
 
     if (state.success) {
@@ -65,7 +74,10 @@ const TourFormDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogClose}>
+    <Dialog open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) handleDialogClose(); // close only when dialog is actually closing
+      }}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{isEdit ? "Edit Tour" : "Add New Tour"}</DialogTitle>

@@ -118,16 +118,27 @@ const AdminFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+              <FieldLabel htmlFor="address">Address</FieldLabel>
               <Input
-                id="contactNumber"
-                name="contactNumber"
+                id="address"
+                name="address"
+                placeholder="123 Main St, City, Country"
+                defaultValue={state?.formData?.address || admin?.address || ""}
+              />
+              <InputFieldError field="address" state={state} />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="phone">Phone</FieldLabel>
+              <Input
+                id="phone"
+                name="phone"
                 placeholder="+1234567890"
                 defaultValue={
-                  state?.formData?.contactNumber || admin?.contactNumber || ""
+                  state?.formData?.phone || admin?.phone || ""
                 }
               />
-              <InputFieldError field="contactNumber" state={state} />
+              <InputFieldError field="phone" state={state} />
             </Field>
 
             {/* Password Field (Create Mode Only) */}

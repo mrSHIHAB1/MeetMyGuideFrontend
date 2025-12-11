@@ -4,7 +4,8 @@ import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import { Plus } from "lucide-react";
 import { useState, useTransition, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import TourFormDialog from "./TourFormDialog";
+import TourFormDialog from "../../guide/TourFormDialog";
+
 
 const ToursManagementHeader = () => {
     const router = useRouter();

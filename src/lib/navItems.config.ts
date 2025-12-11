@@ -24,17 +24,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
 
             ]
         },
-        {
-            title: "Settings",
-            items: [
-                {
-                    title: "Change Password",
-                    href: "/change-password",
-                    icon: "Settings", // ✅ String
-                    roles: ["TOURIST"],
-                },
-            ],
-        },
+
     ]
 }
 
@@ -42,33 +32,27 @@ export const GUIDENavItems: NavSection[] = [
     {
         title: "TOURIST Management",
         items: [
+
+
             {
-                title: "TOURS",
-                href: "/guide/dashboard/tours-management",
-                icon: "Calendar", 
+                title: "My Listing",
+                href: "/guide/dashboard/my-listing",
+                icon: "Calendar",
                 badge: "3",
                 roles: ["GUIDE"],
             },
-            
-                {
-                    title: "My Listing",
-                    href: "/guide/dashboard/my-listing",
-                    icon: "Calendar", 
-                    badge: "3",
-                    roles: ["GUIDE"],
-                },
-                {
-                    title: "Upcoming Booking",
-                    href: "/guide/dashboard/upcomming-booking",
-                    icon: "Clock", // ✅ String
-                    roles: ["GUIDE"],
-                },
-                {
-                    title: "Pending Requests",
-                    href: "/guide/dashboard/pending-requests",
-                    icon: "FileText",
-                    roles: ["GUIDE"],
-                },
+            {
+                title: "Upcoming Booking",
+                href: "/guide/dashboard/upcomming-booking",
+                icon: "Clock",
+                roles: ["GUIDE"],
+            },
+            {
+                title: "Pending Requests",
+                href: "/guide/dashboard/pending-requests",
+                icon: "FileText",
+                roles: ["GUIDE"],
+            },
         ],
     }
 ]
@@ -80,18 +64,18 @@ export const TOURISTNavItems: NavSection[] = [
             {
                 title: "Tours",
                 href: "/tourist/dashboard/my-tours",
-                icon: "Calendar", 
+                icon: "Calendar",
                 roles: ["TOURIST"],
             },
             {
                 title: "Bookings",
-                href: "/bookings",
-                icon: "ClipboardList", 
+                href: "/tourist/dashboard/bookings",
+                icon: "ClipboardList",
                 roles: ["TOURIST"],
             },
         ],
     }
-   
+
 
 ]
 
@@ -102,19 +86,19 @@ export const adminNavItems: NavSection[] = [
             {
                 title: "Admins",
                 href: "/admin/dashboard/admins-management",
-                icon: "Shield", 
+                icon: "Shield",
                 roles: ["ADMIN"],
             },
             {
                 title: "Guides",
                 href: "/admin/dashboard/guides-management",
-                icon: "Stethoscope", 
+                icon: "Stethoscope",
                 roles: ["ADMIN"],
             },
             {
                 title: "Tourists",
                 href: "/admin/dashboard/tourists-management",
-                icon: "Users", 
+                icon: "Users",
                 roles: ["ADMIN"],
             },
         ],
@@ -125,21 +109,16 @@ export const adminNavItems: NavSection[] = [
             {
                 title: "Tours",
                 href: "/admin/dashboard/tours-management",
-                icon: "Calendar", 
+                icon: "Calendar",
                 roles: ["ADMIN"],
             },
             {
                 title: "Bookings",
                 href: "/admin/dashboard/bookings-management",
-                icon: "Clock", 
+                icon: "Clock",
                 roles: ["ADMIN"],
             },
-            {
-                title: "Specialities",
-                href: "/admin/dashboard/specialities-management",
-                icon: "Hospital", 
-                roles: ["ADMIN"],
-            },
+
         ],
     }
 ]
@@ -149,9 +128,9 @@ export const getNavItemsByRole = (role: UserRole): NavSection[] => {
 
     switch (role) {
         case "ADMIN":
-            return [...commonNavItems, ...adminNavItems];
+            return [...adminNavItems, ...commonNavItems];
         case "GUIDE":
-            return [...commonNavItems, ...GUIDENavItems];
+            return [...GUIDENavItems, ...commonNavItems];
         case "TOURIST":
             return [...commonNavItems, ...TOURISTNavItems];
         default:

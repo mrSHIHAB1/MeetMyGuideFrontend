@@ -1,7 +1,7 @@
 import AdminsFilter from "@/components/modules/Admin/AdminsManagement/AdminsFilter";
 import AdminsManagementHeader from "@/components/modules/Admin/AdminsManagement/AdminsManagementHeader";
 import AdminsTable from "@/components/modules/Admin/AdminsManagement/AdminsTable";
-import ToursManagementHeader from "@/components/modules/Admin/ToursManagement/AdminsManagementHeader";
+import GuideToursManagementHeader from "@/components/modules/guide/GuideToursManagementHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
@@ -19,14 +19,14 @@ const AdminTouristsManagementPage = async ({
 
   return (
     <div className="space-y-6">
-     <ToursManagementHeader></ToursManagementHeader>
+      <GuideToursManagementHeader></GuideToursManagementHeader>
 
       {/* Search, Filters */}
       <AdminsFilter />
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
         <AdminsTable admins={adminsResult?.data || []} />
-      
+
       </Suspense>
     </div>
   );

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, CheckCircle, XCircle, Clock } from "lucide-react";
+import BookingUpdateDialog from "./BookingUpdateDialog";
 
 interface BookingsTableProps {
     bookings: IBooking[];
@@ -29,7 +30,7 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
     const [viewingBooking, setViewingBooking] = useState<IBooking | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
-
+    const [updatingBooking, setUpdatingBooking] = useState<IBooking | null>(null);
     const handleRefresh = () => {
         startTransition(() => {
             router.refresh();
@@ -38,6 +39,9 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
 
     const handleView = (booking: IBooking) => {
         setViewingBooking(booking);
+    };
+    const handleUpdate = (booking: IBooking) => {
+        setUpdatingBooking(booking);
     };
 
     const handleDelete = (booking: IBooking) => {
@@ -123,10 +127,11 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
                 data={bookings}
                 columns={bookingsColumns}
                 onView={handleView}
+                onEdit={handleUpdate}
                 onDelete={handleDelete}
                 getRowKey={(booking) => booking._id || booking.id!}
                 emptyMessage="No bookings found"
-                customActions={renderActions}
+
             />
 
             {/* View Booking Detail Dialog */}
@@ -134,6 +139,11 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
                 open={!!viewingBooking}
                 onClose={() => setViewingBooking(null)}
                 booking={viewingBooking}
+            />
+            <BookingUpdateDialog
+                open={!!updatingBooking}
+                onClose={() => setUpdatingBooking(null)}
+                booking={updatingBooking}
             />
 
             {/* Delete Confirmation Dialog */}

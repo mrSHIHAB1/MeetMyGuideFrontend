@@ -8,27 +8,28 @@ import { cookies } from "next/headers";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 
 const PublicNavbar = async () => {
-  const currentUser=await getUserInfo();
-  const role=currentUser.role;
+  const currentUser = await getUserInfo();
+  const accessToken = (await cookies()).get("accessToken")?.value;
+  const role = currentUser.role;
   const navItems = [
     { href: "/explore", label: "Explore Tours" },
     { href: "/BecomeGuide", label: "Become a Guide" },
- 
+
   ];
- 
-  if (role === "ADMIN") {
+
+  if (accessToken && role === "ADMIN") {
     navItems.push({ href: "/admin/dashboard", label: "Dashboard" });
   }
 
-  if (role === "GUIDE") {
+  if (accessToken && role === "GUIDE") {
     navItems.push({ href: "/guide/dashboard", label: "Dashboard" });
   }
 
-  if (role === "TOURIST") {
-    navItems.push({ href: "/tourist/dashboard", label: "Dashboard" });
+  if (accessToken && role === "TOURIST") {
+    navItems.push({ href: "/tourist/dashboard", label: "Dashboard" }, { href: "/tourist/mybookings", label: "My Bookings" });
   }
-  const accessToken = (await cookies()).get("accessToken")?.value;
-  const user=await getUserInfo();
+
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">

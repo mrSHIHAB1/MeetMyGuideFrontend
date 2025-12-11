@@ -46,7 +46,21 @@ export const acceptBooking = async (bookingId: string) => {
         };
     }
 }
-
+export const completeBooking = async (bookingId: string) => {
+    try {
+        const res = await serverFetch.patch(`/booking/${bookingId}/complete`, {
+            headers: { "Content-Type": "application/json" },
+        });
+        const result = await res.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to complete booking'}`
+        };
+    }
+}
 export const declineBooking = async (bookingId: string) => {
     try {
         const res = await serverFetch.patch(`/booking/${bookingId}/decline`, {

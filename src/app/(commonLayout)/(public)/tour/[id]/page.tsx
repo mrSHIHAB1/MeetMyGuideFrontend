@@ -17,7 +17,7 @@ export default async function TourPage({ params }: Props) {
 
   return (
     <div className="p-6">
-      <TourDetailsPage tour={tour} guideinfo={guide.data} />
+      <TourDetailsPage tour={tour} guideinfo={guide?.data} />
     </div>
   );
 }

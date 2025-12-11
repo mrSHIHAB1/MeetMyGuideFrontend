@@ -8,7 +8,7 @@ import { IBooking } from "@/types/booking.interface";
 
 
 interface ToursTableProps {
-  tours: IBooking [];
+  tours: IBooking[];
 }
 
 const ToursTable = ({ tours }: ToursTableProps) => {
@@ -35,8 +35,7 @@ const ToursTable = ({ tours }: ToursTableProps) => {
             <tbody>
               {tours.map((tour) => (
                 <tr key={tour._id} className="hover:bg-gray-50">
-                  <td className="border p-2">{tour.totalPrice}</td>
-                  <td className="border p-2">{tour.guide}</td>
+
                   <td className="border p-2">{tour.status} BDT</td>
                   <td className="border p-2 text-center">
                     <Button
