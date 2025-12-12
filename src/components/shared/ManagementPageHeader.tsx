@@ -34,7 +34,7 @@ const ManagementPageHeader = ({
       <div className="flex items-center gap-2">
         {secondaryAction}
         {action && (
-          <Button onClick={action.onClick}>
+          <Button onClick={action.onClick} className=" bg-gradient-to-b from-blue-600 to-blue-800">
             <Icon className="mr-2 h-4 w-4" />
             {action.label}
           </Button>

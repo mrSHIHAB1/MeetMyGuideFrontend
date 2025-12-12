@@ -13,8 +13,7 @@ const TouristsManagementHeader = () => {
     const router = useRouter();
     const [, startTransition] = useTransition();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [isEmailsDialogOpen, setIsEmailsDialogOpen] = useState(false);
-    const [touristEmails, setTouristEmails] = useState<string[]>([]);
+    
     const [loadingEmails, setLoadingEmails] = useState(false);
 
     const handleSuccess = () => {
@@ -23,22 +22,7 @@ const TouristsManagementHeader = () => {
         });
     };
 
-    const handleViewAllEmails = async () => {
-        setLoadingEmails(true);
-        try {
-            // Fetch all tourists with role filter
-            const result = await getTourists("role=TOURIST");
-            if (result.success && result.data) {
-                const emails = result.data.map((tourist: any) => tourist.email).filter(Boolean);
-                setTouristEmails(emails);
-                setIsEmailsDialogOpen(true);
-            }
-        } catch (error) {
-            console.error("Failed to fetch tourist emails:", error);
-        } finally {
-            setLoadingEmails(false);
-        }
-    };
+
 
     //force remount to reset state of form
     const [dialogKey, setDialogKey] = useState(0);
@@ -61,12 +45,7 @@ const TouristsManagementHeader = () => {
                 onSuccess={handleSuccess}
             />
 
-            <ViewAllEmailsDialog
-                open={isEmailsDialogOpen}
-                onClose={() => setIsEmailsDialogOpen(false)}
-                emails={touristEmails}
-            />
-
+          
             <ManagementPageHeader
                 title="Tourists Management"
                 description="Manage tourist accounts and profiles"
@@ -75,17 +54,7 @@ const TouristsManagementHeader = () => {
                     icon: Plus,
                     onClick: handleOpenDialog,
                 }}
-                secondaryAction={
-                    <Button
-                        variant="outline"
-                        onClick={handleViewAllEmails}
-                        disabled={loadingEmails}
-                        className="gap-2"
-                    >
-                        <Mail className="w-4 h-4" />
-                        {loadingEmails ? "Loading..." : "View All Emails"}
-                    </Button>
-                }
+              
             />
         </>
     );

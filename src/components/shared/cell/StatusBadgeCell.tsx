@@ -14,7 +14,7 @@ export function StatusBadgeCell({
   deletedText = "Deleted",
 }: StatusBadgeCellProps) {
   return (
-    <Badge variant={isDeleted ? "destructive" : "default"}>
+    <Badge variant={isDeleted ? "destructive" : "secondary"}>
       {isDeleted ? deletedText : activeText}
     </Badge>
   );

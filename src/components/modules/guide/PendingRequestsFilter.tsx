@@ -37,7 +37,7 @@ const PendingRequestsFilter = () => {
                 <option value="CANCELLED">Cancelled Only</option>
             </select>
 
-            <RefreshButton />
+            
         </div>
     );
 };

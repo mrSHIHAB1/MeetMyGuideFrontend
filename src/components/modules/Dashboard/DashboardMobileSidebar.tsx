@@ -18,18 +18,16 @@ interface DashboardMobileSidebarContentProps {
 }
 
 const DashboardMobileSidebar = ({
-  userInfo,
+ 
   navItems,
-  dashboardHome,
+
 }: DashboardMobileSidebarContentProps) => {
   const pathname = usePathname();
   return (
     <div className=" flex h-full flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6">
-        <Link href={dashboardHome}>
-          <span className="text-xl font-bold text-primary">MeetMyGuide</span>
-        </Link>
+        
       </div>
       <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
@@ -79,21 +77,7 @@ const DashboardMobileSidebar = ({
       </ScrollArea>
 
       {/* User Info at Bottom */}
-      <div className="border-t p-4">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">
-              {userInfo.name.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo.name}</p>
-            <p className="text-xs text-muted-foreground capitalize">
-              {userInfo.role.toLowerCase()}
-            </p>
-          </div>
-        </div>
-      </div>
+     
     </div>
   );
 };

@@ -57,10 +57,10 @@ export const getRouteOwner = (pathname: string): "ADMIN" | "GUIDE" | "TOURIST" |
 
 export const getDefaultDashboardRoute = (role: UserRole): string => {
     if (role === "ADMIN") {
-        return "/admin/dashboard";
+        return "/admin/dashboard/admins-management";
     }
     if (role === "GUIDE") {
-        return "/guide/dashboard";
+        return "/guide/dashboard/my-listing";
     }
     if (role === "TOURIST") {
         return "/";

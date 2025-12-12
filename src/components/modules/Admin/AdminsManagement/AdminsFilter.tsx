@@ -10,7 +10,7 @@ const AdminsFilter = () => {
       {/* Row 1: Search and Refresh */}
       <div className="flex items-center gap-3">
         <SearchFilter paramName="searchTerm" placeholder="Search admins..." />
-        <RefreshButton />
+        
       </div>
 
       {/* Row 2: Filter Controls */}
@@ -21,7 +21,7 @@ const AdminsFilter = () => {
         {/* Contact Number Filter */}
         <SearchFilter paramName="contactNumber" placeholder="Contact" />
 
-        <ClearFiltersButton />
+        
       </div>
     </div>
   );

@@ -123,12 +123,49 @@ const GuideFormDialog = ({
                                 name="contactNumber"
                                 placeholder="+1234567890"
                                 defaultValue={
-                                    state?.formData?.contactNumber || guide?.contactNumber || ""
+                                    state?.formData?.phone|| guide?.phone|| ""
                                 }
                             />
                             <InputFieldError field="contactNumber" state={state} />
                         </Field>
+                        <Field>
+    <FieldLabel htmlFor="isVerified">Is Verified</FieldLabel>
+    <select
+      id="isVerified"
+      name="isVerified"
+      defaultValue={guide?.isVerified ? "true" : "false"}
+      className="w-full border px-3 py-2 rounded"
+    >
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+    <InputFieldError field="isVerified" state={state} />
+  </Field>
 
+  <Field>
+    <FieldLabel htmlFor="isBlocked">Is Blocked</FieldLabel>
+    <select
+      id="isBlocked"
+      name="isBlocked"
+      defaultValue={guide?.isblocked ? "true" : "false"}
+      className="w-full border px-3 py-2 rounded"
+    >
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+    <InputFieldError field="isBlocked" state={state} />
+  </Field>
+
+  <Field>
+    <FieldLabel htmlFor="address">Address</FieldLabel>
+    <Input
+      id="address"
+      name="address"
+      placeholder="Enter address"
+      defaultValue={state?.formData?.address || guide?.address || ""}
+    />
+    <InputFieldError field="address" state={state} />
+  </Field>
                         {/* Password Field (Create Mode Only) */}
                         {!isEdit && (
                             <Field>

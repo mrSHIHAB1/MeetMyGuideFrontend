@@ -26,13 +26,28 @@ const ExploreTourFilter = () => {
             router.push(`?${params.toString()}`);
         });
     };
+    const handleLanguageChange = (language: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (language && language !== "ALL") {
+            params.set("spokenLanguages", language);
+            params.set("page", "1");
+        } else {
+            params.delete("spokenLanguages");
+            params.delete("page");
+        }
+
+        startTransition(() => {
+            router.push(`?${params.toString()}`);
+        });
+    };
 
     return (
         <div className="space-y-3 ">
             {/* Row 1: Search and Refresh */}
-            <div className="flex items-center gap-3">
-                <SearchFilter paramName="destination" placeholder="Search destination..." />
-                <RefreshButton />
+            <div className="flex items-center gap-3 ">
+                <SearchFilter  paramName="destination" placeholder="Search destination..." />
+              
             </div>
 
             {/* Row 2: Filter Controls */}
@@ -48,7 +63,7 @@ const ExploreTourFilter = () => {
 
 
             </div>
-            <div className="border border-gray-200 p-3 rounded-md">
+            <div className="border border-gray-200 px-3 py-1 rounded-md">
                 <select
                     className="select select-bordered w-full max-w-xs"
                     onChange={(e) => handleCategoryChange(e.target.value)}
@@ -66,7 +81,25 @@ const ExploreTourFilter = () => {
                     <option value="NIGHTLIFE">Nightlife</option>
                 </select>
             </div>
-            <ClearFiltersButton />
+            <div className="border border-gray-200 px-3 py-1 rounded-md">
+                <select
+                    className="select select-bordered w-full max-w-xs"
+                    onChange={(e) => handleLanguageChange(e.target.value)}
+                    value={searchParams.get("spokenLanguages") || "ALL"}
+                    disabled={isPending}
+                >
+                    <option value="ALL">All Languages</option>
+                    <option value="ENGLISH">English</option>
+                    <option value="HINDI">Hindi</option>
+                    <option value="BENGALI">Bengali</option>
+                    <option value="SPANISH">Spanish</option>
+                    <option value="FRENCH">French</option>
+                    <option value="GERMAN">German</option>
+                    <option value="CHINESE">Chinese</option>
+                    <option value="ARABIC">Arabic</option>
+                </select>
+            </div>
+    
         </div>
     );
 };

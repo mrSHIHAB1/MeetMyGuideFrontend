@@ -3,7 +3,7 @@ import BookingsManagementHeader from "@/components/modules/Admin/BookingsManagem
 import BookingsTable from "@/components/modules/Admin/BookingsManagement/BookingsTable";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getAllBookings } from "@/services/admin/bookingsManagement";
+import { getAllBookings, getFilteredBookings } from "@/services/admin/bookingsManagement";
 import { Suspense } from "react";
 
 const AdminBookingsManagementPage = async ({
@@ -13,7 +13,7 @@ const AdminBookingsManagementPage = async ({
 }) => {
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
-  const bookingsResult = await getAllBookings(queryString);
+  const bookingsResult = await getFilteredBookings(queryString);
 
   return (
     <div className="space-y-6">

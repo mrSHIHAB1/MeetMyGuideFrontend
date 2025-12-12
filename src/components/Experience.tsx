@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ExperienceSharing() {
     return (
-        <div className="w-full min-h-screen bg-gradient-to-br from-gray-300 to-gray-100 p-12 flex flex-col gap-12">
+        <div className="w-full max-h-screen bg-gradient-to-br from-gray-300 to-gray-100 p-12 flex flex-col gap-12">
 
             {/* Header */}
             <div className="max-w-3xl">

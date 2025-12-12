@@ -19,8 +19,8 @@ export const TourCard = ({ tour }: TourCardProps) => {
             fill
             className="object-cover"
           />
-          <span className="absolute top- right-3 bg-purple-500 text-white text-xs px-3 py-1 rounded-full">
-            SALE
+          <span className="absolute top-1 right-3 bg-purple-500 text-white text-xs px-3 py-1 rounded-full">
+           {tour.category}
           </span>
         </div>
 
@@ -29,12 +29,12 @@ export const TourCard = ({ tour }: TourCardProps) => {
           <div className="bg-white shadow-md rounded-xl p-3 flex justify-between items-center text-gray-500 text-sm">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 bg-purple-500 rounded-full"></span>
-              10 Days
+              {tour.duration}Hours 
             </div>
 
             <div className="flex items-center gap-4">
-              <Mail size={16} />
-              <Users size={16} />
+              
+              <Users size={16} /><p>{tour.maxGroupSize}</p>
             </div>
           </div>
 
@@ -71,7 +71,7 @@ export const TourCard = ({ tour }: TourCardProps) => {
             <div className="text-right">
               <p className="text-gray-400 text-sm">From</p>
               <p className="text-xl font-bold">
-                $1000 <span className="text-gray-400 line-through text-sm">$1023</span>
+               BDT:{tour.fee} <span className="text-gray-400 line-through text-sm">10%</span>
               </p>
             </div>
           </div>

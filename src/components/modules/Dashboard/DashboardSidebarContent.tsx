@@ -23,22 +23,17 @@ const DashboardSidebarContent = ({
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex h-full w-72 flex-col border-r border-gray-200 bg-white shadow-lg">
+    <div className="hidden md:flex h-full w-72 flex-col bg-gradient-to-b from-blue-600 to-blue-800 text-white shadow-lg">
       {/* Logo / Brand */}
-      {/* <div className="flex h-16 items-center border-b border-gray-200 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-        <Link href={dashboardHome} className="flex items-center space-x-2">
-          <span className="text-2xl font-bold tracking-wider">MeetMyGuide</span>
-        </Link>
-      </div> */}
-
+     
       {/* Navigation */}
       <ScrollArea className="flex-1 px-3 py-6">
-        <nav className="">
+        <nav>
           {navItems.map((section, sectionIdx) => (
-            <div key={sectionIdx}>
+            <div key={sectionIdx} className="mb-4">
               {section.title && (
-                <h4 className="mb-2 px-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">
-
+                <h4 className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-blue-200">
+                  {section.title}
                 </h4>
               )}
 
@@ -54,11 +49,16 @@ const DashboardSidebarContent = ({
                       className={cn(
                         "flex items-center gap-3 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
                         isActive
-                          ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
-                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          ? "bg-gradient-to-r from-blue-500 to-indigo-500 shadow-md text-white"
+                          : "text-blue-100 hover:bg-blue-500 hover:bg-opacity-30 hover:text-white"
                       )}
                     >
-                      <Icon className={cn("h-5 w-5 flex-shrink-0", isActive ? "text-white" : "text-gray-500")} />
+                      <Icon
+                        className={cn(
+                          "h-5 w-5 flex-shrink-0",
+                          isActive ? "text-white" : "text-blue-200"
+                        )}
+                      />
                       <span className="flex-1">{item.title}</span>
                       {item.badge && (
                         <Badge
@@ -78,14 +78,16 @@ const DashboardSidebarContent = ({
       </ScrollArea>
 
       {/* User Info at Bottom */}
-      <div className="border-t border-gray-200 p-4 bg-gray-50 rounded-t-xl mt-4">
+      <div className="border-t border-blue-500 p-4 bg-blue-700 rounded-t-xl mt-4">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center shadow">
-            <span className="text-white font-bold">{userInfo.name.charAt(0).toUpperCase()}</span>
+          <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center shadow">
+            <span className="text-white font-bold">
+              {userInfo.name.charAt(0).toUpperCase()}
+            </span>
           </div>
           <div className="flex-1 overflow-hidden">
             <p className="text-sm font-semibold truncate">{userInfo.name}</p>
-            <p className="text-xs text-gray-500 capitalize">{userInfo.role.toLowerCase()}</p>
+            <p className="text-xs text-blue-200 capitalize">{userInfo.role.toLowerCase()}</p>
           </div>
           <button className="ml-2 px-3 py-1 text-xs text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-sm transition">
             Logout

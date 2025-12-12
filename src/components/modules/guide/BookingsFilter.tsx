@@ -41,7 +41,7 @@ const BookingsFilter = () => {
                     <option value="CANCELLED">Cancelled</option>
                 </select>
 
-                <RefreshButton />
+          
                 <ClearFiltersButton />
             </div>
         </div>

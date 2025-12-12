@@ -3,6 +3,9 @@ export interface IGuide {
     id?: string; // Keep for backward compatibility
     email: string;
     name: string;
+    address:string,
+    isVerified:boolean,
+    isblocked:boolean,
     picture?: string | null;
     profilePhoto?: string | null; // Alternative field name
     contactNumber?: string;

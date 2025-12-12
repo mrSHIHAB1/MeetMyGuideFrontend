@@ -4,6 +4,9 @@ export interface ITourist {
     email: string;
     name: string;
     picture?: string | null;
+    address:string,
+    isVerified:boolean,
+    isblocked:boolean,
     profilePhoto?: string | null; // Alternative field name
     contactNumber?: string;
     phone?: string; // Alternative field name

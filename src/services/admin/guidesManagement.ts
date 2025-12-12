@@ -11,6 +11,7 @@ export async function createGuide(_prevState: any, formData: FormData) {
         phone: formData.get("contactNumber") as string,
         password: formData.get("password") as string,
         picture: formData.get("file") as File,
+      
     };
 
     const newFormData = new FormData()
@@ -44,7 +45,7 @@ export async function getGuides(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -62,7 +63,7 @@ export async function getGuideById(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+       
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -78,6 +79,9 @@ export async function updateGuide(id: string, _prevState: any, formData: FormDat
     const validationPayload: any = {
         name: formData.get("name") as string,
         contactNumber: formData.get("contactNumber") as string,
+          isVerified: formData.get("isVerified") === "true", 
+        isblocked: formData.get("isblocked") === "true",
+        address: formData.get("address") as string,
     };
 
     try {
@@ -108,7 +112,7 @@ export async function softDeleteGuide(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+       
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`

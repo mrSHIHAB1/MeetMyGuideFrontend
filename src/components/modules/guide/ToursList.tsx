@@ -110,7 +110,7 @@ export const ToursList = ({ tours }: ToursListProps) => {
                             )}
 
                             {tour.category && (
-                                <span className="badge badge-primary badge-sm w-fit">
+                                <span className="badge badge-primary badge-sm w-fit p-1">
                                     {tour.category}
                                 </span>
                             )}
@@ -199,6 +199,7 @@ export const ToursList = ({ tours }: ToursListProps) => {
                                     <p className="font-semibold">Duration:</p>
                                     <p className="text-sm">{selectedTour.duration} hours</p>
                                 </div>
+                                
                             </div>
 
                             {selectedTour.destination && (
@@ -211,7 +212,7 @@ export const ToursList = ({ tours }: ToursListProps) => {
                             {selectedTour.category && (
                                 <div>
                                     <p className="font-semibold">Category:</p>
-                                    <span className="badge badge-primary">{selectedTour.category}</span>
+                                    <span className="badge badge-primary p-2">{selectedTour.category}</span>
                                 </div>
                             )}
 

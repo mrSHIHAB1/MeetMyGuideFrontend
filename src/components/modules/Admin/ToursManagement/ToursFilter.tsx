@@ -36,7 +36,7 @@ const ToursFilter = () => {
             {/* Row 1: Search and Refresh */}
             <div className="flex items-center gap-3">
                 <SearchFilter paramName="searchTerm" placeholder="Search tours..." />
-                <RefreshButton />
+             
             </div>
 
             {/* Row 2: Filter Controls */}

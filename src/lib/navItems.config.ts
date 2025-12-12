@@ -2,25 +2,26 @@
 import { NavSection } from "@/types/dashboard.interface";
 import { getDefaultDashboardRoute, UserRole } from "./auth-utils";
 
-
 export const getCommonNavItems = (role: UserRole): NavSection[] => {
     const defaultDashboard = getDefaultDashboardRoute(role);
 
     return [
         {
             items: [
-                {
-                    title: "Dashboard",
-                    href: defaultDashboard,
-                    icon: "LayoutDashboard",
-                    roles: ["TOURIST", "GUIDE", "ADMIN"],
-                },
+              
                 {
                     title: "My Profile",
                     href: `/my-profile`,
                     icon: "User",
                     roles: ["TOURIST", "GUIDE", "ADMIN"],
                 },
+                {
+                    title: "Settings",
+                    href:"#",
+                    icon: "Settings",
+                    roles: ["TOURIST", "GUIDE", "ADMIN"],
+                },
+                
 
             ]
         },
@@ -38,7 +39,7 @@ export const GUIDENavItems: NavSection[] = [
                 title: "My Listing",
                 href: "/guide/dashboard/my-listing",
                 icon: "Calendar",
-                badge: "3",
+             
                 roles: ["GUIDE"],
             },
             {
@@ -86,19 +87,19 @@ export const adminNavItems: NavSection[] = [
             {
                 title: "Admins",
                 href: "/admin/dashboard/admins-management",
-                icon: "Shield",
+                icon: "ShieldUser",
                 roles: ["ADMIN"],
             },
             {
                 title: "Guides",
                 href: "/admin/dashboard/guides-management",
-                icon: "Stethoscope",
+                icon: "User",
                 roles: ["ADMIN"],
             },
             {
                 title: "Tourists",
                 href: "/admin/dashboard/tourists-management",
-                icon: "Users",
+                icon: "UsersRound",
                 roles: ["ADMIN"],
             },
         ],

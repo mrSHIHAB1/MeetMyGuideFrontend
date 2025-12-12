@@ -96,7 +96,7 @@ const BookingFormDialog = ({
             <Input
               id="tour"
               name="tour"
-              defaultValue={booking?.tour || ""}
+              defaultValue={ ""}
               placeholder="Tour ObjectId"
             />
           </Field>

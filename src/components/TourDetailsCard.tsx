@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ITour } from "@/types/tour.interface";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { toast } from "sonner";
+import { Bookmark, Icon } from "lucide-react";
 interface Guide {
   name: string;
   photo: string;
@@ -26,9 +27,10 @@ interface Guide {
 interface TourDetailsPageProps {
   tour: ITour;
   guideinfo?: Guide;
+  wishlist:string[]
 }
 
-export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProps) {
+export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDetailsPageProps) {
   const router = useRouter();
   const images = tour.images ?? [];
 
@@ -36,7 +38,7 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
-  console.log("hekr", guideinfo?.name)
+
   const handleBooking = async () => {
     const tourist = await getUserInfo();
 
@@ -78,31 +80,58 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
       setLoading(false);
     }
   };
+ 
+ 
 
-  // const handlePay = async () => {
-  //   const res = await fetch("http://localhost:5000/api/v1/payment/checkout-session", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       "amount": tour.fee * 100,
-  //       "currency": "bdt",
-  //       "bookingId": booking._id,
-  //       "tourId": tour._id
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
-  //     }),
-  //   });
-  //   const session = await res.json();
-  //   console.log(session)
-  //   router.push(session.data.checkoutUrl);
-  // }
+  // Check if this tour is already in wishlist
+  useEffect(() => {
+    if (tour._id && wishlist.includes(tour._id)) {
+      setIsBookmarked(true);
+    } else {
+      setIsBookmarked(false);
+    }
+  }, [wishlist, tour._id]);
+  const toggleWishlist = async () => {
+    const user = await getUserInfo();
+    if (!user.id) {
+      toast.error("Please login first");
+      router.push("/login");
+      return;
+    }
 
+    setLoading(true);
+    try {
+      const endpoint = `/user/${user.id}/wishlist/${isBookmarked ? "remove" : "add"}`;
+      const res = await serverFetch[isBookmarked ? "delete" : "post"](endpoint, {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tourId: tour._id }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setIsBookmarked(!isBookmarked);
+        toast.success(isBookmarked ? "Removed from wishlist" : "Added to wishlist");
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+ 
   return (
     <>
 
       <main className="pb-20">
         {/* Top Images */}
-        <section className="max-w-6xl mx-auto mt-6 px-4">
-          {images.length >= 3 ? (
+        <section className="max-w-4xl mx-auto mt-6 px-4">
+          {images.length >= 0 && (
             // ---------------------------
             // SHOW SLIDER
             // ---------------------------
@@ -118,41 +147,13 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
                   <Image
                     src={img}
                     alt={`tour-image-${index}`}
-                    width={1200}
-                    height={800}
-                    className="w-full h-72 md:h-96 object-cover rounded-lg"
+                    fill
+                    className="w-72 h-72 md:h-96 object-cover rounded-lg"
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
-          ) : (
-            // ---------------------------
-            // SHOW GRID (up to 3 images)
-            // ---------------------------
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <Image
-                src={images[0] || "/bgimg.png"}
-                alt="img-1"
-                width={1200}
-                height={800}
-                className="h-72 w-full object-cover rounded-lg"
-              />
-              <Image
-                src={images[1] || "/bgimg.png"}
-                alt="img-2"
-                width={1200}
-                height={800}
-                className="h-72 w-full object-cover rounded-lg"
-              />
-              <Image
-                src={images[2] || "/bgimg.png"}
-                alt="img-3"
-                width={1200}
-                height={800}
-                className="h-72 w-full object-cover rounded-lg"
-              />
-            </div>
-          )}
+          ) }
         </section>
 
         {/* Header */}
@@ -166,11 +167,13 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
               <span>⏱️</span> {tour.duration}
             </div>
             <div className="flex items-center gap-2">
-              <span>⭐</span> Easy
+              <span>⭐</span> {tour.category}
             </div>
-            <div className="flex items-center gap-2">
-              <span>👶</span> Min Age 0
-            </div>
+            <div className="flex items-center gap-2 cursor-pointer" onClick={toggleWishlist}>
+            <Bookmark className={isBookmarked ? "text-red-500" : "text-gray-400"} />
+            <span>{isBookmarked ? "In Wishlist" : "Add to Wishlist"}</span>
+          </div>
+           
           </div>
         </section>
 
@@ -180,9 +183,7 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
           <div className="md:col-span-2 space-y-6">
             <h2 className="text-2xl font-semibold">Enjoy the Adventure</h2>
             <p className="leading-relaxed text-gray-700">
-              Are you looking for an adventure of a lifetime? Join us on an unforgettable
-              journey through some of the world’s most stunning landscapes and cultural
-              destinations. Our expertly curated tours take you to incredible destinations...
+              {tour.description}
             </p>
 
             <p className="leading-relaxed text-gray-700">
@@ -191,7 +192,7 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
 
             {/* Included / Excluded */}
             <div className="mt-10">
-              <h3 className="text-2xl font-semibold mb-4">Included / Excluded</h3>
+              <h3 className="text-2xl font-semibold mb-4">Guide Information</h3>
               <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                   <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
@@ -272,6 +273,7 @@ export default function TourDetailsPage({ tour, guideinfo }: TourDetailsPageProp
                   <button
                     type="button"
                     className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
+                    onClick={() => router.push(`/guide-profile/${guideinfo?._id}`)}
                   >
                     View Profile →
                   </button>

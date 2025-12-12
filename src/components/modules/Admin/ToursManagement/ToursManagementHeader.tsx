@@ -33,11 +33,7 @@ const ToursManagementHeader = () => {
             <ManagementPageHeader
                 title="Tours Management"
                 description="Manage all tours and experiences"
-                action={{
-                    label: "Add Tour",
-                    icon: Plus,
-                    onClick: () => setIsDialogOpen(true),
-                }}
+                
             />
         </>
     );

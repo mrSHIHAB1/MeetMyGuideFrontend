@@ -224,7 +224,7 @@ const GuideTourFormDialog = ({
                         <Button type="button" variant="outline" onClick={handleDialogClose}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={isPending}>
+                        <Button type="submit" disabled={isPending} className="bg-gradient-to-b from-blue-600 to-blue-800">
                             {isPending ? "Saving..." : isEdit ? "Update Tour" : "Create Tour"}
                         </Button>
                     </div>

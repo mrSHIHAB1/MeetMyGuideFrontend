@@ -44,7 +44,7 @@ export async function getTourists(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -62,7 +62,7 @@ export async function getTouristById(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+       
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -78,6 +78,8 @@ export async function updateTourist(id: string, _prevState: any, formData: FormD
     const validationPayload: any = {
         name: formData.get("name") as string,
         contactNumber: formData.get("contactNumber") as string,
+        isblocked: formData.get("isblocked") === "true",
+        address: formData.get("address") as string,
     };
 
     try {
@@ -108,7 +110,7 @@ export async function softDeleteTourist(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+      
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -126,7 +128,7 @@ export async function deleteTourist(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`

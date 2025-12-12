@@ -51,7 +51,7 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
                 }
             })
         } else {
-            throw new Error("No Set-Cookie header found");
+            throw new Error("Invalid Email or Password");
         }
 
         if (!accessTokenObject) {

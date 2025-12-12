@@ -25,7 +25,7 @@ const BookingsFilter = () => {
             {/* Row 1: Search and Refresh */}
             <div className="flex items-center gap-3">
                 <SearchFilter paramName="searchTerm" placeholder="Search bookings..." />
-                <RefreshButton />
+              
             </div>
 
             {/* Row 2: Filter Controls */}
@@ -47,7 +47,7 @@ const BookingsFilter = () => {
                     </SelectContent>
                 </Select>
 
-                <ClearFiltersButton />
+          
             </div>
         </div>
     );

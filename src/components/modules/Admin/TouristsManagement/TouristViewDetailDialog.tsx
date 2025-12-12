@@ -77,7 +77,7 @@ const TouristViewDetailDialog = ({
                                     <Phone className="h-4 w-4 mt-1 text-muted-foreground" />
                                     <InfoRow
                                         label="Contact Number"
-                                        value={tourist?.contactNumber || "Not provided"}
+                                        value={tourist?.phone || "Not provided"}
                                     />
                                 </div>
                                 <div className="flex items-start gap-3">

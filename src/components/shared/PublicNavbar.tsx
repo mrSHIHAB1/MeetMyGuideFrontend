@@ -1,3 +1,5 @@
+// At the top of your page file
+export const dynamic = 'force-dynamic';
 
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -6,6 +8,8 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import LogoutButton from "./LogoutButton";
 import { cookies } from "next/headers";
 import { getUserInfo } from "@/services/auth/getUserInfo";
+import Image from "next/image";
+import UserDropdown from "../modules/Dashboard/UserDropdown";
 
 const PublicNavbar = async () => {
   const currentUser = await getUserInfo();
@@ -14,6 +18,7 @@ const PublicNavbar = async () => {
   const navItems = [
     { href: "/explore", label: "Explore Tours" },
     { href: "/BecomeGuide", label: "Become a Guide" },
+    { href: "#contact", label: "Contact" }, 
 
   ];
 
@@ -26,7 +31,7 @@ const PublicNavbar = async () => {
   }
 
   if (accessToken && role === "TOURIST") {
-    navItems.push({ href: "/tourist/dashboard", label: "Dashboard" }, { href: "/tourist/mybookings", label: "My Bookings" });
+    navItems.push({ href: "/tourist/mybookings", label: "Dashboard" });
   }
 
 
@@ -34,7 +39,13 @@ const PublicNavbar = async () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-primary">Find MY Guide</span>
+          <Image
+            src="/logo.png"
+            alt="Find My Guide Logo"
+            width={35}
+            height={35}
+          />
+          <span className="text-xl font-bold text-primary">MyGuide</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
@@ -51,7 +62,7 @@ const PublicNavbar = async () => {
 
         <div className="hidden md:flex items-center space-x-2">
           {accessToken ? (
-            <LogoutButton />
+               <UserDropdown userInfo={currentUser} />
           ) : (
             <Link href="/login">
               <Button>Login</Button>

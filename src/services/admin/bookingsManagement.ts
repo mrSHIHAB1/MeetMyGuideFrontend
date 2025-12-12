@@ -2,6 +2,7 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { getUserInfo } from "../auth/getUserInfo";
+import { IBooking } from "@/types/booking.interface";
 
 
 export async function createBooking(_prevState: any, formData: FormData) {
@@ -13,7 +14,7 @@ export async function createBooking(_prevState: any, formData: FormData) {
     // Attach traveler to form data
     formData.append("traveler", travelerId);
 
-    console.log("Traveler ID added:", travelerId);
+  
 
     // Send formData directly to backend
     const response = await serverFetch.post("/booking/create", {
@@ -24,7 +25,7 @@ export async function createBooking(_prevState: any, formData: FormData) {
 
     return result;
   } catch (error: any) {
-    console.log("Booking Error:", error);
+    
     return {
       success: false,
       message: "Failed to create booking",
@@ -43,14 +44,39 @@ export async function getAllBookings(queryString?: string) {
     const result = await response.json();
     return result;
   } catch (error: any) {
-    console.log(error);
+  
     return {
       success: false,
       message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
     };
   }
 }
+export async function getFilteredBookings(queryString?: string) {
+  try {
+    const endpoint = queryString
+      ? `/booking/filtered?${queryString}`
+      : "/booking/filtered";
 
+    const response = await serverFetch.get(endpoint);
+    const result = await response.json();
+
+    if (!result.success) {
+      return { success: false, data: [], message: result.message };
+    }
+
+    return { success: true, data: result.data as IBooking[] };
+  } catch (error: any) {
+    console.error("Error fetching bookings:", error);
+    return {
+      success: false,
+      data: [],
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong",
+    };
+  }
+}
 /**
  * GET BOOKING BY ID
  * API: GET /booking/:id
@@ -61,7 +87,7 @@ export async function getBookingById(id: string) {
     const result = await response.json();
     return result;
   } catch (error: any) {
-    console.log(error);
+   
     return {
       success: false,
       message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -100,7 +126,7 @@ export async function deleteBooking(id: string) {
     const result = await response.json();
     return result;
   } catch (error: any) {
-    console.log(error);
+   
     return {
       success: false,
       message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`

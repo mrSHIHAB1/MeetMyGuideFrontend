@@ -27,24 +27,26 @@ interface TourDetailsPageProps {
     tour: ITour;
     guideinfo?: Guide;
     booking?: any;
+    avgrating: number;
+    reviewCount: number;
 }
 
-export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetailsPageProps) {
+export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, reviewCount }: TourDetailsPageProps) {
     const router = useRouter();
     const images = tour.images ?? [];
-    console.log("booking", booking.status)
-    const [paymentStatus, setPaymentStatus] = useState(booking?.paymentStatus || "PENDING");
+
+    const [paymentStatus, setPaymentStatus] = useState("PENDING");
 
     const getPaymentStatus = async () => {
         try {
             const res = await fetch(`http://localhost:5000/api/v1/payment/booking/${booking._id}`);
             const data = await res.json();
-
+console.log(data)
             if (data?.data?.status) {
                 setPaymentStatus(data.data.status); // update UI
             }
         } catch (error) {
-            console.log("Payment check failed", error);
+
         }
     };
 
@@ -52,7 +54,11 @@ export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetail
     useEffect(() => {
         getPaymentStatus();
     }, []);
-
+    console.log("booking",booking.status,"payment",paymentStatus)
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(0);
+    const [reviewComment, setReviewComment] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     const handlePay = async () => {
         const res = await fetch("http://localhost:5000/api/v1/payment/checkout-session", {
@@ -70,6 +76,50 @@ export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetail
 
         router.push(session.data.checkoutUrl);
     }
+    const submitReview = async () => {
+        const user = await getUserInfo();
+        if (!user?.id) {
+            toast.error("Please login first!");
+            router.push("/login");
+            return;
+        }
+
+        if (!rating) {
+            toast.error("Please select a star rating!");
+            return;
+        }
+
+        setSubmitting(true);
+
+        try {
+            const res = await fetch("http://localhost:5000/api/v1/review/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    reviewerId: user.id,
+                    guideId: guideinfo?._id,
+                    tourId: tour._id,
+                    rating,
+                    comment: reviewComment,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                toast.success("Review submitted successfully!");
+                setRating(0);
+                setReviewComment("");
+            } else {
+                toast.error(data.message || "Something went wrong");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to submit review");
+        } finally {
+            setSubmitting(false);
+        }
+    };
 
     return (
         <>
@@ -166,7 +216,7 @@ export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetail
 
                         {/* Included / Excluded */}
                         <div className="mt-10">
-                            <h3 className="text-2xl font-semibold mb-4">Included / Excluded</h3>
+                            <h3 className="text-2xl font-semibold mb-4">Guide Info</h3>
                             <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
                                 <div className="flex items-center gap-4">
                                     <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
@@ -203,14 +253,20 @@ export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetail
                                                     className="h-4 w-4"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
-                                                    aria-hidden
                                                 >
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
                                                 </svg>
-                                                <span className="font-medium">4.5</span>
+
+                                                <span className="font-medium">
+                                                    {avgrating}
+                                                </span>
                                             </div>
-                                            <span className="text-gray-500">(23 testimonials)</span>
+
+                                            <span className="text-gray-500">
+                                                ({reviewCount} testimonial{reviewCount !== 1 ? "s" : ""})
+                                            </span>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -253,26 +309,82 @@ export default function BookDetailsPage({ tour, guideinfo, booking }: TourDetail
                                 </div>
                             </div>
                         </div>
+                        <div className="mt-10 p-6 border rounded-xl bg-white shadow">
+                            <h3 className="text-2xl font-semibold mb-4">Leave a Review about the guide</h3>
+
+                            {/* STAR RATING */}
+                            <div className="flex gap-2 mb-4">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <svg
+                                        key={star}
+                                        onMouseEnter={() => setHover(star)}
+                                        onMouseLeave={() => setHover(0)}
+                                        onClick={() => setRating(star)}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill={(hover || rating) >= star ? "orange" : "gray"}
+                                        className="h-8 w-8 cursor-pointer transition"
+                                    >
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1
+        1 0 00.95.69h3.63c.969 0 1.371 1.24.588
+        1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12
+        3.45c.3.921-.755 1.688-1.54 1.118L10
+        13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1
+        1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1
+        1 0 00.95-.69l1.12-3.45z" />
+                                    </svg>
+                                ))}
+                            </div>
+
+                            {/* COMMENT INPUT */}
+                            <textarea
+                                value={reviewComment}
+                                onChange={(e) => setReviewComment(e.target.value)}
+                                className="w-full border rounded-lg p-3"
+                                rows={4}
+                                placeholder="Write your review..."
+                            />
+
+                            {/* SUBMIT BUTTON */}
+                            <button
+                                disabled={submitting}
+                                onClick={submitReview}
+                                className="bg-orange-500 text-white px-4 py-2 rounded-xl mt-4 hover:bg-orange-600"
+                            >
+                                {submitting ? "Submitting..." : "Submit Review"}
+                            </button>
+                        </div>
                     </div>
 
                     {/* BOOKING FORM */}
                     <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
-                        <h3 className="text-lg font-medium">Price</h3>
-                        <p className="text-3xl font-bold mt-2">BDT  {tour?.fee}</p>
+  <h3 className="text-lg font-medium">Price</h3>
+  <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
 
-                        {
-                            booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
-                                <button onClick={handlePay} className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700">
-                                    PAY NOW
-                                </button>
-                            ) : (
+  {booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
+    <button
+      onClick={handlePay}
+      className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700"
+    >
+      PAY NOW
+    </button>
+  ) : booking?.status === "COMPLETED" && paymentStatus === "COMPLETED" ? (
+    <button
+      disabled
+      className="bg-green-500 text-white w-full py-3 rounded-lg mt-4 cursor-not-allowed"
+    >
+      PAID
+    </button>
+  ) : booking?.status !== "COMPLETED" ? (
+    <button
+      className="bg-yellow-500 text-white w-full py-3 rounded-lg mt-4"
+      disabled
+    >
+      {booking?.status || "N/A"}
+    </button>
+  ) : null}
+</aside>
 
-                                <button className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700">
-                                    {booking?.status}
-                                </button>
-                            )
-                        }
-                    </aside>
                 </section>
             </main>
         </>

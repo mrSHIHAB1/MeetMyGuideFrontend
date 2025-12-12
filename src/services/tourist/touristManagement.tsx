@@ -53,4 +53,33 @@ export async function registertourist(_currentState: any, formData: FormData) {
       };
     }
   }
-  
+ 
+
+export async function getTouristById(id: string) {
+    try {
+        const response = await serverFetch.get(`/user/${id}`)
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+export async function getTourById(id: string) {
+  try {
+      const response = await serverFetch.get(`/tour/${id}`)
+      const result = await response.json();
+      return result;
+  } catch (error: any) {
+      console.log(error);
+      return {
+          success: false,
+          message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+      };
+  }
+}
+
+

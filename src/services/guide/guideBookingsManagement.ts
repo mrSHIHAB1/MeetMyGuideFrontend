@@ -76,3 +76,14 @@ export const declineBooking = async (bookingId: string) => {
         };
     }
 }
+export const fetchGuideReviews = async (guideId: string) => {
+    const res = await serverFetch.get(`/review/guide/${guideId}`);
+    const data = await res.json();
+  
+    return {
+      avgRating: data?.meta?.avgRating || 0,
+      count: data?.meta?.count || 0,
+      reviews: data?.data || []
+    };
+  };
+  

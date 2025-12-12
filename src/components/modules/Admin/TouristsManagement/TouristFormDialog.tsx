@@ -115,7 +115,31 @@ const TouristFormDialog = ({
                             />
                             <InputFieldError field="email" state={state} />
                         </Field>
+                        
+                        <Field>
+                            <FieldLabel htmlFor="isBlocked">Is Blocked</FieldLabel>
+                            <select
+                                id="isblocked"
+                                name="isblocked"
+                                defaultValue={tourist?.isblocked ? "true" : "false"}
+                                className="w-full border px-3 py-2 rounded"
+                            >
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                            <InputFieldError field="isblocked" state={state} />
+                        </Field>
 
+                        <Field>
+                            <FieldLabel htmlFor="address">Address</FieldLabel>
+                            <Input
+                                id="address"
+                                name="address"
+                                placeholder="Enter address"
+                                defaultValue={state?.formData?.address || tourist?.address || ""}
+                            />
+                            <InputFieldError field="address" state={state} />
+                        </Field>
                         <Field>
                             <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                             <Input
@@ -123,7 +147,7 @@ const TouristFormDialog = ({
                                 name="contactNumber"
                                 placeholder="+1234567890"
                                 defaultValue={
-                                    state?.formData?.contactNumber || tourist?.contactNumber || ""
+                                    state?.formData?.phone || tourist?.phone || ""
                                 }
                             />
                             <InputFieldError field="contactNumber" state={state} />

@@ -22,7 +22,7 @@ export const adminsColumns: Column<IAdmin>[] = [
     header: "Contact",
     accessor: (admin) => (
       <div className="flex flex-col">
-        <span className="text-sm">{admin.contactNumber}</span>
+        <span className="text-sm">{admin.phone}</span>
       </div>
     ),
   },

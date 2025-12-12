@@ -22,7 +22,7 @@ export const touristsColumns: Column<ITourist>[] = [
         header: "Contact",
         accessor: (tourist) => (
             <div className="flex flex-col">
-                <span className="text-sm">{tourist.contactNumber}</span>
+                <span className="text-sm">{tourist.phone}</span>
             </div>
         ),
     },

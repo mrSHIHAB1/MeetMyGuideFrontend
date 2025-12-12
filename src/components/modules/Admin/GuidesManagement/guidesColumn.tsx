@@ -22,7 +22,7 @@ export const guidesColumns: Column<IGuide>[] = [
         header: "Contact",
         accessor: (guide) => (
             <div className="flex flex-col">
-                <span className="text-sm">{guide.contactNumber}</span>
+                <span className="text-sm">{guide.phone}</span>
             </div>
         ),
     },

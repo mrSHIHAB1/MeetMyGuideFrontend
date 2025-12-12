@@ -9,7 +9,7 @@ const MybookingsLayout = async ({
 }) => {
     return (
         <>
-            <PublicNavbar></PublicNavbar>
+           
             <div className="">{children}</div>
         </>
     );

@@ -56,18 +56,7 @@ export const toursColumns: Column<ITour>[] = [
             <span className="font-medium">${tour.fee}</span>
         ),
     },
-    {
-        header: "Duration",
-        accessor: (tour) => (
-            <span className="text-sm">{tour.duration}h</span>
-        ),
-    },
-    {
-        header: "Max Group",
-        accessor: (tour) => (
-            <span className="text-sm">{tour.maxGroupSize || 'N/A'}</span>
-        ),
-    },
+ 
     {
         header: "Status",
         accessor: (tour) => getStatusBadge(tour.status),
