@@ -10,8 +10,8 @@ interface StatusBadgeCellProps {
 
 export function StatusBadgeCell({
   isDeleted,
-  activeText = "Active",
-  deletedText = "Deleted",
+  activeText = "Verified",
+  deletedText = "UnVerified",
 }: StatusBadgeCellProps) {
   return (
     <Badge variant={isDeleted ? "destructive" : "secondary"}>

@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { toast } from "sonner";
-import { Bookmark, Icon } from "lucide-react";
+import { Bookmark, ClipboardClock, ClipboardType, Icon, MapPinned } from "lucide-react";
 interface Guide {
   name: string;
   photo: string;
@@ -27,10 +27,12 @@ interface Guide {
 interface TourDetailsPageProps {
   tour: ITour;
   guideinfo?: Guide;
-  wishlist:string[]
+  wishlist:string[],
+  avgrating: number;
+    reviewCount: number;
 }
 
-export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDetailsPageProps) {
+export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating, reviewCount  }: TourDetailsPageProps) {
   const router = useRouter();
   const images = tour.images ?? [];
 
@@ -48,6 +50,14 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
       router.push("/login");
       return;
     }
+    if (!date) {
+      toast.error("Please select a date for your tour");
+      return;
+    }
+    if (!time) {
+      toast.error("Please select a time for your tour");
+      return;
+    }
     try {
       // Get traveler info (simulate with a dummy function or fetch from auth)
       // replace with actual user session
@@ -59,6 +69,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
         requestedTime: time,
         specialRequests: specialRequest,
       }
+      
       const res = await serverFetch.post("/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,12 +81,13 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
       });
 
       console.log(payload)
-      alert("Booking created successfully!");
+      toast.success("Booking Created Successfully")
       // optional: redirect to bookings page
 
     } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Something went wrong");
+      
+      toast.error(err.message||"Booking Created Successfully")
+    
     } finally {
       setLoading(false);
     }
@@ -161,13 +173,13 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
           <h1 className="text-4xl font-bold">{tour.title}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-gray-600">
             <div className="flex items-center gap-2">
-              <span>📍</span> {tour.destination}
+              <span><MapPinned /></span> {tour.destination}
             </div>
             <div className="flex items-center gap-2">
-              <span>⏱️</span> {tour.duration}
+              <span><ClipboardClock /></span> {tour.duration}
             </div>
             <div className="flex items-center gap-2">
-              <span>⭐</span> {tour.category}
+              <span><ClipboardType /></span> {tour.category}
             </div>
             <div className="flex items-center gap-2 cursor-pointer" onClick={toggleWishlist}>
             <Bookmark className={isBookmarked ? "text-red-500" : "text-gray-400"} />
@@ -192,95 +204,99 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
 
             {/* Included / Excluded */}
             <div className="mt-10">
-              <h3 className="text-2xl font-semibold mb-4">Guide Information</h3>
-              <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
-                    <Image
-                      src={guideinfo?.picture || "/bgimg.png"}
-                      alt="Arlene McCoy profile image"
-                      width={64}
-                      height={64}
-                      className="object-cover h-16 w-16"
-                    />
-                  </div>
+                            <h3 className="text-2xl font-semibold mb-4">Guide Info</h3>
+                            <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
+                                        <Image
+                                            src={guideinfo?.picture || "/bgimg.png"}
+                                            alt="Arlene McCoy profile image"
+                                            width={64}
+                                            height={64}
+                                            className="object-cover h-16 w-16"
+                                        />
+                                    </div>
 
 
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="text-xl font-semibold">{guideinfo?.name}</h2>
-                        <p className="text-gray-600 text-sm mt-1">
-                          {guideinfo?.role}
-                        </p>
-                      </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div>
+                                                <h2 className="text-xl font-semibold">{guideinfo?.name}</h2>
+                                                <p className="text-gray-600 text-sm mt-1">
+                                                    {guideinfo?.role}
+                                                </p>
+                                            </div>
 
 
-                      <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
-                        12+ Tour Completed
-                      </span>
-                    </div>
+                                            <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
+                                                12+ Tour Completed
+                                            </span>
+                                        </div>
 
 
-                    <div className="flex items-center gap-2 mt-3 text-sm">
-                      <div className="flex items-center gap-1 text-orange-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
-                        </svg>
-                        <span className="font-medium">4.5</span>
-                      </div>
-                      <span className="text-gray-500">(23 testimonials)</span>
-                    </div>
-                  </div>
-                </div>
+                                        <div className="flex items-center gap-2 mt-3 text-sm">
+                                            <div className="flex items-center gap-1 text-orange-500">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="h-4 w-4"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
+                                                </svg>
+
+                                                <span className="font-medium">
+                                                    {avgrating}
+                                                </span>
+                                            </div>
+
+                                            <span className="text-gray-500">
+                                                ({reviewCount} testimonial{reviewCount !== 1 ? "s" : ""})
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
 
 
-                <div className="text-sm text-gray-700">
-                  <p>
-                    <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
-                  </p>
-                  <p className="mt-1">
-                    <span className="font-semibold">Starts at:</span> INR 1,200+
-                  </p>
-                </div>
+                                <div className="text-sm text-gray-700">
+                                    <p>
+                                        <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
+                                    </p>
+                                    <p className="mt-1">
+                                        <span className="font-semibold">Starts at:</span> INR 1,200+
+                                    </p>
+                                </div>
 
 
-                <div className="flex flex-wrap gap-2 text-xs">
-                  {guideinfo?.travelpreferences?.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium whitespace-nowrap"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                                <div className="flex flex-wrap gap-2 text-xs">
+                                    {guideinfo?.travelpreferences?.map((item) => (
+                                        <span
+                                            key={item}
+                                            className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium whitespace-nowrap"
+                                        >
+                                            {item}
+                                        </span>
+                                    ))}
+                                </div>
 
 
-                <div className="flex justify-between items-center pt-4 border-t">
-                  <div className="text-sm text-gray-600">
-                    <p className="font-semibold">Next Available Slot:</p>
-                    <p className="text-orange-600 font-medium">Tomorrow, 10:00 AM</p>
-                  </div>
+                                <div className="flex justify-between items-center pt-4 border-t">
+                                    <div className="text-sm text-gray-600">
+                                        <p className="font-semibold">Next Available Slot:</p>
+                                        <p className="text-orange-600 font-medium">Tomorrow, 10:00 AM</p>
+                                    </div>
 
 
-                  <button
-                    type="button"
-                    className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
-                    onClick={() => router.push(`/guide-profile/${guideinfo?._id}`)}
-                  >
-                    View Profile →
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+                                    <button
+                                        type="button"
+                                        className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
+                                    >
+                                        View Profile →
+                                    </button>
+                                </div>
+                            </div>
+                        </div> </div>
 
           {/* BOOKING FORM */}
           <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
@@ -294,6 +310,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
                   type="date"
                   className="w-full mt-1 border px-3 py-2 rounded"
                   value={date}
+                  required
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
@@ -304,6 +321,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[] }: TourDet
                   type="time"
                   className="w-full mt-1 border px-3 py-2 rounded"
                   value={time}
+                  required
                   onChange={(e) => setTime(e.target.value)}
                 />
               </div>

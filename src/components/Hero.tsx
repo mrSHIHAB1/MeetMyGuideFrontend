@@ -1,6 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
+
 export const Hero = () => {
+  const router=useRouter();
   return (
     <div>
       <div
@@ -17,7 +21,7 @@ export const Hero = () => {
               Explore the world's most beautiful destinations with ease. Find unique experiences, plan your trips, and make memories that last a lifetime.
 
             </p>
-            <button className="btn btn-primary rounded-xl">Explore Now</button>
+            <button onClick={()=>router.push('/explore')} className="btn btn-primary rounded-xl">Explore Now</button>
           </div>
         </div>
       </div>

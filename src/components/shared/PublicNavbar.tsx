@@ -18,7 +18,7 @@ const PublicNavbar = async () => {
   const navItems = [
     { href: "/explore", label: "Explore Tours" },
     { href: "/BecomeGuide", label: "Become a Guide" },
-    { href: "#contact", label: "Contact" }, 
+ 
 
   ];
 

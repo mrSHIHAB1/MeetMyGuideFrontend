@@ -1,6 +1,6 @@
 export default function({ id }: { id?: string }){
     return(<>
-<section className="bg-gradient-to-r from-orange-400 to-pink-500 py-16">
+<section className="bg-gradient-to-r from-blue-500 to-blue-800 py-16">
   <div className="max-w-6xl mx-auto px-4 text-center">
     <h2 className="text-4xl font-bold text-white mb-4">Get in Touch</h2>
     <p className="text-white/90 mb-10">

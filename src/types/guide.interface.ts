@@ -6,6 +6,7 @@ export interface IGuide {
     address:string,
     isVerified:boolean,
     isblocked:boolean,
+    isActive:boolean,
     picture?: string | null;
     profilePhoto?: string | null; // Alternative field name
     contactNumber?: string;

@@ -13,7 +13,7 @@ export const adminsColumns: Column<IAdmin>[] = [
       <UserInfoCell
         name={admin.name}
         email={admin.email}
-        photo={admin.profilePhoto}
+        photo={admin.picture}
       />
     ),
     sortKey: "name",
@@ -28,7 +28,7 @@ export const adminsColumns: Column<IAdmin>[] = [
   },
   {
     header: "Status",
-    accessor: (admin) => <StatusBadgeCell isDeleted={admin.isDeleted} />,
+    accessor: (admin) => <StatusBadgeCell isDeleted={admin.isActive} />,
   },
   {
     header: "Joined",

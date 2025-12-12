@@ -43,7 +43,7 @@ const AdminFormDialog = ({
     const file = e.target.files?.[0];
     setSelectedFile(file || null);
   };
-
+console.log("state",state)
   // Reset the handled flag when dialog opens/closes
   useEffect(() => {
     if (open) {
@@ -62,7 +62,8 @@ const AdminFormDialog = ({
       onSuccess();
       onClose();
     } else if (state?.message && !state.success) {
-      toast.error(state.message);
+      
+      toast.error(state.errorSources[0].message);
 
       // Restore file to input after error
       if (selectedFile && fileInputRef.current) {

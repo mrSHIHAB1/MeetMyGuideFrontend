@@ -10,7 +10,7 @@ export const TourCard = ({ tour }: TourCardProps) => {
   const router = useRouter();
   return (
     <>
-      <div className="w-[full] bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+      <div className="w-[full] bg-white shadow-md overflow-hidden border border-gray-100">
         {/* Image Section */}
         <div className="relative h-56 w-full">
           <Image
@@ -48,7 +48,7 @@ export const TourCard = ({ tour }: TourCardProps) => {
           </div>
 
           {/* Description */}
-          <div className="text-gray-500 text-sm mt-4 flex items-center gap-2">
+          {/* <div className="text-gray-500 text-sm mt-4 flex items-center gap-2">
             <div className="avatar">
               <div className="w-24 rounded-full">
                 <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
@@ -57,7 +57,7 @@ export const TourCard = ({ tour }: TourCardProps) => {
             <div>
               <p>{tour.description}</p>
             </div>
-          </div>
+          </div> */}
 
           {/* Price + Button */}
           <div className="flex justify-between items-center mt-6 mb-4">
@@ -69,9 +69,9 @@ export const TourCard = ({ tour }: TourCardProps) => {
             </button>
 
             <div className="text-right">
-              <p className="text-gray-400 text-sm">From</p>
+              <p className="text-black-400 text-sm">Guide Fee</p>
               <p className="text-xl font-bold">
-               BDT:{tour.fee} <span className="text-gray-400 line-through text-sm">10%</span>
+              <span className="text-3xl">৳</span>{tour.fee} 
               </p>
             </div>
           </div>

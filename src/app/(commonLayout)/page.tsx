@@ -7,11 +7,10 @@ import Featured from "@/components/shared/Featured";
 import { getExploreAllTour } from "@/services/tourist/toursManagement";
 
 export default async function Home() {
-  const tour= await getExploreAllTour();
-
+ 
   return <div>
     <Hero></Hero>
-    <Featured tour={tour.data}></Featured>
+    <Featured></Featured>
     <PackageSection></PackageSection>
     <Experience></Experience>
     <FrequentlyAskedQuestion></FrequentlyAskedQuestion>

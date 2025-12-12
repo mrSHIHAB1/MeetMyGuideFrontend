@@ -1,16 +1,11 @@
-import { TourCard } from "../TourCard";
+"use client"
+import { useRouter } from "next/navigation";
 
-export default function Featured({tour}:{tour:any}) {
-    const chunkArray = (arr: any[], size: number) => {
-        const result = [];
-        for (let i = 0; i < arr.length; i += size) {
-          result.push(arr.slice(i, i + size));
-        }
-        return result;
-      };
-    
-      const tourChunks = chunkArray(tour, 4);
-      console.log(tourChunks)
+
+export default function Featured() {
+
+const router=useRouter();
+
     return (
         <div>
       <section className="w-full bg-white py-20 px-6 lg:px-20">
@@ -33,7 +28,7 @@ export default function Featured({tour}:{tour:any}) {
               with a custom-tailored itinerary that exceeds your expectations.
             </p>
   
-            <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+            <button onClick={()=>router.push('/explore')} className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
               More Info
             </button>
           </div>

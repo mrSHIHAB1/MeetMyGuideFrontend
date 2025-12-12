@@ -13,7 +13,7 @@ export const guidesColumns: Column<IGuide>[] = [
             <UserInfoCell
                 name={guide.name}
                 email={guide.email}
-                photo={guide.profilePhoto}
+                photo={guide.picture}
             />
         ),
         sortKey: "name",
@@ -28,7 +28,7 @@ export const guidesColumns: Column<IGuide>[] = [
     },
     {
         header: "Status",
-        accessor: (guide) => <StatusBadgeCell isDeleted={guide.isDeleted} />,
+        accessor: (guide) => <StatusBadgeCell isDeleted={!guide.isVerified} />,
     },
     {
         header: "Joined",

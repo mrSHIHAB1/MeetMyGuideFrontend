@@ -23,22 +23,7 @@ const GuidesManagementHeader = () => {
         });
     };
 
-    const handleViewAllEmails = async () => {
-        setLoadingEmails(true);
-        try {
-            // Fetch all guides with role filter
-            const result = await getGuides("role=GUIDE");
-            if (result.success && result.data) {
-                const emails = result.data.map((guide: any) => guide.email).filter(Boolean);
-                setGuideEmails(emails);
-                setIsEmailsDialogOpen(true);
-            }
-        } catch (error) {
-            console.error("Failed to fetch guide emails:", error);
-        } finally {
-            setLoadingEmails(false);
-        }
-    };
+    
 
     //force remount to reset state of form
     const [dialogKey, setDialogKey] = useState(0);
