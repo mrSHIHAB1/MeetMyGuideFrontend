@@ -1,6 +1,9 @@
 # 🗺️ Local Guide Platform
 
 [Live Demo]([https://your-live-url.com](https://meet-my-guide-frontend.vercel.app/))  
+Client Live Deployment: https://meet-my-guide-frontend.vercel.app
+
+Server Live Deployment: https://meetmyguide.onrender.com
 
 Local Guide Platform connects travelers with passionate local experts who can offer authentic, personalized experiences. Travelers can explore hidden gems, cultural hotspots, and unique activities, while locals can monetize their knowledge and skills.
 
