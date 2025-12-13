@@ -16,7 +16,7 @@ export async function register(_currentState: any, formData: FormData) {
         .split(",")
         .map((x) => x.trim())
         .filter(Boolean),
-      expertise: String(formData.get("expertise"))
+      travelpreferences: String(formData.get("expertise"))
         .split(",")
         .map((x) => x.trim())
         .filter(Boolean),

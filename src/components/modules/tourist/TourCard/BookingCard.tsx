@@ -15,7 +15,7 @@ export const BookingCard = ({
     const [activeTab, setActiveTab] = useState("UPCOMING");
 
     // 🔹 Filter based on bookingStatus
-    const upcoming = data.filter((x) => x.bookingStatus === "PENDING");
+    const upcoming = data.filter((x) => x.bookingStatus === "PENDING" || x.bookingStatus === "CONFIRMED");
     const past = data.filter((x) => x.bookingStatus === "COMPLETED");
     const wishlist = data.filter((x) => x.isBookmarked);
     const dataMap: Record<string, any[]> = {

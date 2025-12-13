@@ -14,7 +14,7 @@ const AdminBookingsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const bookingsResult = await getFilteredBookings(queryString);
-
+console.log("Bookings Result:", bookingsResult);
   return (
     <div className="space-y-6">
       <BookingsManagementHeader />

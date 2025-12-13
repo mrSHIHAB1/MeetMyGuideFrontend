@@ -39,3 +39,42 @@ export const resetPasswordSchema = z
         message: "Passwords don't match",
         path: ["confirmPassword"],
     });
+    export const touristSignupSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name cannot exceed 50 characters"),
+
+  email: z.string().email("Invalid email address"),
+
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters"),
+
+  phone: z
+    .string()
+    .max(11, "Phone number cannot exceed 11 digits")
+    .optional(),
+
+  address: z.string().max(200).optional(),
+
+  bio: z.string().optional(),
+
+  spokenLanguages: z.string().optional(),
+
+  travelpreferences: z.string().optional(),
+
+  file: z
+    .any()
+    .optional()
+    .refine(
+      (file) => !file || file?.size <= 2 * 1024 * 1024,
+      "Image must be under 2MB"
+    )
+    .refine(
+      (file) =>
+        !file ||
+        ["image/png", "image/jpeg", "image/jpg"].includes(file?.type),
+      "Only JPG, JPEG, PNG allowed"
+    ),
+});

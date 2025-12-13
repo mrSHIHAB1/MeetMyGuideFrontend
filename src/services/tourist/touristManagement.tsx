@@ -2,23 +2,26 @@ import { serverFetch } from "@/lib/server-fetch";
 
 export async function registertourist(_currentState: any, formData: FormData) {
     try {
-      const data = {
-        name: formData.get("name"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        phone: formData.get("phone"),
-        address: formData.get("address"),
-        bio: formData.get("bio"),
-       
-        spokenLanguages: String(formData.get("spokenLanguages"))
-          .split(",")
-          .map((x) => x.trim())
-          .filter(Boolean),
-        expertise: String(formData.get("travelpreferences"))
-          .split(",")
-          .map((x) => x.trim())
-          .filter(Boolean),
-      };
+    const data = {
+  name: formData.get("name"),
+  email: formData.get("email"),
+  password: formData.get("password"),
+  phone: formData.get("phone") || "",
+  address: formData.get("address"),
+  bio: formData.get("bio"),
+  role: "TOURIST",
+
+  spokenLanguages: String(formData.get("spokenLanguages"))
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean),
+
+  travelpreferences: String(formData.get("travelpreferences"))
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean),
+};
+console.log(data)
   
       const fd = new FormData();
       fd.append("data", JSON.stringify(data));

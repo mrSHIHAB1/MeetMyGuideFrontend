@@ -8,7 +8,7 @@ export async function createTourist(_prevState: any, formData: FormData) {
     const validationPayload = {
         name: formData.get("name") as string,
         email: formData.get("email") as string,
-        phone: formData.get("contactNumber") as string,
+        phone: formData.get("phone") as string,
         password: formData.get("password") as string,
         picture: formData.get("file") as File,
     };

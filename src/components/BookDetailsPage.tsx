@@ -39,7 +39,7 @@ export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, r
 
     const getPaymentStatus = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/payment/booking/${booking._id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/payment/booking/${booking._id}`);
             const data = await res.json();
 console.log(data)
             if (data?.data?.status) {
@@ -61,7 +61,7 @@ console.log(data)
     const [submitting, setSubmitting] = useState(false);
 
     const handlePay = async () => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/payment/checkout-session`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/payment/checkout-session`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -92,7 +92,7 @@ console.log(data)
         setSubmitting(true);
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/review/create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/review/create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
