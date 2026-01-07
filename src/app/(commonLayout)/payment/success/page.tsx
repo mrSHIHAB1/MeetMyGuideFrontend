@@ -4,10 +4,8 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-// ----------------------
-// Inner Content Component
-// ----------------------
 function SuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -20,7 +18,7 @@ function SuccessContent() {
 
     async function confirmPayment() {
       try {
-        const res = await fetch(`/api/v1/payment/confirm/${sessionId}`, {
+        const res = await fetch(`${API_BASE}/payment/confirm/${sessionId}`, {
           method: "POST",
         });
 
@@ -28,12 +26,12 @@ function SuccessContent() {
 
         setStatus(
           res.ok
-            ? "🎉 Payment Successful! Status updated to PAID."
-            : `❌ Payment failed: ${data.message}`
+            ? " Payment Successful! Status updated to PAID."
+            : `Payment failed: ${data.message}`
         );
       } catch (error) {
         setStatus("⚠ Server error");
-        console.error(error);
+      
       }
     }
 

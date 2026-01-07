@@ -49,7 +49,7 @@ console.log(data)
 
         }
     };
-
+console.log(booking.status,paymentStatus)
     // (optional) Auto-load status when page opens
     useEffect(() => {
         getPaymentStatus();

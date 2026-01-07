@@ -15,9 +15,13 @@ export default async function TourPage({ params }: Props) {
 
   const tourResponse = await getTourById(id);
   const tour = tourResponse.data;
-  const current=await getUserInfo();
-  const user=await getTouristById(current.id)
-const wishlist=user.data.wishlist
+  const current = await getUserInfo(); 
+  let wishlist: string[] = []; 
+
+  if (current) {
+    const user = await getTouristById(current.id);
+    wishlist = user?.data?.wishlist || [];
+  }
   const guide = tour.guide ? await getGuideById(tour.guide) : undefined;
   const { avgRating, count } = await fetchGuideReviews(guide.data._id);
 

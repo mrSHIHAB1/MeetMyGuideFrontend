@@ -16,7 +16,10 @@ const PublicNavbar = async () => {
   const accessToken = (await cookies()).get("accessToken")?.value;
   const role = currentUser.role;
   const navItems = [
-    { href: "/explore", label: "Explore Tours" },
+    { href: "/", label: "Home" },
+    { href: "/explore", label: "Explore" },
+    { href: "/contacts", label: "Contacts" },
+    { href: "/about", label: "About" },
     { href: "/BecomeGuide", label: "Become a Guide" },
  
 
@@ -97,7 +100,9 @@ const PublicNavbar = async () => {
                   <Link href="/login" className="text-lg font-medium">
                     <Button>Login</Button>
                   </Link>
+               
                 </div>
+                
               </nav>
             </SheetContent>
           </Sheet>
