@@ -5,7 +5,7 @@ export default function ExperienceSharing() {
         <div className="w-full max-h-screen bg-gradient-to-br from-gray-300 to-gray-100 p-12 flex flex-col gap-12">
 
             {/* Header */}
-            <div className="max-w-3xl">
+            <div className="container mx-auto max-w-3xl text-center flex flex-col gap-4">
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">
                     Unforgettable Travel <br /> Experiences
                 </h1>
@@ -19,7 +19,7 @@ export default function ExperienceSharing() {
             </div>
 
             {/* Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 container mx-auto ">
 
                 {/* Card 1 */}
                 <div className="bg-indigo-500 text-white p-8 rounded-2xl shadow-xl">

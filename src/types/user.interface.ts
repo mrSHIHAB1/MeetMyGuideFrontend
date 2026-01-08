@@ -7,6 +7,9 @@ export interface UserInfo {
     name: string;
     email: string;
     role: UserRole;
+    phone?: string;
+    address?: string;
+    picture?: string;
     needPasswordChange: boolean;
     status: "ACTIVE" | "BLOCKED" | "DELETED";
     admin?: IAdmin;

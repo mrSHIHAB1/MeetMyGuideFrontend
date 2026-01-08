@@ -16,6 +16,7 @@ interface MyProfileProps {
 }
 
 const MyProfile = ({ userInfo }: MyProfileProps) => {
+  console.log("User Info in MyProfile:", userInfo);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -185,13 +186,13 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   <Input
                     id="contactNumber"
                     name="contactNumber"
-                    defaultValue={profileData?.phone || ""}
+                    defaultValue={userInfo?.phone || ""}
                     required
                     disabled={isPending}
                   />
                 </div>
 
-                {/* Doctor-Specific Fields */}
+              
                 {userInfo.role === "GUIDE" && userInfo.guide && (
                   <>
                     <div className="space-y-2">
@@ -291,7 +292,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   </>
                 )}
 
-                {/* Patient-Specific Fields */}
+                
                 {userInfo.role === "TOURIST" && userInfo.tourist && (
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="address">Address</Label>

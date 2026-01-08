@@ -32,7 +32,8 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
             id: result.data.id,
             name: verified.name || result.data.email.split("@")[0],
             email: result.data.email,
-            role: result.data.role
+            role: result.data.role,
+           
         };
 
         return userInfo;

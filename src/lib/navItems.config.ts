@@ -82,7 +82,7 @@ export const adminNavItems: NavSection[] = [
              {
                 title: "Dashboard",
                 href: "/admin/dashboard",
-                icon: "ShieldUser",
+                icon: "ChartArea",
                 roles: ["ADMIN"],
             },
             {
