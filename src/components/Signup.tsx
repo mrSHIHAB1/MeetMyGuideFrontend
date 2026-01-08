@@ -21,21 +21,21 @@ const Signup= () => {
     if (!state) return;
 
     if (state.success) {
-      toast.success("Account created successfully!");
-      setTimeout(() => router.push("/login"), 1500); // redirect after 1.5s
+      toast.success("Requested successfully! Please wait for approval.");
+      setTimeout(() => router.push("/login"), 1500); 
     } else if (!state.success && state.message) {
       toast.error(state.message);
     }
   }, [state, router]);
 
   return (
-    <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
+    <section className="relative z-10 overflow-hidden pb-16 pt-6 md:pb-20 lg:pb-28 lg:pt-[10px]">
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+            <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-2 dark:bg-dark sm:p-[60px]">
               <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                Create your account
+                Request for a guide account
               </h3>
               <p className="mb-11 text-center text-base font-medium text-body-color">
                 It’s totally free and super easy
@@ -155,8 +155,8 @@ const Signup= () => {
                 </div>
 
                 <div className="mb-6">
-                  <button className="shadow-submit w-full rounded-sm bg-primary px-9 py-4 text-white">
-                    Sign up
+                  <button className="shadow-submit w-full rounded-sm bg-blue-500 px-9 py-4 text-white">
+                    Request
                   </button>
                 </div>
               </form>

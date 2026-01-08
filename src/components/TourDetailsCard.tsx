@@ -12,7 +12,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { toast } from "sonner";
-import { Bookmark, ClipboardClock, ClipboardType, Icon, MapPinned } from "lucide-react";
+import { Bookmark, ClipboardClock, ClipboardType, Icon, MapPinned, Loader2 } from "lucide-react";
+
 interface Guide {
   name: string;
   photo: string;
@@ -21,22 +22,23 @@ interface Guide {
   spokenLanguages: string[];
   role: string;
   travelpreferences: string[];
-  _id: string; // guide ID
+  _id: string;
 }
 
 interface TourDetailsPageProps {
   tour: ITour;
   guideinfo?: Guide;
-  wishlist:string[],
+  wishlist: string[];
   avgrating: number;
-    reviewCount: number;
+  reviewCount: number;
 }
 
-export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating, reviewCount  }: TourDetailsPageProps) {
+export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrating, reviewCount }: TourDetailsPageProps) {
   const router = useRouter();
   const images = tour.images ?? [];
 
   const [loading, setLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
@@ -44,7 +46,6 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
   const handleBooking = async () => {
     const tourist = await getUserInfo();
 
-    setLoading(true);
     if (tourist.id == '') {
       toast.error("Please login first");
       router.push("/login");
@@ -58,9 +59,9 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
       toast.error("Please select a time for your tour");
       return;
     }
+
+    setLoading(true);
     try {
-      // Get traveler info (simulate with a dummy function or fetch from auth)
-      // replace with actual user session
       const payload = {
         tourist: tourist.id,
         guide: guideinfo?._id,
@@ -74,10 +75,6 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-
-
-
-
       });
 
       console.log(payload)
@@ -85,19 +82,14 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
       // optional: redirect to bookings page
 
     } catch (err: any) {
-      
-      toast.error(err.message||"Booking Created Successfully")
-    
+      toast.error(err.message || "Booking Failed")
     } finally {
       setLoading(false);
     }
   };
- 
- 
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  // Check if this tour is already in wishlist
   useEffect(() => {
     if (tour._id && wishlist.includes(tour._id)) {
       setIsBookmarked(true);
@@ -105,6 +97,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
       setIsBookmarked(false);
     }
   }, [wishlist, tour._id]);
+
   const toggleWishlist = async () => {
     const user = await getUserInfo();
     if (!user.id) {
@@ -113,7 +106,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
       return;
     }
 
-    setLoading(true);
+    setWishlistLoading(true);
     try {
       const endpoint = `/user/${user.id}/wishlist/${isBookmarked ? "remove" : "add"}`;
       const res = await serverFetch[isBookmarked ? "delete" : "post"](endpoint, {
@@ -133,20 +126,16 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
       console.error(err);
       toast.error(err.message || "Something went wrong");
     } finally {
-      setLoading(false);
+      setWishlistLoading(false);
     }
   };
- 
+
   return (
     <>
-
       <main className="pb-20">
         {/* Top Images */}
         <section className="max-w-4xl mx-auto mt-6 px-4">
           {images.length >= 0 && (
-            // ---------------------------
-            // SHOW SLIDER
-            // ---------------------------
             <Swiper
               modules={[Navigation, Pagination]}
               navigation
@@ -165,7 +154,7 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
                 </SwiperSlide>
               ))}
             </Swiper>
-          ) }
+          )}
         </section>
 
         {/* Header */}
@@ -181,11 +170,17 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
             <div className="flex items-center gap-2">
               <span><ClipboardType /></span> {tour.category}
             </div>
-            <div className="flex items-center gap-2 cursor-pointer" onClick={toggleWishlist}>
-            <Bookmark className={isBookmarked ? "text-red-500" : "text-gray-400"} />
-            <span>{isBookmarked ? "In Wishlist" : "Add to Wishlist"}</span>
-          </div>
-           
+            <div 
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" 
+              onClick={toggleWishlist}
+            >
+              {wishlistLoading ? (
+                <Loader2 className="animate-spin text-gray-400" size={20} />
+              ) : (
+                <Bookmark className={isBookmarked ? "text-red-500 fill-red-500" : "text-gray-400"} />
+              )}
+              <span>{isBookmarked ? "In Wishlist" : "Add to Wishlist"}</span>
+            </div>
           </div>
         </section>
 
@@ -202,113 +197,102 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
               Our accommodations are carefully selected for comfort and convenience…
             </p>
 
-            {/* Included / Excluded */}
+            {/* Guide Info */}
             <div className="mt-10">
-                            <h3 className="text-2xl font-semibold mb-4">Guide Info</h3>
-                            <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
-                                        <Image
-                                            src={guideinfo?.picture || "/bgimg.png"}
-                                            alt="Arlene McCoy profile image"
-                                            width={64}
-                                            height={64}
-                                            className="object-cover h-16 w-16"
-                                        />
-                                    </div>
+              <h3 className="text-2xl font-semibold mb-4">Guide Info</h3>
+              <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image
+                      src={guideinfo?.picture || "/bgimg.png"}
+                      alt="Guide profile image"
+                      width={64}
+                      height={64}
+                      className="object-cover h-16 w-16"
+                    />
+                  </div>
 
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h2 className="text-xl font-semibold">{guideinfo?.name}</h2>
+                        <p className="text-gray-600 text-sm mt-1">
+                          {guideinfo?.role}
+                        </p>
+                      </div>
 
-                                    <div className="flex-1">
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div>
-                                                <h2 className="text-xl font-semibold">{guideinfo?.name}</h2>
-                                                <p className="text-gray-600 text-sm mt-1">
-                                                    {guideinfo?.role}
-                                                </p>
-                                            </div>
+                      <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
+                        12+ Tour Completed
+                      </span>
+                    </div>
 
+                    <div className="flex items-center gap-2 mt-3 text-sm">
+                      <div className="flex items-center gap-1 text-orange-500">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
+                        </svg>
+                        <span className="font-medium">{avgrating}</span>
+                      </div>
+                      <span className="text-gray-500">
+                        ({reviewCount} Review{reviewCount !== 1 ? "s" : ""})
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-                                            <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
-                                                12+ Tour Completed
-                                            </span>
-                                        </div>
+                <div className="text-sm text-gray-700">
+                  <p>
+                    <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
+                  </p>
+                  <p className="mt-1">
+                    <span className="font-semibold">Starts at:</span> INR 1,200+
+                  </p>
+                </div>
 
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {guideinfo?.travelpreferences?.map((item) => (
+                    <span
+                      key={item}
+                      className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium whitespace-nowrap"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
 
-                                        <div className="flex items-center gap-2 mt-3 text-sm">
-                                            <div className="flex items-center gap-1 text-orange-500">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-4 w-4"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
-                                                </svg>
+                <div className="flex justify-between items-center pt-4 border-t">
+                  <div className="text-sm text-gray-600">
+                    <p className="font-semibold">Available</p>
+                    <p className="text-orange-600 font-medium">Saturday to Friday</p>
+                  </div>
 
-                                                <span className="font-medium">
-                                                    {avgrating}
-                                                </span>
-                                            </div>
-
-                                            <span className="text-gray-500">
-                                                ({reviewCount} testimonial{reviewCount !== 1 ? "s" : ""})
-                                            </span>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                                <div className="text-sm text-gray-700">
-                                    <p>
-                                        <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
-                                    </p>
-                                    <p className="mt-1">
-                                        <span className="font-semibold">Starts at:</span> INR 1,200+
-                                    </p>
-                                </div>
-
-
-                                <div className="flex flex-wrap gap-2 text-xs">
-                                    {guideinfo?.travelpreferences?.map((item) => (
-                                        <span
-                                            key={item}
-                                            className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium whitespace-nowrap"
-                                        >
-                                            {item}
-                                        </span>
-                                    ))}
-                                </div>
-
-
-                                <div className="flex justify-between items-center pt-4 border-t">
-                                    <div className="text-sm text-gray-600">
-                                        <p className="font-semibold">Next Available Slot:</p>
-                                        <p className="text-orange-600 font-medium">Tomorrow, 10:00 AM</p>
-                                    </div>
-
-
-                                    <button
-                                        type="button"
-                                        className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
-                                    >
-                                        View Profile →
-                                    </button>
-                                </div>
-                            </div>
-                        </div> </div>
+                  <button
+                    type="button"
+                    className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
+                  >
+                    View Profile →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* BOOKING FORM */}
           <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
-            <h3 className="text-lg font-medium">Price</h3>
-            <p className="text-3xl font-bold mt-2">BDT  {tour?.fee}</p>
+            <h3 className="text-lg font-medium">Fee</h3>
+            <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
 
             <div className="mt-6 space-y-4">
               <div>
-                <label>Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
                 <input
                   type="date"
-                  className="w-full mt-1 border px-3 py-2 rounded"
+                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                   value={date}
                   required
                   onChange={(e) => setDate(e.target.value)}
@@ -316,10 +300,10 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
               </div>
 
               <div>
-                <label>Time</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
                 <input
                   type="time"
-                  className="w-full mt-1 border px-3 py-2 rounded"
+                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                   value={time}
                   required
                   onChange={(e) => setTime(e.target.value)}
@@ -327,25 +311,36 @@ export default function TourDetailsPage({ tour, guideinfo,wishlist=[], avgrating
               </div>
 
               <div>
-                <label>Special Request</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Special Request</label>
                 <input
                   type="text"
-                  className="w-full mt-1 border px-3 py-2 rounded"
+                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Any special requirements?"
                   value={specialRequest}
                   onChange={(e) => setSpecialRequest(e.target.value)}
                 />
               </div>
 
               <div className="space-y-2 mt-4">
-                <h4 className="font-medium">Itinerary</h4>
+                <h4 className="font-medium">Travel Details</h4>
                 <label className="flex items-center gap-2">
                   {tour.itinerary}
                 </label>
-
               </div>
 
-              <button onClick={handleBooking} className="bg-purple-600 text-white w-full py-3 rounded-lg mt-4 hover:bg-purple-700">
-                Book Now
+              <button 
+                onClick={handleBooking} 
+                disabled={loading}
+                className="cursor-pointer bg-purple-600 text-white w-full py-3 rounded-lg mt-4 hover:bg-purple-700 disabled:bg-purple-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin" size={20} />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <span>Book Now</span>
+                )}
               </button>
             </div>
           </aside>

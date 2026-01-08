@@ -67,9 +67,15 @@ const PublicNavbar = async () => {
           {accessToken ? (
                <UserDropdown userInfo={currentUser} />
           ) : (
+            <div className="flex">
             <Link href="/login">
-              <Button>Login</Button>
+              <Button className="bg-red-500">Sign in</Button>
             </Link>
+            <p className="p-2">|</p>
+             <Link href="/register">
+              <Button className="bg-blue-500">Sign Up</Button>
+            </Link>
+            </div>
           )}
         </div>
 

@@ -95,7 +95,7 @@ export default function SeamlessCarousel({
       </div>
 
       {/* Carousel */}
-      <div ref={viewportRef} className="container  mx-auto overflow-hidden  px-6 ">
+      <div ref={viewportRef} className="container  mx-auto overflow-hidden  px-6 pb-2 ">
         <div
           ref={trackRef}
           className="flex gap-6 transition-transform duration-500"

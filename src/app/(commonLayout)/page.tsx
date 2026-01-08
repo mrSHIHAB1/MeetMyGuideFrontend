@@ -8,6 +8,8 @@ import { getExploreAllTour } from "@/services/tourist/toursManagement";
 import { FeatuerdTour, FeaturedGuide } from "@/services/tour/Featuredtour";
 import { getTourById } from "@/services/tourist/touristManagement";
 import { getGuideById } from "@/services/admin/guidesManagement";
+import { TableSkeleton } from "@/components/shared/TableSkeleton";
+import { Suspense } from "react";
 
 export default async function Home() {
   const featuredResult = await FeatuerdTour();
@@ -47,6 +49,9 @@ console.log("merged Guides",mergedGuides)
   return (
     <div className="">
       <Hero />
+            {/* <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
+                <Featured tours={mergedTours} />
+            </Suspense> */}
       <Featured tours={mergedTours} />
       {/* You can add a FeaturedGuides component here */}
       <FrequentlyAskedQuestion guides={mergedGuides}/>

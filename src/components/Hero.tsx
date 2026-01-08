@@ -37,7 +37,7 @@ export const Hero = () => {
               {/* Buttons */}
               <div className="flex items-center gap-4">
                 <button  onClick={() => router.push('/explore')} className="cursor-pointer rounded-full bg-blue-500 px-7 py-3 text-white font-medium shadow-lg hover:bg-blue-600 transition">
-                  Get Started
+                  Explore
                 </button>
 
                 <button className="flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-gray-700 hover:bg-gray-100 transition">
@@ -95,7 +95,7 @@ export const Hero = () => {
                 </div>
 
                 {/* Floating User Icon */}
-                <div className="absolute -bottom-6 left-2/3 -translate-x-1/2 bg-orange-100 p-4 rounded-full shadow-lg flex space-x-1">
+                <div className="absolute -bottom-4 left-2/3 -translate-x-1/2 bg-orange-100 p-4  rounded-full shadow-lg flex space-x-1 ">
                   <User className="w-5 h-5 text-orange-500" /><p className="font-medium "> Top Guides</p>
                 </div>
               </div>
