@@ -148,7 +148,7 @@ const BookingUpdateDialog = ({ open, onClose, booking }: BookingUpdateDialogProp
                     <Button variant="outline" onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} disabled={loading}>
+                    <Button onClick={handleSubmit} disabled={loading} className="bg-blue-500 hover:bg-blue-600">
                         {loading ? "Updating..." : "Update"}
                     </Button>
                 </div>

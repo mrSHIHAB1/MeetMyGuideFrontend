@@ -163,3 +163,17 @@ export async function deleteTour(id: string) {
         };
     }
 }
+export async function guideToursByGuideId(id: string) {
+    try {
+        const response = await serverFetch.get(`/tour/guide/${id}`);
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.error("Get guide tours error:", error);
+        return {
+            success: false,
+            message:
+                process.env.NODE_ENV === "development" ? error.message : "Failed to get guide tours",
+        };
+    }
+}

@@ -4,11 +4,11 @@ export default function Contacts() {
   return (
     <section className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16">
-        
+
         {/* LEFT FORM */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <form className="space-y-5">
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input label="First Name" placeholder="Yourn First Name" />
               <Input label="Last Name" placeholder="Your Last Name" />
@@ -64,7 +64,7 @@ export default function Contacts() {
 
           <div className="flex items-center gap-8 text-sm font-medium">
             <div className="flex items-center gap-2">
-               <MapPin /><span>Dhaka,Bangladesh</span>
+              <MapPin /><span>Dhaka,Bangladesh</span>
             </div>
             <div className="flex items-center gap-2">
               <Phone /> <span>+1 (234) 567-8910</span>

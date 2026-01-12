@@ -19,7 +19,7 @@ interface ITourViewDialogProps {
 
 const getStatusBadge = (status?: TourStatus) => {
     if (status === TourStatus.ACTIVE) {
-        return <Badge variant="default">Active</Badge>;
+        return <Badge variant="default" className="bg-blue-500">Active</Badge>;
     }
     return <Badge variant="secondary">Inactive</Badge>;
 };

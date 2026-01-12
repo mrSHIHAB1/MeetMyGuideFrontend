@@ -32,7 +32,7 @@ const TourFilter = () => {
             {/* Row 1: Search and Refresh */}
             <div className="flex items-center gap-3">
                 <SearchFilter paramName="destination" placeholder="Search destination..." />
-                
+
             </div>
 
             {/* Row 2: Filter Controls */}
@@ -61,7 +61,7 @@ const TourFilter = () => {
                 {/* Max Price Filter */}
                 <SearchFilter paramName="maxPrice" placeholder="Max Price" />
 
-                <ClearFiltersButton />
+
             </div>
         </div>
     );

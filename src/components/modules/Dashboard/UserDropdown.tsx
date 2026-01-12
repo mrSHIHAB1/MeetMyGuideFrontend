@@ -14,7 +14,7 @@ import { logoutUser } from "@/services/auth/logoutUser";
 import { UserInfo } from "@/types/user.interface";
 import { Settings, User } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 interface UserDropdownProps {
   userInfo: UserInfo;
 }
@@ -27,9 +27,13 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="rounded-full">
-          <span className="text-sm font-semibold">
-            {userInfo.name.charAt(0).toUpperCase()}
-          </span>
+          <Image
+            src={userInfo.picture || "https://github.com/shadcn.png"}
+            alt="User"
+            width={35}
+            height={35}
+            className="rounded-full object-cover"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
@@ -37,7 +41,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium">{userInfo.name}</p>
             <p className="text-xs text-muted-foreground">{userInfo.email}</p>
-            <p className="text-xs text-primary capitalize">
+            <p className="text-xs text-primary capitalize"> role:
               {userInfo.role.toLowerCase()}
             </p>
           </div>
@@ -49,7 +53,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             Profile
           </Link>
         </DropdownMenuItem>
-      
+
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleLogout}

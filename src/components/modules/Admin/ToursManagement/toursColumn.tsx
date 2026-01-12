@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 
 const getStatusBadge = (status?: TourStatus) => {
     if (status === TourStatus.ACTIVE) {
-        return <Badge variant="default">Active</Badge>;
+        return <Badge variant="default" className="bg-blue-500">Active</Badge>;
     }
     return <Badge variant="secondary">Inactive</Badge>;
 };
@@ -53,10 +53,10 @@ export const toursColumns: Column<ITour>[] = [
     {
         header: "Fee",
         accessor: (tour) => (
-            <span className="font-medium">${tour.fee}</span>
+            <span className="font-medium">{tour.fee}</span>
         ),
     },
- 
+
     {
         header: "Status",
         accessor: (tour) => getStatusBadge(tour.status),

@@ -45,9 +45,9 @@ const ExploreTourFilter = () => {
     return (
         <div className="space-y-3 ">
             {/* Row 1: Search and Refresh */}
-            <div className="flex items-center gap-3 ">
-                <SearchFilter  paramName="destination" placeholder="Search destination..." />
-              
+            <div className="flex items-center gap-3  ">
+                <SearchFilter paramName="destination" placeholder="Search destination" />
+
             </div>
 
             {/* Row 2: Filter Controls */}
@@ -99,7 +99,7 @@ const ExploreTourFilter = () => {
                     <option value="ARABIC">Arabic</option>
                 </select>
             </div>
-    
+
         </div>
     );
 };

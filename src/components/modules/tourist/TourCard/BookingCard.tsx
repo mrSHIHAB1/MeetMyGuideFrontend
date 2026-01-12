@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import LogoutButton from "@/components/shared/LogoutButton";
 
 export const BookingCard = ({
     data,
@@ -14,7 +15,6 @@ export const BookingCard = ({
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("UPCOMING");
 
-    // 🔹 Filter based on bookingStatus
     const upcoming = data.filter((x) => x.bookingStatus === "PENDING" || x.bookingStatus === "CONFIRMED");
     const past = data.filter((x) => x.bookingStatus === "COMPLETED");
     const wishlist = data.filter((x) => x.isBookmarked);
@@ -23,7 +23,7 @@ export const BookingCard = ({
         PAST: past,
         WISHLIST: wishlist
     };
-
+    console.log("This is user", wishlist)
     return (
         <div className="flex w-full min-h-screen bg-gray-50 p-6 gap-6">
 
@@ -42,13 +42,11 @@ export const BookingCard = ({
                 <p className="text-sm text-gray-600">{user?.phone}</p>
                 <p className="text-sm text-gray-600 mb-4">{user?.email}</p>
 
-                <button className="border px-4 py-2 rounded-lg text-sm w-full mb-6">
-                    EDIT PROFILE
+                <button onClick={() => router.push("/my-profile")} className="hover:bg-gray-100 border px-4 py-2 rounded-lg text-sm w-full mb-6 cursor-pointer">
+                    Profile
                 </button>
 
-                <button className="mt-auto border px-4 py-2 rounded-lg text-sm text-red-500 border-red-300 w-full">
-                    LOGOUT ↪
-                </button>
+                <LogoutButton />
             </aside>
 
             {/* Right Section */}
@@ -59,7 +57,7 @@ export const BookingCard = ({
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`pb-3 ${activeTab === tab
+                            className={`pb-3 cursor-pointer ${activeTab === tab
                                 ? "text-black border-b-2 border-black"
                                 : "text-gray-500"
                                 }`}
@@ -71,7 +69,7 @@ export const BookingCard = ({
 
                 {/* Cards */}
                 <div className="flex flex-col gap-6">
-                    {dataMap[activeTab].map((item, index) => (
+                    {dataMap[activeTab].length > 0 ? dataMap[activeTab].map((item, index) => (
                         <div key={index} className="flex bg-white border rounded-xl p-4 shadow-sm gap-4">
 
                             <div className="w-40 h-28 rounded-lg overflow-hidden">
@@ -101,28 +99,30 @@ export const BookingCard = ({
                                         <p className="font-semibold text-lg">{item.fee} BDT</p>
                                     </div>
 
-                                    {item.status === "PENDING"  &&(
+                                    {item.status === "PENDING" && (
                                         <button className="text-sm text-blue-600 hover:underline">
                                             Pay Now
                                         </button>
                                     )}
 
-<button
-            onClick={() => {
-              if(activeTab === "WISHLIST"){
-                router.push(`/tour/${item.tourId}`); // redirect to tour details page
-              } else {
-                router.push(`/bookings/${item.bookingId}`); // existing booking details
-              }
-            }}
-            className="text-sm text-gray-600 hover:underline"
-          >
-            VIEW MORE
-          </button>
+                                    <button
+                                        onClick={() => {
+                                            if (activeTab === "WISHLIST") {
+                                                router.push(`/tour/${item.tourId}`); // redirect to tour details page
+                                            } else {
+                                                router.push(`/bookings/${item.bookingId}`); // existing booking details
+                                            }
+                                        }}
+                                        className="text-lg text-gray-600 hover:underline cursor-pointer"
+                                    >
+                                        Details
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p className="text-center">No {activeTab.toLowerCase()} found</p>
+                    )}
                 </div>
             </main>
         </div>

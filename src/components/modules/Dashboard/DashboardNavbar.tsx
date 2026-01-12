@@ -7,12 +7,17 @@ import DashboardNavbarContent from "./DashboardNavbarContent";
 const DashboardNavbar = async () => {
   const userInfo = (await getUserInfo()) as UserInfo;
   const navItems = getNavItemsByRole(userInfo.role);
+  const dashboardHome = getDefaultDashboardRoute(userInfo.role);
 
 
   return (<>
-    {/* <DashboardNavbarContent navItems={navItems}></DashboardNavbarContent> */}
-    
-      </>
+    <DashboardNavbarContent
+      userInfo={userInfo}
+      navItems={navItems}
+      dashboardHome={dashboardHome}
+    />
+
+  </>
   );
 };
 

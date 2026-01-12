@@ -23,7 +23,7 @@ const MyToursListingPage = async ({
   const tourResult = await getAllToursByFilterForGuide(filters);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
 
       <GuideToursManagementHeader></GuideToursManagementHeader>
       {/* Search and Filters */}

@@ -21,6 +21,7 @@ interface Guide {
   picture: string;
   spokenLanguages: string[];
   role: string;
+  dailyrate: number;
   travelpreferences: string[];
   _id: string;
 }
@@ -70,7 +71,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
         requestedTime: time,
         specialRequests: specialRequest,
       }
-      
+
       const res = await serverFetch.post("/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -170,8 +171,8 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
             <div className="flex items-center gap-2">
               <span><ClipboardType /></span> {tour.category}
             </div>
-            <div 
-              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" 
+            <div
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
               onClick={toggleWishlist}
             >
               {wishlistLoading ? (
@@ -185,117 +186,91 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
         </section>
 
         {/* Content + Booking Sidebar */}
-        <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mt-10 px-4">
-          {/* MAIN CONTENT */}
-          <div className="md:col-span-2 space-y-6">
-            <h2 className="text-2xl font-semibold">Enjoy the Adventure</h2>
-            <p className="leading-relaxed text-gray-700">
-              {tour.description}
-            </p>
+        <section className="max-w-6xl mx-auto mt-10 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* LEFT: Main Content */}
+          <div className="space-y-6 bg-white p-6 rounded-xl shadow border">
+            {/* Tour Title */}
 
-            <p className="leading-relaxed text-gray-700">
-              Our accommodations are carefully selected for comfort and convenience…
-            </p>
 
+            {/* Description */}
+
+            <h3 className="font-semibold text-gray-800">Description</h3>
+            <p className="text-gray-700 leading-relaxed ">{tour.description}</p>
+
+            {/* Meeting Point */}
+            <div className="mt-4">
+              <h3 className="font-semibold text-gray-800">Meeting Point</h3>
+              <p className="text-gray-600">{tour.meetingPoint}</p>
+            </div>
+ <div className="mt-4">
+              <h3 className="font-semibold text-gray-800">Group Size</h3>
+              <p className="text-gray-600">{tour.maxGroupSize} Person</p>
+            </div>
+
+            {/* Itinerary */}
+            <div className="mt-4">
+              <h3 className="font-semibold text-gray-800">Travel Plan</h3>
+              <p className="text-gray-600">{tour.itinerary}</p>
+            </div>
+
+          </div>
+          {/* BOOKING FORM */}
+          <aside className="bg-white p-6 rounded-xl shadow border flex flex-col gap-6 sticky top-10">
             {/* Guide Info */}
-            <div className="mt-10">
-              <h3 className="text-2xl font-semibold mb-4">Guide Info</h3>
-              <div className="w-full mx-auto bg-white rounded-2xl shadow p-6 border flex flex-col gap-4">
+            {guideinfo && (
+              <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                   <div className="h-16 w-16 rounded-full overflow-hidden flex-shrink-0">
                     <Image
-                      src={guideinfo?.picture || "/bgimg.png"}
-                      alt="Guide profile image"
+                      src={guideinfo.picture || "/bgimg.png"}
+                      alt={guideinfo.name}
                       width={64}
                       height={64}
-                      className="object-cover h-16 w-16"
+                      className="object-cover"
                     />
                   </div>
-
                   <div className="flex-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="text-xl font-semibold">{guideinfo?.name}</h2>
-                        <p className="text-gray-600 text-sm mt-1">
-                          {guideinfo?.role}
-                        </p>
-                      </div>
-
-                      <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
-                        12+ Tour Completed
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 mt-3 text-sm">
-                      <div className="flex items-center gap-1 text-orange-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1 1 0 00.95.69h3.63c.969 0 1.371 1.24.588 1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12 3.45c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1 1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1 1 0 00.95-.69l1.12-3.45z" />
-                        </svg>
-                        <span className="font-medium">{avgrating}</span>
-                      </div>
-                      <span className="text-gray-500">
-                        ({reviewCount} Review{reviewCount !== 1 ? "s" : ""})
-                      </span>
+                    <h2 className="text-xl font-semibold">{guideinfo.name}</h2>
+                    <p className="text-gray-600 text-sm">{guideinfo.role}</p>
+                    <div className="flex items-center gap-2 mt-2 text-sm text-orange-500">
+                      <span>⭐ {avgrating}</span>
+                      <span className="text-gray-500">({reviewCount} reviews)</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="text-sm text-gray-700">
-                  <p>
-                    <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
-                  </p>
-                  <p className="mt-1">
-                    <span className="font-semibold">Starts at:</span> INR 1,200+
-                  </p>
+                  <p><span className="font-semibold">Speaks:</span> {guideinfo.spokenLanguages.join(", ")}</p>
+                
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-xs">
-                  {guideinfo?.travelpreferences?.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium whitespace-nowrap"
-                    >
-                      {item}
-                    </span>
+                  {guideinfo.travelpreferences.map(pref => (
+                    <span key={pref} className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium">{pref}</span>
                   ))}
                 </div>
 
-                <div className="flex justify-between items-center pt-4 border-t">
-                  <div className="text-sm text-gray-600">
-                    <p className="font-semibold">Available</p>
-                    <p className="text-orange-600 font-medium">Saturday to Friday</p>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
-                  >
-                    View Profile →
-                  </button>
-                </div>
+                <button
+                  onClick={() => router.push(`/guideDetails/${guideinfo._id}`)}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-medium transition w-full"
+                >
+                  View Profile →
+                </button>
               </div>
-            </div>
-          </div>
+            )}
 
-          {/* BOOKING FORM */}
-          <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
-            <h3 className="text-lg font-medium">Fee</h3>
-            <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
+            {/* Booking Form */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium">Booking Fee</h3>
+              <p className="text-3xl font-bold">BDT {tour.fee}</p>
 
-            <div className="mt-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
                 <input
                   type="date"
-                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                   value={date}
-                  required
                   onChange={(e) => setDate(e.target.value)}
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
@@ -303,10 +278,9 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
                 <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
                 <input
                   type="time"
-                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                   value={time}
-                  required
                   onChange={(e) => setTime(e.target.value)}
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
@@ -314,33 +288,20 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
                 <label className="block text-sm font-medium text-gray-700 mb-1">Special Request</label>
                 <input
                   type="text"
-                  className="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Any special requirements?"
                   value={specialRequest}
                   onChange={(e) => setSpecialRequest(e.target.value)}
+                  placeholder="Any special requirements?"
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
-              <div className="space-y-2 mt-4">
-                <h4 className="font-medium">Travel Details</h4>
-                <label className="flex items-center gap-2">
-                  {tour.itinerary}
-                </label>
-              </div>
 
-              <button 
-                onClick={handleBooking} 
+              <button
+                onClick={handleBooking}
                 disabled={loading}
-                className="cursor-pointer bg-purple-600 text-white w-full py-3 rounded-lg mt-4 hover:bg-purple-700 disabled:bg-purple-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:bg-purple-400 disabled:cursor-not-allowed"
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin" size={20} />
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  <span>Book Now</span>
-                )}
+                {loading ? <><Loader2 className="animate-spin" /> Processing...</> : "Book Now"}
               </button>
             </div>
           </aside>

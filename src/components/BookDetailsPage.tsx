@@ -41,7 +41,7 @@ export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, r
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/payment/booking/${booking._id}`);
             const data = await res.json();
-console.log(data)
+            console.log(data)
             if (data?.data?.status) {
                 setPaymentStatus(data.data.status); // update UI
             }
@@ -49,12 +49,12 @@ console.log(data)
 
         }
     };
-console.log(booking.status,paymentStatus)
+    console.log(booking.status, paymentStatus)
     // (optional) Auto-load status when page opens
     useEffect(() => {
         getPaymentStatus();
     }, []);
-    console.log("booking",booking.status,"payment",paymentStatus)
+    console.log("booking", booking.status, "payment", paymentStatus)
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewComment, setReviewComment] = useState("");
@@ -241,7 +241,7 @@ console.log(booking.status,paymentStatus)
 
 
                                             <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-md whitespace-nowrap">
-                                                12+ Tour Completed
+                                                ({reviewCount} Tours Completed)
                                             </span>
                                         </div>
 
@@ -263,7 +263,7 @@ console.log(booking.status,paymentStatus)
                                             </div>
 
                                             <span className="text-gray-500">
-                                                ({reviewCount} testimonial{reviewCount !== 1 ? "s" : ""})
+                                                ({reviewCount} Review{reviewCount !== 1 ? "s" : ""})
                                             </span>
                                         </div>
 
@@ -271,14 +271,7 @@ console.log(booking.status,paymentStatus)
                                 </div>
 
 
-                                <div className="text-sm text-gray-700">
-                                    <p>
-                                        <span className="font-semibold">Speaks:</span> {guideinfo?.spokenLanguages?.join(", ")}
-                                    </p>
-                                    <p className="mt-1">
-                                        <span className="font-semibold">Starts at:</span> INR 1,200+
-                                    </p>
-                                </div>
+
 
 
                                 <div className="flex flex-wrap gap-2 text-xs">
@@ -294,96 +287,100 @@ console.log(booking.status,paymentStatus)
 
 
                                 <div className="flex justify-between items-center pt-4 border-t">
-                                    <div className="text-sm text-gray-600">
-                                        <p className="font-semibold">Next Available Slot:</p>
-                                        <p className="text-orange-600 font-medium">Tomorrow, 10:00 AM</p>
-                                    </div>
+
 
 
                                     <button
+                                        onClick={() => router.push(`/guideDetails/${guideinfo?._id}`)}
                                         type="button"
-                                        className="bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
+                                        className="cursor-pointer bg-orange-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-orange-600 transition"
                                     >
                                         View Profile →
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-10 p-6 border rounded-xl bg-white shadow">
-                            <h3 className="text-2xl font-semibold mb-4">Leave a Review about the guide</h3>
 
-                            {/* STAR RATING */}
-                            <div className="flex gap-2 mb-4">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <svg
-                                        key={star}
-                                        onMouseEnter={() => setHover(star)}
-                                        onMouseLeave={() => setHover(0)}
-                                        onClick={() => setRating(star)}
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill={(hover || rating) >= star ? "orange" : "gray"}
-                                        className="h-8 w-8 cursor-pointer transition"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1
+                                </div>
+                                <div className="mt-10 p-6 border rounded-xl bg-white shadow">
+                                    <h3 className="text-2xl font-semibold mb-4">Leave a Review about the guide</h3>
+
+                                    {/* STAR RATING */}
+                                    <div className="flex gap-2 mb-4">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <svg
+                                                key={star}
+                                                onMouseEnter={() => setHover(star)}
+                                                onMouseLeave={() => setHover(0)}
+                                                onClick={() => setRating(star)}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill={(hover || rating) >= star ? "orange" : "gray"}
+                                                className="h-8 w-8 cursor-pointer transition"
+                                            >
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.12 3.45a1
         1 0 00.95.69h3.63c.969 0 1.371 1.24.588
         1.81l-2.94 2.136a1 1 0 00-.364 1.118l1.12
         3.45c.3.921-.755 1.688-1.54 1.118L10
         13.347l-2.915 2.362c-.786.57-1.838-.197-1.539-1.118l1.12-3.45a1
         1 0 00-.364-1.118L2.462 8.877c-.783-.57-.38-1.81.588-1.81h3.63a1
         1 0 00.95-.69l1.12-3.45z" />
-                                    </svg>
-                                ))}
+                                            </svg>
+                                        ))}
+                                    </div>
+
+                                    {/* COMMENT INPUT */}
+                                    <textarea
+                                        value={reviewComment}
+                                        onChange={(e) => setReviewComment(e.target.value)}
+                                        className="w-full border rounded-lg p-3"
+                                        rows={4}
+                                        placeholder="Write your review..."
+                                    />
+
+                                    {/* SUBMIT BUTTON */}
+                                    <button
+                                        disabled={submitting}
+                                        onClick={submitReview}
+                                        className="bg-orange-500 text-white px-4 py-2 rounded-xl mt-4 hover:bg-orange-600"
+                                    >
+                                        {submitting ? "Submitting..." : "Submit Review"}
+                                    </button>
+                                </div>
                             </div>
 
-                            {/* COMMENT INPUT */}
-                            <textarea
-                                value={reviewComment}
-                                onChange={(e) => setReviewComment(e.target.value)}
-                                className="w-full border rounded-lg p-3"
-                                rows={4}
-                                placeholder="Write your review..."
-                            />
+                            <div>
 
-                            {/* SUBMIT BUTTON */}
-                            <button
-                                disabled={submitting}
-                                onClick={submitReview}
-                                className="bg-orange-500 text-white px-4 py-2 rounded-xl mt-4 hover:bg-orange-600"
-                            >
-                                {submitting ? "Submitting..." : "Submit Review"}
-                            </button>
+                            </div>
                         </div>
+
                     </div>
 
                     {/* BOOKING FORM */}
                     <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
-  <h3 className="text-lg font-medium">Price</h3>
-  <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
+                        <h3 className="text-lg font-medium">Payment</h3>
+                        <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
 
-  {booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
-    <button
-      onClick={handlePay}
-      className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700"
-    >
-      PAY NOW
-    </button>
-  ) : booking?.status === "COMPLETED" && paymentStatus === "COMPLETED" ? (
-    <button
-      disabled
-      className="bg-green-500 text-white w-full py-3 rounded-lg mt-4 cursor-not-allowed"
-    >
-      PAID
-    </button>
-  ) : booking?.status !== "COMPLETED" ? (
-    <button
-      className="bg-yellow-500 text-white w-full py-3 rounded-lg mt-4"
-      disabled
-    >
-      {booking?.status || "N/A"}
-    </button>
-  ) : null}
-</aside>
+                        {booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
+                            <button
+                                onClick={handlePay}
+                                className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700"
+                            >
+                                PAY NOW
+                            </button>
+                        ) : booking?.status === "COMPLETED" && paymentStatus === "COMPLETED" ? (
+                            <button
+                                disabled
+                                className="bg-green-500 text-white w-full py-3 rounded-lg mt-4 cursor-not-allowed"
+                            >
+                                PAID
+                            </button>
+                        ) : booking?.status !== "COMPLETED" ? (
+                            <button
+                                className="bg-yellow-500 text-white w-full py-3 rounded-lg mt-4"
+                                disabled
+                            >
+                                {booking?.status || "N/A"}
+                            </button>
+                        ) : null}
+                    </aside>
 
                 </section>
             </main>

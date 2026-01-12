@@ -5,46 +5,74 @@ import { getAllTour } from "@/services/tourist/toursManagement";
 
 const BookingDashboard = async () => {
 
-    // 🔹 Get user
     const userResult = await getUserInfo();
     const userinfo = await getTouristById(userResult.id);
     const user = userinfo.data || null;
 
-    // 🔹 Get all bookings for this user
+
     const bookingsResult = await getAllTour();
     const bookings = bookingsResult?.data || [];
 
-    // 🔹 Create new variable where booking + tour info is stored together
-    const mergedData = await Promise.all(
+
+    const mergedBookings = await Promise.all(
         bookings.map(async (booking: any) => {
-            const tourRes = await getTourById(booking.tour._id);
+            const tourRes = await getTourById(booking.tour?._id);
             const tour = tourRes?.data || {};
-            const isBookmarked = user?.wishlist?.includes(tour._id);
+
             return {
                 bookingId: booking._id,
-                bookingStatus: booking.status,
-                paymentStatus: booking.paymentStatus,
-                requestedDate: booking.requestedDate,
+                bookingStatus: booking.status || "PENDING",
+                paymentStatus: booking.paymentStatus || "UNPAID",
+                requestedDate: booking.requestedDate || "N/A",
 
-                // tour info
+
+                tourId: tour._id || "",
+                title: tour.title || "Untitled Tour",
+                destination: tour.destination || "Unknown",
+                fee: tour.fee || 0,
+                images: tour.images?.length ? tour.images : ["/no-image.jpg"],
+                duration: tour.duration || "N/A",
+                category: tour.category || "General",
+                meetingPoint: tour.meetingPoint || "TBD",
+                itinerary: tour.itinerary || [],
+                tourStatus: tour.status || "UPCOMING",
+
+
+                isBookmarked: user?.wishlist?.includes(tour._id) || false,
+            };
+        })
+    );
+
+
+    const wishlistTours = await Promise.all(
+        (user?.wishlist || []).map(async (tourId: string) => {
+            const tourRes = await getTourById(tourId);
+            const tour = tourRes?.data;
+            if (!tour) return null;
+
+            return {
+                bookingId: null,
+                bookingStatus: "WISHLIST",
+                paymentStatus: null,
+                requestedDate: null,
                 tourId: tour._id,
                 title: tour.title,
                 destination: tour.destination,
                 fee: tour.fee,
-                images: tour.images,
+                images: tour.images?.length ? tour.images : ["/no-image.jpg"],
                 duration: tour.duration,
                 category: tour.category,
                 meetingPoint: tour.meetingPoint,
                 itinerary: tour.itinerary,
                 tourStatus: tour.status,
-                //userwishlist
-
-                isBookmarked,
+                isBookmarked: true,
             };
         })
     );
 
-    // Pass clean merged data
+
+    const mergedData = [...mergedBookings, ...wishlistTours.filter(Boolean)];
+
     return <BookingCard data={mergedData} user={user} />;
 };
 

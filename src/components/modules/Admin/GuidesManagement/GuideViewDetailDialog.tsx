@@ -52,7 +52,7 @@ const GuideViewDetailDialog = ({
                             <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
                                 <Badge
                                     variant={guide?.isDeleted ? "destructive" : "default"}
-                                    className="text-sm"
+                                    className="text-sm bg-blue-500"
                                 >
                                     {guide?.isDeleted ? "Inactive" : "Active"}
                                 </Badge>

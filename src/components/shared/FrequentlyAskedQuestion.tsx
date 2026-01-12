@@ -2,6 +2,8 @@
 
 import { IGuide } from "@/types/guide.interface";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
 
 interface FeaturedGuides {
@@ -23,7 +25,7 @@ export default function SeamlessCarousel({
   const [maxTranslate, setMaxTranslate] = useState(0);
   const [step, setStep] = useState(0); // REAL card width
 
-  // ✅ Measure everything properly
+  const router = useRouter()
   useEffect(() => {
     const measure = () => {
       if (!viewportRef.current || !trackRef.current || !cardRef.current)
@@ -149,7 +151,8 @@ export default function SeamlessCarousel({
                     </div>
                   </div>
 
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue-600 transition">
+                  <button onClick={() => router.push(`/guideDetails/${guide.data._id}`)} className="bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue-600 transition">
+
                     View Profile
                   </button>
                 </div>

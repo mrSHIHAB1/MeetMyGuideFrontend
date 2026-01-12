@@ -135,15 +135,13 @@ const PendingBookingsTable = ({ bookings: initialBookings }: PendingBookingsTabl
                                 <div className="font-medium">
                                     {booking.tour?.title || "N/A"}
                                 </div>
-                                <div className="text-sm text-gray-500">
-                                    ${booking.tour?.fee || 0}
-                                </div>
+
                             </td>
                             <td>{formatDate(booking.requestedDate)}</td>
                             <td>{booking.requestedTime || "N/A"}</td>
                             <td>{booking.numberOfPeople || 1}</td>
                             <td>
-                                <span className={`badge ${getStatusBadge(booking.status)}`}>
+                                <span className={`badge bg-blue-500 text-gray-100 ${getStatusBadge(booking.status)}`}>
                                     {booking.status}
                                 </span>
                             </td>
@@ -152,7 +150,7 @@ const PendingBookingsTable = ({ bookings: initialBookings }: PendingBookingsTabl
                             </td>
                             <td>
                                 {booking.status === "PENDING" ? (
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 ">
                                         <button
                                             className="btn btn-success btn-sm"
                                             onClick={() => handleAccept(booking._id)}

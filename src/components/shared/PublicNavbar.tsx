@@ -21,7 +21,7 @@ const PublicNavbar = async () => {
     { href: "/contacts", label: "Contacts" },
     { href: "/about", label: "About" },
     { href: "/BecomeGuide", label: "Become a Guide" },
- 
+
 
   ];
 
@@ -65,16 +65,16 @@ const PublicNavbar = async () => {
 
         <div className="hidden md:flex items-center space-x-2">
           {accessToken ? (
-               <UserDropdown userInfo={currentUser} />
+            <UserDropdown userInfo={currentUser} />
           ) : (
             <div className="flex">
-            <Link href="/login">
-              <Button className="bg-red-500">Sign in</Button>
-            </Link>
-            <p className="p-2">|</p>
-             <Link href="/register">
-              <Button className="bg-blue-500">Sign Up</Button>
-            </Link>
+              <Link href="/login">
+                <Button className="bg-red-500">Sign in</Button>
+              </Link>
+              <p className="p-2">|</p>
+              <Link href="/register">
+                <Button className="bg-blue-500">Sign Up</Button>
+              </Link>
             </div>
           )}
         </div>
@@ -103,12 +103,10 @@ const PublicNavbar = async () => {
                 ))}
                 <div className="border-t pt-4 flex flex-col space-y-4">
                   <div className="flex justify-center"></div>
-                  <Link href="/login" className="text-lg font-medium">
-                    <Button>Login</Button>
-                  </Link>
-               
+
+
                 </div>
-                
+
               </nav>
             </SheetContent>
           </Sheet>

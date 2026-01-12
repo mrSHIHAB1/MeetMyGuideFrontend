@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useActionState } from "react";
 import { loginUser } from "@/services/auth/loginUser";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Lock, Mail } from "lucide-react";
 
 const SigninPage = ({ redirect }: { redirect?: string }) => {
   const [state, formAction] = useActionState(loginUser, null);
@@ -34,7 +34,7 @@ const SigninPage = ({ redirect }: { redirect?: string }) => {
   const fillLoginForm = (email: string, password: string) => {
     const emailInput = document.getElementById('email') as HTMLInputElement;
     const passwordInput = document.getElementById('password') as HTMLInputElement;
-    
+
     if (emailInput && passwordInput) {
       emailInput.value = email;
       passwordInput.value = password;
@@ -45,10 +45,10 @@ const SigninPage = ({ redirect }: { redirect?: string }) => {
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-16 md:pb-20 lg:pb-28 lg:pt-[10px]">
-        <div className="container mx-auto">
+        <div className="container mx-auto ">
           <div className="-mx-4 flex flex-wrap">
-            <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+            <div className="w-full px-4 ">
+              <div className="shadow-xl rounded-xl mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px] border border-gray-100">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Sign in to your account
                 </h3>
@@ -63,42 +63,72 @@ const SigninPage = ({ redirect }: { redirect?: string }) => {
 
                 <form onSubmit={handleSubmit}>
                   {redirect && <input type="hidden" name="redirect" value={redirect} />}
-                  
-                  <div className="mb-8">
+
+                  <div className="mb-6">
                     <label
                       htmlFor="email"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-200"
                     >
                       Your Email
                     </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="Enter your Email"
-                      disabled={isLoading}
-                      required
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
+                    <div className="relative group">
+                      {/* Optional icon */}
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Enter your Email"
+                        disabled={isLoading}
+                        required
+                        className="
+        w-full pl-10 pr-4 py-3 rounded-xl 
+        bg-gray-50 dark:bg-[#2C303B] 
+        border border-gray-200 dark:border-transparent 
+        text-gray-700 dark:text-gray-200 
+        outline-none 
+        focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 
+        hover:border-gray-300
+        transition-all duration-300
+        selection:bg-blue-500 selection:text-white
+        disabled:opacity-50 disabled:cursor-not-allowed
+      "
+                      />
+                    </div>
                   </div>
 
-                  <div className="mb-8">
+                  <div className="mb-6">
                     <label
                       htmlFor="password"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-200"
                     >
                       Your Password
                     </label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter your Password"
-                      disabled={isLoading}
-                      required
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
+                    <div className="relative group">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter your Password"
+                        disabled={isLoading}
+                        required
+                        className="
+        w-full pl-10 pr-4 py-3 rounded-xl 
+        bg-gray-50 dark:bg-[#2C303B] 
+        border border-gray-200 dark:border-transparent 
+        text-gray-700 dark:text-gray-200 
+        outline-none 
+        focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 
+        hover:border-gray-300
+        transition-all duration-300
+        selection:bg-blue-500 selection:text-white
+        disabled:opacity-50 disabled:cursor-not-allowed
+      "
+                      />
+                    </div>
                   </div>
+
 
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div className="mb-4 sm:mb-0">
@@ -135,14 +165,7 @@ const SigninPage = ({ redirect }: { redirect?: string }) => {
                         Keep me signed in
                       </label>
                     </div>
-                    <div>
-                      <a
-                        href="#0"
-                        className="text-sm font-medium text-primary hover:underline"
-                      >
-                        Forgot Password?
-                      </a>
-                    </div>
+
                   </div>
 
                   <div className="mb-6">
@@ -151,7 +174,7 @@ const SigninPage = ({ redirect }: { redirect?: string }) => {
                       variant="default"
                       size="lg"
                       disabled={isLoading}
-                      className="shadow-submit bg-blue-600 dark:shadow-submit-dark flex w-full items-center justify-center gap-2 rounded-sm px-9 py-4 text-base font-medium text-white duration-300 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {isLoading ? (
                         <>

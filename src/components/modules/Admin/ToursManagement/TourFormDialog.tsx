@@ -83,7 +83,7 @@ const TourFormDialog = ({
           <DialogTitle>{isEdit ? "Edit Tour" : "Add New Tour"}</DialogTitle>
         </DialogHeader>
 
-        <form ref={formRef} action={formAction} className="space-y-4">
+        <form ref={formRef} action={formAction} className="space-y-4 selection:bg-blue-500 ">
           <Field>
             <FieldLabel htmlFor="title">Title *</FieldLabel>
             <Input
@@ -92,6 +92,7 @@ const TourFormDialog = ({
               defaultValue={tour?.title}
               placeholder="Amazing City Tour"
               required
+              className="selection:bg-blue-500"
             />
           </Field>
 
@@ -213,7 +214,7 @@ const TourFormDialog = ({
             <Button type="button" variant="outline" onClick={handleDialogClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" className="bg-blue-500" disabled={isPending}>
               {isPending ? "Saving..." : isEdit ? "Update Tour" : "Create Tour"}
             </Button>
           </div>

@@ -82,16 +82,14 @@ const BookingsTable = ({ bookings }: BookingsTableProps) => {
                                 <div className="font-medium">
                                     {booking.tour?.title || "N/A"}
                                 </div>
-                                <div className="text-sm text-gray-500">
-                                    ${booking.tour?.fee || 0}
-                                </div>
+
                             </td>
                             <td>{formatDate(booking.requestedDate)}</td>
                             <td>{booking.requestedTime || "N/A"}</td>
                             <td>{booking.numberOfPeople || 1}</td>
                             <td>
                                 {booking.status !== "CONFIRMED" ? (
-                                    <span className="badge badge-info">{booking.status}</span>
+                                    <span className="badge badge-info text-gray-100">{booking.status}</span>
                                 ) : (<div>
                                     <span className="badge badge-info">{booking.status}</span>
                                     <button

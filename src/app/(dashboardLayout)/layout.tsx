@@ -11,13 +11,13 @@ const CommonDashboardLayout = async ({
   return (
     <>
       <PublicNavbar />
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex min-h-screen">
 
         <DashboardSidebar />
-        <div className="flex flex-1 flex-col overflow-hidden">
-       
+        <div className="flex flex-1 flex-col">
+          <DashboardNavbar />
 
-          <main className="flex-1 overflow-y-auto bg-muted/10 p-4 md:p-6">
+          <main className="flex-1 bg-muted/10 p-4 md:p-6">
 
             <div className="">{children}</div>
 

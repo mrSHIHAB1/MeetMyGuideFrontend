@@ -33,13 +33,16 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
             name: verified.name || result.data.email.split("@")[0],
             email: result.data.email,
             role: result.data.role,
-           
+            picture: result.data.picture ?? null,
+            phone: result.data.phone ?? null,
+            address: result.data.address ?? null,
+
         };
 
         return userInfo;
 
     } catch (error) {
-     
+
 
         return {
             id: "",

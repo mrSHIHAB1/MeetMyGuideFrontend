@@ -52,7 +52,7 @@ const TouristViewDetailDialog = ({
                             <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
                                 <Badge
                                     variant={tourist?.isDeleted ? "destructive" : "default"}
-                                    className="text-sm"
+                                    className="text-sm bg-blue-500"
                                 >
                                     {tourist?.isDeleted ? "Inactive" : "Active"}
                                 </Badge>
@@ -118,7 +118,7 @@ const TouristViewDetailDialog = ({
                                     <InfoRow label="Role" value="Tourist" />
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <User className="h-4 w-4 mt-1 text-muted-foreground" />
+                                    <User className="h-4 w-4 mt-1 text-muted-foreground " />
                                     <InfoRow
                                         label="Account Status"
                                         value={tourist?.isDeleted ? "Inactive" : "Active"}

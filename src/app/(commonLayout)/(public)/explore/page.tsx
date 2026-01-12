@@ -28,7 +28,7 @@ async function ExploreContent({
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {tours.length > 0 ? (
         tours.map((tour: any) => (
-          
+
           <TourCard key={tour._id} tour={tour} />
         ))
       ) : (

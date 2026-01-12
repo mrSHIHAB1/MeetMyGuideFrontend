@@ -8,10 +8,10 @@ import { Badge } from "@/components/ui/badge";
 
 const getStatusBadge = (status: BookingStatus) => {
     const variants: Record<BookingStatus, { variant: "default" | "secondary" | "destructive" | "outline", label: string }> = {
-        [BookingStatus.PENDING]: { variant: "secondary", label: "Pending" },
-        [BookingStatus.CONFIRMED]: { variant: "default", label: "Confirmed" },
+        [BookingStatus.PENDING]: { variant: "outline", label: "Pending" },
+        [BookingStatus.CONFIRMED]: { variant: "outline", label: "Confirmed" },
         [BookingStatus.COMPLETED]: { variant: "outline", label: "Completed" },
-        [BookingStatus.CANCELLED]: { variant: "destructive", label: "Cancelled" },
+        [BookingStatus.CANCELLED]: { variant: "outline", label: "Cancelled" },
     };
 
     const config = variants[status];

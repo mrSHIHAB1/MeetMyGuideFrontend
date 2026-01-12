@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavSection } from "@/types/dashboard.interface";
 import { UserInfo } from "@/types/user.interface";
+import LogoutButton from "@/components/shared/LogoutButton";
 
 interface DashboardSidebarContentProps {
   userInfo: UserInfo;
@@ -23,9 +24,9 @@ const DashboardSidebarContent = ({
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex h-full w-72 flex-col bg-gradient-to-b from-blue-600 to-blue-800 text-white shadow-lg">
+    <div className="hidden md:flex sticky top-16 h-[calc(100vh-64px)] w-72 flex-col bg-gradient-to-b from-blue-600 to-blue-800 text-white shadow-lg overflow-y-auto">
       {/* Logo / Brand */}
-     
+
       {/* Navigation */}
       <ScrollArea className="flex-1 px-3 py-6">
         <nav>
@@ -78,21 +79,10 @@ const DashboardSidebarContent = ({
       </ScrollArea>
 
       {/* User Info at Bottom */}
-      <div className="border-t border-blue-500 p-4 bg-blue-700 rounded-t-xl mt-4">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center shadow">
-            <span className="text-white font-bold">
-              {userInfo.name.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-semibold truncate">{userInfo.name}</p>
-            <p className="text-xs text-blue-200 capitalize">{userInfo.role.toLowerCase()}</p>
-          </div>
-          <button className="ml-2 px-3 py-1 text-xs text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-sm transition">
-            Logout
-          </button>
-        </div>
+      <div className="p-4 mt-4">
+
+        <LogoutButton />
+
       </div>
     </div>
   );
