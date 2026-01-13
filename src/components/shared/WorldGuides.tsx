@@ -20,35 +20,35 @@ export default function WorldGuides() {
       city: "Maldives",
       hotels: 980,
       image:
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "/Maldives.png",
     },
     {
       id: 2,
       city: "Japan",
       hotels: 1319,
       image:
-        "https://images.unsplash.com/photo-1766933233626-8f784567dfed?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "/Japan.png",
     },
     {
       id: 3,
       city: "Chennai",
       hotels: 1497,
       image:
-        "https://images.unsplash.com/photo-1593693397690-362cb9666fc2",
+        "/Chennai.png",
     },
     {
       id: 4,
       city: "Kathmandu",
       hotels: 1152,
       image:
-        "https://images.unsplash.com/photo-1548013146-72479768bada",
+        "/Kahtmanu.png",
     },
     {
       id: 5,
       city: "Bali",
       hotels: 2100,
       image:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4",
+        "/Bali.png",
     },
   ];
 
@@ -57,7 +57,7 @@ export default function WorldGuides() {
 
   const CARD_WIDTH = 320; // must match min-w
 
-  // 🔁 Auto Slide
+
   useEffect(() => {
     const interval = setInterval(() => {
       slideTo((activeIndex + 1) % destinations.length);
@@ -80,7 +80,7 @@ export default function WorldGuides() {
   const router = useRouter();
 
   return (<>
-    <main className="bg-white overflow-x-hidden py-16">
+    <main className="bg-white overflow-x-hidden px-8 container mx-auto   py-10">
       {/* ---------- Title (inside container) ---------- */}
       <div className="container mx-auto px-4 text-center mb-12">
         <h1 className="text-4xl font-bold">
@@ -148,9 +148,29 @@ export default function WorldGuides() {
         </div>
       </div>
     </main>
-    <div className="container mx-auto px-4 h-26  bg-blue-300 flex items-center justify-center">
-      <Button onClick={() => router.push('/BecomeGuide')} className="bg-blue-600 cursor-pointer hover:bg-blue-700"><Plane></Plane> Become a International Guide </Button>
+    <div className="bg-gradient-to-r from-blue-600 via-sky-500 to-blue-700 py-16">
+      <div className="container mx-auto px-4 text-center text-white">
+
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          Share Your Journey With the World 🌍
+        </h2>
+
+        <p className="max-w-2xl mx-auto text-blue-100 mb-8 text-lg">
+          Join our global network of expert travel guides and help travelers
+          explore destinations with confidence and local insight.
+        </p>
+
+        <Button
+          onClick={() => router.push("/BecomeGuide")}
+          className="bg-white text-blue-700 hover:bg-blue-100 font-semibold px-8 py-3 rounded-full shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto"
+        >
+          <Plane className="w-5 h-5" />
+          Become an International Guide
+        </Button>
+
+      </div>
     </div>
+
   </>
   );
 }

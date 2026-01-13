@@ -63,7 +63,7 @@ export default function Featured({ tours }: { tours: FeaturedTour[] }) {
           <button
             onClick={prevSlide}
             disabled={translateX === 0}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border cursor-pointer
             flex items-center justify-center
             disabled:opacity-40 hover:bg-gray-100"
           >
@@ -72,7 +72,7 @@ export default function Featured({ tours }: { tours: FeaturedTour[] }) {
           <button
             onClick={nextSlide}
             disabled={translateX >= maxTranslate}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full cursor-pointer
             bg-purple-600 text-white
             flex items-center justify-center
             disabled:opacity-40"
@@ -133,7 +133,7 @@ export default function Featured({ tours }: { tours: FeaturedTour[] }) {
                       router.push(`/tour/${item.data._id}`)
                     }
                     className="px-4 py-1 text-sm border rounded-full
-                    hover:bg-purple-600 hover:text-white transition"
+                    hover:bg-purple-600 hover:text-white transition cursor-pointer"
                   >
                     Book Now
                   </button>

@@ -14,7 +14,7 @@ const AdminTouristsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const toursResult = await getAllTour(queryString);
-  console.log(toursResult)
+
   return (
     <div className="space-y-6">
       <ToursManagementHeader></ToursManagementHeader>

@@ -35,7 +35,7 @@ export async function getAllToursByFilter(filters?: TourFilterParams) {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -69,7 +69,7 @@ export async function getAllToursByFilterForGuide(filters?: TourFilterParams) {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -82,7 +82,7 @@ export async function getTourById(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message:
@@ -94,9 +94,9 @@ export async function getTourById(id: string) {
 export async function createTour(_prevState: any, formData: FormData) {
     let user = await getUserInfo();
     user = user.id;
-    console.log(user)
+
     formData.append("guide", user)
-    console.log(formData)
+
     try {
         const response = await serverFetch.post("/tour/create", {
             body: formData, // VERY IMPORTANT

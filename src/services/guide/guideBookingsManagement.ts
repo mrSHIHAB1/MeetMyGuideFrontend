@@ -23,7 +23,7 @@ export const getGuideBookings = async (filters?: BookingFilterParams) => {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -39,7 +39,7 @@ export const acceptBooking = async (bookingId: string) => {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to accept booking'}`
@@ -54,7 +54,7 @@ export const completeBooking = async (bookingId: string) => {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to complete booking'}`
@@ -69,7 +69,7 @@ export const declineBooking = async (bookingId: string) => {
         const result = await res.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to decline booking'}`
@@ -79,11 +79,10 @@ export const declineBooking = async (bookingId: string) => {
 export const fetchGuideReviews = async (guideId: string) => {
     const res = await serverFetch.get(`/review/guide/${guideId}`);
     const data = await res.json();
-  
+
     return {
-      avgRating: data?.meta?.avgRating || 0,
-      count: data?.meta?.count || 0,
-      reviews: data?.data || []
+        avgRating: data?.meta?.avgRating || 0,
+        count: data?.meta?.count || 0,
+        reviews: data?.data || []
     };
-  };
-  
+};

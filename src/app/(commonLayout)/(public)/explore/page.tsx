@@ -1,3 +1,5 @@
+import ExploreTourFilter from "@/components/modules/tourist/Exploretourfilter";
+import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { TourCard } from "@/components/TourCard";
 import { getAllToursByFilter } from "@/services/guide/tourMangement";
 import Image from "next/image";
@@ -63,8 +65,10 @@ export default async function ExplorePage({
       <p className="text-muted-foreground px-6">
         Discover tours based on your preferences
       </p>
-
-      <Suspense fallback={<div className="p-6">Loading tours...</div>}>
+      <div className="px-6 md:hidden">
+        <ExploreTourFilter />
+      </div>
+      <Suspense fallback={<TableSkeleton columns={3} rows={10} />}>
         <ExploreContent searchParams={searchParamsObj} />
       </Suspense>
     </div>

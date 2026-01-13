@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <main className="bg-white text-gray-800">
 
-      {/* 1️⃣ Hero Section */}
+
       <section
         className="relative bg-cover bg-center bg-no-repeat  text-white  px-6"
         style={{
@@ -28,14 +28,14 @@ export default function AboutPage() {
       {/* 2️⃣ Who We Are */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-           <Image
-    src={guideBg}
-    alt="About travel"
-    width={600}
-    height={400}
-    className="w-full rounded-2xl shadow-lg object-cover"
-    priority
-  />
+          <Image
+            src={guideBg}
+            alt="About travel"
+            width={600}
+            height={400}
+            className="w-full rounded-2xl shadow-lg object-cover"
+            priority
+          />
           <div>
             <h2 className="text-3xl font-bold mb-4">Who We Are</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -51,7 +51,7 @@ export default function AboutPage() {
       <section className="bg-gray-100 py-20 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 text-center md:text-left">
           <div className="p-8 bg-white rounded-2xl shadow-lg">
-           <BowArrow size={48} />
+            <BowArrow size={48} />
             <h3 className="text-2xl font-semibold mb-2">Our Mission</h3>
             <p className="text-gray-600">
               To make travel safe, local, and meaningful while empowering
@@ -108,57 +108,57 @@ export default function AboutPage() {
       </section>
 
       {/* 5️⃣ Our Guides */}
-<section className="bg-gray-50 py-20 px-6">
-  <div className="max-w-6xl mx-auto text-center">
-    <h2 className="text-3xl font-bold mb-8">About the Developer</h2>
+      <section className="bg-gray-50 py-20 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-8">About the Developer</h2>
 
-    <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-      <img
-        src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400"
-        alt="Developer"
-        className="w-40 h-40 mx-auto object-cover rounded-full shadow-md"
-      />
+          <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+            <img
+              src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="Developer"
+              className="w-40 h-40 mx-auto object-cover rounded-full shadow-md"
+            />
 
-      <h4 className="mt-6 text-xl font-semibold">
-        Md. Montasir Rahman Shihab
-      </h4>
+            <h4 className="mt-6 text-xl font-semibold">
+              Md. Montasir Rahman Shihab
+            </h4>
 
-      <p className="text-indigo-600 font-medium mt-1">
-        Full Stack Web Developer
-      </p>
+            <p className="text-indigo-600 font-medium mt-1">
+              Full Stack Web Developer
+            </p>
 
-      <p className="text-gray-600 mt-4 leading-relaxed">
-        I am a passionate full-stack developer focused on building scalable,
-        user-friendly web applications. This platform was designed to connect
-        travelers with authentic local experiences using modern technologies
-        and clean UI/UX principles.
-      </p>
+            <p className="text-gray-600 mt-4 leading-relaxed">
+              I am a passionate full-stack developer focused on building scalable,
+              user-friendly web applications. This platform was designed to connect
+              travelers with authentic local experiences using modern technologies
+              and clean UI/UX principles.
+            </p>
 
-      <div className="flex justify-center gap-4 mt-6">
-        <a
-          href="https://github.com/"
-          target="_blank"
-          className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://linkedin.com/"
-          target="_blank"
-          className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="mailto:example@email.com"
-          className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
-        >
-          Email
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+            <div className="flex justify-center gap-4 mt-6">
+              <a
+                href="https://github.com/"
+                target="_blank"
+                className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="mailto:example@email.com"
+                className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100 transition"
+              >
+                Email
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 6️⃣ Achievements / Stats */}
       <section className="py-20 px-6 text-center">

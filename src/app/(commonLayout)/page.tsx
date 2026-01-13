@@ -29,36 +29,36 @@ export default async function Home() {
     return <p>Failed to load featured guides</p>;
   }
 
-  // Extract guide IDs
   const guideIds = featuredGuidesResult.data.map(
     (item: { guide: string }) => item.guide
   );
 
-  // Fetch guide details
   const guidesData = await Promise.all(
     guideIds.map((id: string) => getGuideById(id))
   );
 
-  // Merge averageRating and totalReviews from FeaturedGuide API
+
   const mergedGuides = guidesData.map((guide, index) => ({
     ...guide,
     averageRating: featuredGuidesResult.data[index].averageRating,
     totalReviews: featuredGuidesResult.data[index].totalReviews,
   }));
 
-  console.log("merged Guides", mergedGuides)
   return (
     <div className="">
       <Hero />
-      {/* <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
-                <Featured tours={mergedTours} />
-            </Suspense> */}
-      <Featured tours={mergedTours} />
-      {/* You can add a FeaturedGuides component here */}
-      <FrequentlyAskedQuestion guides={mergedGuides} />
+      <Suspense fallback={<TableSkeleton columns={4} rows={1} />}>
+        <Featured tours={mergedTours} />
+      </Suspense>
+
+      <Suspense fallback={<TableSkeleton columns={4} rows={1} />}>
+        <FrequentlyAskedQuestion guides={mergedGuides} />
+      </Suspense>
+
       <PackageSection />
-      <Experience />
+
       <WorldGuides />
+      <Experience />
     </div>
   );
 }

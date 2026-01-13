@@ -44,21 +44,16 @@ const ExploreTourFilter = () => {
 
     return (
         <div className="space-y-3 ">
-            {/* Row 1: Search and Refresh */}
+
             <div className="flex items-center gap-3  ">
                 <SearchFilter paramName="destination" placeholder="Search destination" />
 
             </div>
 
-            {/* Row 2: Filter Controls */}
             <div className="flex items-center gap-3">
-                {/* Category Filter */}
 
-
-                {/* Min Price Filter */}
                 <SearchFilter paramName="minPrice" placeholder="Min Price" />
 
-                {/* Max Price Filter */}
                 <SearchFilter paramName="maxPrice" placeholder="Max Price" />
 
 

@@ -83,7 +83,7 @@ const TourFormDialog = ({
           <DialogTitle>{isEdit ? "Edit Tour" : "Add New Tour"}</DialogTitle>
         </DialogHeader>
 
-        <form ref={formRef} action={formAction} className="space-y-4 selection:bg-blue-500 ">
+        <form ref={formRef} action={formAction} className="space-y-4  ">
           <Field>
             <FieldLabel htmlFor="title">Title *</FieldLabel>
             <Input

@@ -1,61 +1,125 @@
 import Link from 'next/link';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Compass } from 'lucide-react';
 
 function PublicFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
-      <nav>
-        <h6 className="footer-title">Services</h6>
-        <a className="link link-hover">Branding</a>
-        <a className="link link-hover">Design</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Advertisement</a>
-      </nav>
-      <nav>
-        <h6 className="footer-title">Company</h6>
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </nav>
-      <nav>
-        <h6 className="footer-title">Social</h6>
-        <div className="grid grid-flow-col gap-4">
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current">
-              <path
-                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current">
-              <path
-                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current">
-              <path
-                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-            </svg>
-          </a>
+    <footer className="bg-base-200 text-base-content pt-16 pb-8 border-t border-base-300">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="bg-blue-500 p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
+                <Compass className="text-primary-content w-6 h-6" />
+              </div>
+              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text ">
+                MyGuide
+              </span>
+            </Link>
+            <p className="text-base-content/70 leading-relaxed max-w-sm">
+              Discover unique experiences and hidden gems with our expert local guides. We connect you with the soul of every destination.
+            </p>
+            <div className="flex gap-4">
+              {[
+                { icon: Facebook, href: '#', label: 'Facebook' },
+                { icon: Twitter, href: '#', label: 'Twitter' },
+                { icon: Instagram, href: '#', label: 'Instagram' },
+                { icon: Youtube, href: '#', label: 'Youtube' },
+              ].map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  className="bg-base-300 p-2.5 rounded-full hover:bg-blue-500 hover:text-primary-content transition-all duration-300 transform hover:-translate-y-1 shadow-sm"
+                  aria-label={social.label}
+                >
+                  <social.icon size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h6 className="text-lg font-bold mb-6 relative inline-block">
+              Quick Links
+              <span className="absolute -bottom-1 left-0 w-8 h-1 bg-blue-500 rounded-full"></span>
+            </h6>
+            <ul className="space-y-3">
+              {['Home', 'Destinations', 'Top Guides', 'Tour Packages', 'Blog'].map((item) => (
+                <li key={item}>
+                  <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="link link-hover text-base-content/80 hover:text-primary transition-colors flex items-center gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h6 className="text-lg font-bold mb-6 relative inline-block">
+              Contact Us
+              <span className="absolute -bottom-1 left-0 w-8 h-1 bg-blue-500 rounded-full"></span>
+            </h6>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3 text-base-content/80">
+                <div className="bg-base-300 p-2 rounded-lg">
+                  <MapPin size={18} className="text-primary" />
+                </div>
+                <span>123 Global Street, Tour City, World</span>
+              </li>
+              <li className="flex items-center gap-3 text-base-content/80">
+                <div className="bg-base-300 p-2 rounded-lg">
+                  <Phone size={18} className="text-primary" />
+                </div>
+                <span>+1 (555) 000-1111</span>
+              </li>
+              <li className="flex items-center gap-3 text-base-content/80">
+                <div className="bg-base-300 p-2 rounded-lg">
+                  <Mail size={18} className="text-primary" />
+                </div>
+                <span>hello@meetmyguide.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter Section */}
+          <div>
+            <h6 className="text-lg font-bold mb-6 relative inline-block">
+              Newsletter
+              <span className="absolute -bottom-1 left-0 w-8 h-1 bg-blue-500 rounded-full"></span>
+            </h6>
+            <p className="text-base-content/70 mb-4">Subscribe to get the latest travel tips and offers.</p>
+            <div className="join w-full shadow-lg">
+              <input
+                type="text"
+                placeholder="Email address"
+                className="input input-bordered join-item w-full focus:outline-none focus:border-primary"
+              />
+              <button className="btn bg-blue-500 hover:bg-blue-600 join-item px-6 hover:scale-105 transition-transform">
+                Join
+              </button>
+            </div>
+          </div>
         </div>
-      </nav>
+
+        {/* Bottom Section */}
+        <div className="border-t border-base-300 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-base-content/60 text-sm">
+            © {currentYear} <span className="font-semibold text-primary">MyGuide</span>. All rights reserved.
+          </p>
+          <div className="flex gap-8 text-sm text-base-content/60">
+            <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link href="/cookies" className="hover:text-primary transition-colors">Cookies Policy</Link>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }
+
 export default PublicFooter;

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Play, Globe, Plane, MapPin, User } from "lucide-react";
+import { Play, Globe, Plane, MapPin, User, PlaneIcon } from "lucide-react";
 
 
 export const Hero = () => {
@@ -10,7 +10,7 @@ export const Hero = () => {
   return (
     <div>
       <section className="relative overflow-hidden bg-white">
-        <div className="container mx-auto px-15 py-5">
+        <div className="container mx-auto px-8 py-5">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             {/* LEFT CONTENT */}
@@ -36,13 +36,13 @@ export const Hero = () => {
 
               {/* Buttons */}
               <div className="flex items-center gap-4">
-                <button  onClick={() => router.push('/explore')} className="cursor-pointer rounded-full bg-blue-500 px-7 py-3 text-white font-medium shadow-lg hover:bg-blue-600 transition">
+                <button onClick={() => router.push('/explore')} className="cursor-pointer rounded-full bg-blue-500 px-7 py-3 text-white font-medium shadow-lg hover:bg-blue-600 transition">
                   Explore
                 </button>
 
-                <button className="flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-gray-700 hover:bg-gray-100 transition">
-                  <Play className="w-4 h-4" />
-                  Watch Demo
+                <button onClick={() => router.push('/BecomeGuide')} className="cursor-pointer flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-gray-700 hover:bg-gray-100 transition">
+                  <PlaneIcon className="w-4 h-4" />
+                  Become a Guide
                 </button>
               </div>
             </div>
@@ -51,7 +51,7 @@ export const Hero = () => {
               <div className="relative flex gap-6">
 
                 {/* LEFT STACK */}
-                <div className="flex flex-col gap-6">
+                <div className="flex md:flex-col gap-6">
                   {/* Image 1 */}
                   <div className="relative h-72 w-56 rounded-2xl overflow-hidden shadow-xl">
                     <Image
@@ -79,7 +79,7 @@ export const Hero = () => {
                 </div>
 
                 {/* RIGHT TALL IMAGE */}
-                <div className="relative h-[520px] w-64 rounded-2xl overflow-hidden shadow-xl mt-10">
+                <div className="hidden md:block relative h-[520px] w-64 rounded-2xl overflow-hidden shadow-xl mt-10">
                   <Image
                     src="/hero-33.png"
                     alt="Island beach"
@@ -87,17 +87,14 @@ export const Hero = () => {
                     className="object-cover"
                   />
 
-                  {/* Top Places Badge */}
                   <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-full shadow-md flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-orange-500" />
                     <span className="text-sm font-medium">Top Places</span>
                   </div>
                 </div>
 
-                {/* Floating User Icon */}
-                <div className="absolute -bottom-4 left-2/3 -translate-x-1/2 bg-orange-100 p-4  rounded-full shadow-lg flex space-x-1 ">
-                  <User className="w-5 h-5 text-orange-500" /><p className="font-medium "> Top Guides</p>
-                </div>
+
+
               </div>
             </div>
 
@@ -105,7 +102,7 @@ export const Hero = () => {
         </div>
       </section>
 
-      
+
     </div>
   );
 };

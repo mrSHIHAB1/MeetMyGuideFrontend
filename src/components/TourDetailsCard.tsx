@@ -78,7 +78,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
         body: JSON.stringify(payload),
       });
 
-      console.log(payload)
+
       toast.success("Booking Created Successfully")
       // optional: redirect to bookings page
 
@@ -202,7 +202,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
               <h3 className="font-semibold text-gray-800">Meeting Point</h3>
               <p className="text-gray-600">{tour.meetingPoint}</p>
             </div>
- <div className="mt-4">
+            <div className="mt-4">
               <h3 className="font-semibold text-gray-800">Group Size</h3>
               <p className="text-gray-600">{tour.maxGroupSize} Person</p>
             </div>
@@ -241,7 +241,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
 
                 <div className="text-sm text-gray-700">
                   <p><span className="font-semibold">Speaks:</span> {guideinfo.spokenLanguages.join(", ")}</p>
-                
+
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-xs">
@@ -252,7 +252,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
 
                 <button
                   onClick={() => router.push(`/guideDetails/${guideinfo._id}`)}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-medium transition w-full"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-medium transition w-full cursor-pointer"
                 >
                   View Profile →
                 </button>
@@ -299,7 +299,7 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
               <button
                 onClick={handleBooking}
                 disabled={loading}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:bg-purple-400 disabled:cursor-not-allowed"
+                className="cursor-pointer w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:bg-purple-400 disabled:cursor-not-allowed"
               >
                 {loading ? <><Loader2 className="animate-spin" /> Processing...</> : "Book Now"}
               </button>

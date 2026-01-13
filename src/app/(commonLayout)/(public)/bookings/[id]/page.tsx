@@ -19,7 +19,7 @@ export default async function BookPage({ params }: Props) {
 
     const guide = booking.data.guide._id ? await getGuideById(booking.data.guide._id) : undefined;
     const { avgRating, count } = await fetchGuideReviews(guide.data._id);
-console.log(avgRating)
+
     return (
         <div className="p-6">
             <BookDetailsPage tour={tour} guideinfo={guide?.data} booking={booking.data} avgrating={avgRating} reviewCount={count} />

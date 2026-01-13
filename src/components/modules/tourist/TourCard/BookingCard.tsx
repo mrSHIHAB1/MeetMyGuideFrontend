@@ -23,7 +23,7 @@ export const BookingCard = ({
         PAST: past,
         WISHLIST: wishlist
     };
-    console.log("This is user", wishlist)
+
     return (
         <div className="flex w-full min-h-screen bg-gray-50 p-6 gap-6">
 

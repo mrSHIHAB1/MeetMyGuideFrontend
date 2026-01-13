@@ -41,7 +41,7 @@ export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, r
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/payment/booking/${booking._id}`);
             const data = await res.json();
-            console.log(data)
+
             if (data?.data?.status) {
                 setPaymentStatus(data.data.status); // update UI
             }
@@ -49,12 +49,11 @@ export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, r
 
         }
     };
-    console.log(booking.status, paymentStatus)
-    // (optional) Auto-load status when page opens
+
     useEffect(() => {
         getPaymentStatus();
     }, []);
-    console.log("booking", booking.status, "payment", paymentStatus)
+
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewComment, setReviewComment] = useState("");

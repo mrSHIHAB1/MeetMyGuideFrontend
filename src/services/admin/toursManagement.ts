@@ -15,7 +15,7 @@ export async function getAllTours(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-    
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -33,7 +33,7 @@ export async function getTourById(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -114,7 +114,7 @@ export async function deleteTour(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`

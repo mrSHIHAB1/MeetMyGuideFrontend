@@ -29,15 +29,14 @@ const TourFilter = () => {
 
     return (
         <div className="space-y-3">
-            {/* Row 1: Search and Refresh */}
+
             <div className="flex items-center gap-3">
                 <SearchFilter paramName="destination" placeholder="Search destination..." />
 
             </div>
 
-            {/* Row 2: Filter Controls */}
             <div className="flex items-center gap-3">
-                {/* Category Filter */}
+
                 <select
                     className="select select-bordered w-full max-w-xs"
                     onChange={(e) => handleCategoryChange(e.target.value)}
@@ -55,10 +54,9 @@ const TourFilter = () => {
                     <option value="NIGHTLIFE">Nightlife</option>
                 </select>
 
-                {/* Min Price Filter */}
+
                 <SearchFilter paramName="minPrice" placeholder="Min Price" />
 
-                {/* Max Price Filter */}
                 <SearchFilter paramName="maxPrice" placeholder="Max Price" />
 
 

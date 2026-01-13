@@ -55,32 +55,7 @@ interface ClearFiltersButtonProps {
   showCount?: boolean;
 }
 
-/**
- * Reusable Clear Filters Button Component
- *
- * Automatically counts active filters (excluding preserved params)
- * and clears all URL parameters when clicked.
- *
- * @example
- * // Basic usage
- * <ClearFiltersButton />
- *
- * @example
- * // Preserve page and limit params
- * <ClearFiltersButton preserveParams={['page', 'limit']} />
- *
- * @example
- * // With custom handlers
- * <ClearFiltersButton
- *   onBeforeClear={() => {
- *     console.log('Clearing filters...');
- *     return true; // proceed with clear
- *   }}
- *   onAfterClear={() => {
- *     console.log('Filters cleared!');
- *   }}
- * />
- */
+
 const ClearFiltersButton = ({
   preserveParams = [],
   excludeFromCount = ["page", "limit", "sortBy", "sortOrder"],

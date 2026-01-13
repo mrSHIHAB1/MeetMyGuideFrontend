@@ -69,7 +69,7 @@ export default function SeamlessCarousel({
   return (
     <div className=" bg-gradient-to-br from-slate-50 to-slate-100 py-16 px-4 overflow-hidden">
       {/* Header */}
-      <div className="container px-8 mx-auto mb-10 flex justify-between items-center">
+      <div className="container px-10 mx-auto mb-10 flex justify-between items-center">
         <h2 className="text-3xl font-bold text-gray-900">
           Meet Our Tour Guides
         </h2>
@@ -79,7 +79,7 @@ export default function SeamlessCarousel({
             onClick={prevSlide}
             disabled={translateX === 0}
             className="w-10 h-10 rounded-full border
-            flex items-center justify-center
+            flex items-center justify-center cursor-pointer
             disabled:opacity-40 hover:bg-gray-100"
           >
             ←
@@ -88,7 +88,7 @@ export default function SeamlessCarousel({
             onClick={nextSlide}
             disabled={translateX >= maxTranslate}
             className="w-10 h-10 rounded-full bg-blue-500 text-white
-            flex items-center justify-center
+            flex items-center justify-center cursor-pointer
             disabled:opacity-40"
           >
             →
@@ -151,7 +151,7 @@ export default function SeamlessCarousel({
                     </div>
                   </div>
 
-                  <button onClick={() => router.push(`/guideDetails/${guide.data._id}`)} className="bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue-600 transition">
+                  <button onClick={() => router.push(`/guideDetails/${guide.data._id}`)} className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue-600 transition">
 
                     View Profile
                   </button>
