@@ -25,11 +25,11 @@ export const BookingCard = ({
     };
 
     return (
-        <div className="flex w-full min-h-screen bg-gray-50 p-6 gap-6">
+        <div className="md:flex  min-h-screen  bg-white p-6 gap-6">
 
             {/* Sidebar */}
-            <aside className="w-72 bg-white shadow rounded-2xl p-6 flex flex-col items-center">
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+            <aside className="w-full md:w-72 mb-5  bg-gray-50 shadow rounded-2xl p-6 flex flex-col items-center">
+                <div className="w- h-28 rounded-full overflow-hidden mb-4">
                     <Image
                         src={user?.picture || "/broken.png"}
                         alt="User profile"
@@ -70,7 +70,7 @@ export const BookingCard = ({
                 {/* Cards */}
                 <div className="flex flex-col gap-6">
                     {dataMap[activeTab].length > 0 ? dataMap[activeTab].map((item, index) => (
-                        <div key={index} className="flex bg-white border rounded-xl p-4 shadow-sm gap-4">
+                        <div key={index} className="flex  bg-gray-50 border rounded-xl p-4 shadow-sm gap-4">
 
                             <div className="w-40 h-28 rounded-lg overflow-hidden">
                                 <img src={item.images?.[0] || "/no-image.jpg"} className="w-full h-full object-cover" />

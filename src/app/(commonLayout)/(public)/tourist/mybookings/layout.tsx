@@ -11,7 +11,7 @@ const MybookingsLayout = async ({
     return (
         <>
            
-            <div className="">{children}</div>
+            <div className="mx-auto container">{children}</div>
         </>
     );
 };

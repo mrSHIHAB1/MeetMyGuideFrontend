@@ -11,7 +11,7 @@ import { getUserInfo } from "@/services/auth/getUserInfo";
 import Image from "next/image";
 import UserDropdown from "../modules/Dashboard/UserDropdown";
 
-const PublicNavbar = async () => {
+const DashboardNavbars = async () => {
   const currentUser = await getUserInfo();
   const accessToken = (await cookies()).get("accessToken")?.value;
   const role = currentUser?.role;
@@ -38,7 +38,7 @@ const PublicNavbar = async () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md transition-all duration-300">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 lg:px-8">
+      <div className=" flex h-20 items-center justify-between px-4 lg:px-8">
         {/* Brand Section */}
         <Link href="/" className="flex items-center gap-2 group">
           <div className="bg-blue-500 p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
@@ -143,4 +143,4 @@ const PublicNavbar = async () => {
   );
 };
 
-export default PublicNavbar;
+export default DashboardNavbars;
