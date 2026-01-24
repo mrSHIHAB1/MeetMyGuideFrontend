@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ITour } from "@/types/tour.interface";
 import { useRouter } from "next/navigation";
@@ -37,6 +37,8 @@ interface TourDetailsPageProps {
 export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrating, reviewCount }: TourDetailsPageProps) {
   const router = useRouter();
   const images = tour.images ?? [];
+  const mainSwiperRef = useRef<any>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
@@ -134,32 +136,79 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
   return (
     <>
       <main className="pb-20">
-        {/* Top Images */}
-        <section className="max-w-4xl mx-auto mt-6 px-4">
-          {images.length >= 0 && (
-            <Swiper
-              modules={[Navigation, Pagination]}
-              navigation
-              pagination={{ clickable: true }}
-              className="h-72 md:h-96 rounded-lg overflow-hidden"
-              spaceBetween={10}
-            >
-              {images.map((img, index) => (
-                <SwiperSlide key={index}>
-                  <Image
-                    src={img}
-                    alt={`tour-image-${index}`}
-                    fill
-                    className="w-72 h-72 md:h-96 object-cover rounded-lg"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+        {/* Top Images - Enhanced Banner with Thumbnails */}
+        <section className="w-full bg-white py-4 sm:py-6 md:py-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
+            {images.length >= 0 && (
+              <div className="space-y-3 sm:space-y-4">
+                {/* Main Image Carousel */}
+                <div className="relative group">
+                  <Swiper
+                    ref={mainSwiperRef}
+                    modules={[Navigation, Pagination]}
+                    navigation
+                    pagination={{ clickable: true, dynamicBullets: true }}
+                    className="h-64 sm:h-80 md:h-96 lg:h-[28rem] rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden shadow-2xl"
+                    spaceBetween={10}
+                    onSlideChange={(swiper) => setActiveImageIndex(swiper.activeIndex)}
+                  >
+                    {images.map((img, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={img}
+                            alt={`tour-image-${index}`}
+                            fill
+                            priority={index === 0}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Overlay for better text contrast on next section */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                  {/* Image counter badge */}
+                  {images.length > 1 && (
+                    <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold z-10">
+                      {activeImageIndex + 1} / {images.length}
+                    </div>
+                  )}
+                </div>
+
+                {/* Thumbnail Gallery */}
+                {images.length > 1 && (
+                  <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                    {images.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          mainSwiperRef.current?.swiper.slideTo(index);
+                          setActiveImageIndex(index);
+                        }}
+                        className={`relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg sm:rounded-xl overflow-hidden transition-all duration-300 border-2 ${
+                          activeImageIndex === index
+                            ? "border-blue-500 shadow-lg ring-2 ring-blue-400"
+                            : "border-gray-400 hover:border-blue-300 opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <Image
+                          src={img}
+                          alt={`thumbnail-${index}`}
+                          fill
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </section>
 
         {/* Header */}
-        <section className="max-w-6xl mx-auto mt-10 px-4">
+        <section className="container mx-auto mt-10 px-4">
           <h1 className="text-4xl font-bold">{tour.title}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-gray-600">
             <div className="flex items-center gap-2">
@@ -186,36 +235,46 @@ export default function TourDetailsPage({ tour, guideinfo, wishlist = [], avgrat
         </section>
 
         {/* Content + Booking Sidebar */}
-        <section className="max-w-6xl mx-auto mt-10 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <section className="container mx-auto mt-10 px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* LEFT: Main Content */}
-          <div className="space-y-6 bg-white p-6 rounded-xl shadow border">
-            {/* Tour Title */}
-
-
-            {/* Description */}
-
-            <h3 className="font-semibold text-gray-800">Description</h3>
-            <p className="text-gray-700 leading-relaxed ">{tour.description}</p>
-
-            {/* Meeting Point */}
-            <div className="mt-4">
-              <h3 className="font-semibold text-gray-800">Meeting Point</h3>
-              <p className="text-gray-600">{tour.meetingPoint}</p>
-            </div>
-            <div className="mt-4">
-              <h3 className="font-semibold text-gray-800">Group Size</h3>
-              <p className="text-gray-600">{tour.maxGroupSize} Person</p>
+          <div className="md:col-span-2 space-y-6">
+            {/* Description Card */}
+            <div className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 pb-3 border-b-2 border-blue-500">About This Tour</h3>
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{tour.description}</p>
             </div>
 
-            {/* Itinerary */}
-            <div className="mt-4">
-              <h3 className="font-semibold text-gray-800">Travel Plan</h3>
-              <p className="text-gray-600">{tour.itinerary}</p>
+            {/* Details Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Meeting Point */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 sm:p-7 rounded-xl sm:rounded-2xl border border-blue-100 hover:shadow-md transition-shadow">
+                <h4 className="flex items-center gap-2 font-bold text-gray-900 text-sm sm:text-base mb-3">
+                  <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs">📍</span>
+                  Meeting Point
+                </h4>
+                <p className="text-gray-700 text-sm sm:text-base">{tour.meetingPoint}</p>
+              </div>
+
+              {/* Group Size */}
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 sm:p-7 rounded-xl sm:rounded-2xl border border-green-100 hover:shadow-md transition-shadow">
+                <h4 className="flex items-center gap-2 font-bold text-gray-900 text-sm sm:text-base mb-3">
+                  <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs">👥</span>
+                  Group Size
+                </h4>
+                <p className="text-gray-700 text-sm sm:text-base font-semibold">{tour.maxGroupSize ?? 0} Person{(tour.maxGroupSize ?? 0) > 1 ? "s" : ""}</p>
+              </div>
             </div>
 
+            {/* Travel Plan Card */}
+            <div className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 pb-3 border-b-2 border-orange-500">Travel Plan & Itinerary</h3>
+              <div className="prose prose-sm max-w-none">
+                <p className="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{tour.itinerary}</p>
+              </div>
+            </div>
           </div>
           {/* BOOKING FORM */}
-          <aside className="bg-white p-6 rounded-xl shadow border flex flex-col gap-6 sticky top-10">
+          <aside className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-6 h-fit sticky top-10">
             {/* Guide Info */}
             {guideinfo && (
               <div className="flex flex-col gap-4">

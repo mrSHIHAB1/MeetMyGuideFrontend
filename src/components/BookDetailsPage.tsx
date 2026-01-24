@@ -353,32 +353,84 @@ export default function BookDetailsPage({ tour, guideinfo, booking, avgrating, r
                     </div>
 
                     {/* BOOKING FORM */}
-                    <aside className="border rounded-xl shadow-md p-6 h-fit bg-white sticky top-10">
-                        <h3 className="text-lg font-medium">Payment</h3>
-                        <p className="text-3xl font-bold mt-2">BDT {tour?.fee}</p>
+                    <aside className="h-fit sticky top-10">
+                        <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-8 text-white">
+                            {/* Header */}
+                            <div className="mb-6 pb-4 border-b border-blue-400/30">
+                                <p className="text-blue-100 text-sm font-medium uppercase tracking-wide">Tour Price</p>
+                                <h3 className="text-4xl font-bold mt-2">BDT {tour?.fee}</h3>
+                            </div>
 
-                        {booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
-                            <button
-                                onClick={handlePay}
-                                className="bg-red-500 text-white w-full py-3 rounded-lg mt-4 hover:bg-red-700"
-                            >
-                                PAY NOW
-                            </button>
-                        ) : booking?.status === "COMPLETED" && paymentStatus === "COMPLETED" ? (
-                            <button
-                                disabled
-                                className="bg-green-500 text-white w-full py-3 rounded-lg mt-4 cursor-not-allowed"
-                            >
-                                PAID
-                            </button>
-                        ) : booking?.status !== "COMPLETED" ? (
-                            <button
-                                className="bg-yellow-500 text-white w-full py-3 rounded-lg mt-4"
-                                disabled
-                            >
-                                {booking?.status || "N/A"}
-                            </button>
-                        ) : null}
+                            {/* Payment Status & Details */}
+                            <div className="space-y-4 mb-6">
+                                <div className="bg-blue-500/30 backdrop-blur-sm rounded-lg p-4 border border-blue-400/20">
+                                    <p className="text-xs font-semibold text-blue-100 uppercase tracking-wide mb-1">Booking Status</p>
+                                    <p className="text-lg font-semibold capitalize">{booking?.status || "N/A"}</p>
+                                </div>
+
+                                <div className="bg-blue-500/30 backdrop-blur-sm rounded-lg p-4 border border-blue-400/20">
+                                    <p className="text-xs font-semibold text-blue-100 uppercase tracking-wide mb-1">Payment Status</p>
+                                    <p className="text-lg font-semibold capitalize">{paymentStatus}</p>
+                                </div>
+                            </div>
+
+                            {/* Payment Action Button */}
+                            {booking?.status === "COMPLETED" && paymentStatus === "PENDING" ? (
+                                <button
+                                    onClick={handlePay}
+                                    className="w-full bg-white text-blue-600 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                    Complete Payment Now
+                                </button>
+                            ) : booking?.status === "COMPLETED" && paymentStatus === "COMPLETED" ? (
+                                <button
+                                    disabled
+                                    className="w-full bg-green-400 text-white py-4 rounded-xl font-bold text-lg cursor-default shadow-lg flex items-center justify-center gap-2 opacity-90"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Payment Complete
+                                </button>
+                            ) : booking?.status !== "COMPLETED" ? (
+                                <button
+                                    disabled
+                                    className="w-full bg-yellow-400 text-gray-900 py-4 rounded-xl font-bold text-lg cursor-not-allowed shadow-lg opacity-75"
+                                >
+                                    Awaiting Confirmation
+                                </button>
+                            ) : null}
+
+                            {/* Security Badge */}
+                            <div className="mt-6 pt-4 border-t border-blue-400/30 flex items-center justify-center gap-2 text-blue-100 text-xs">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                </svg>
+                                <span>Secure payment powered by Stripe</span>
+                            </div>
+                        </div>
+
+                        {/* Additional Info Card */}
+                        <div className="mt-4 bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                            <h4 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wide">What's Included</h4>
+                            <ul className="space-y-2 text-sm text-gray-700">
+                                <li className="flex items-start gap-2">
+                                    <span className="text-blue-500 font-bold mt-0.5">✓</span>
+                                    <span>Professional tour guide</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-blue-500 font-bold mt-0.5">✓</span>
+                                    <span>Guided experience</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-blue-500 font-bold mt-0.5">✓</span>
+                                    <span>Support & assistance</span>
+                                </li>
+                            </ul>
+                        </div>
                     </aside>
 
                 </section>
