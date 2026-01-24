@@ -1,6 +1,7 @@
 "use client"
 import { ITour } from "@/types/tour.interface";
 import { Link } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 interface TourCardProps {
     tour: ITour;
@@ -11,9 +12,13 @@ export const TourCardCRUD = ({ tour }: TourCardProps) => {
         <>
             <div className="card bg-base-100 w-full shadow-sm">
                 <figure>
-                    <img
+                    <Image
                         src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                        alt="Shoes" />
+                        alt="Shoes"
+                        width={500}
+                        height={500}
+                        priority
+                    />
                 </figure>
                 <div className="p-2">
                     <div className=" border-3 shadow-xs p-2 rounded-xl flex items-center ">

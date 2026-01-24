@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export default function ExperienceSharing() {
@@ -29,10 +30,13 @@ export default function ExperienceSharing() {
                     </p>
 
                     <div className="flex items-center gap-3">
-                        <img
+                        <Image
                             src="https://i.pravatar.cc/40?img=12"
                             alt="avatar"
                             className="w-10 h-10 rounded-full border border-white"
+                            width={40}
+                            height={40}
+                            priority
                         />
                         <div>
                             <p className="text-xs font-semibold">Jennifer and Mark</p>
@@ -49,10 +53,13 @@ export default function ExperienceSharing() {
                     </p>
 
                     <div className="flex items-center gap-3">
-                        <img
+                        <Image
                             src="https://i.pravatar.cc/40?img=30"
                             alt="avatar"
                             className="w-10 h-10 rounded-full border border-white"
+                            width={40}
+                            height={40}
+                            priority
                         />
                         <div>
                             <p className="text-xs font-semibold">Dylan and Emily</p>

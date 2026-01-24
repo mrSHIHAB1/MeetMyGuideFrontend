@@ -5,6 +5,7 @@ import { MapPin, Phone, Plane } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Destination = {
   id: number;
@@ -112,10 +113,13 @@ export default function WorldGuides() {
                   }`}
               >
                 {/* Image */}
-                <img
+                <Image
                   src={item.image}
                   alt={item.city}
                   className="w-full h-full object-cover"
+                  width={500}
+                  height={500}
+                  priority
                 />
 
                 {/* Gradient */}

@@ -56,10 +56,10 @@ export default async function Home() {
       </Suspense>
 
       <PackageSection />
- <Suspense fallback={<TableSkeleton columns={4} rows={1} />}>
-          <WorldGuides />
+      <Suspense fallback={<TableSkeleton columns={4} rows={1} />}>
+        <WorldGuides />
       </Suspense>
-      
+
       <Experience />
     </div>
   );

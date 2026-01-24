@@ -10,7 +10,16 @@ export const Hero = () => {
     <div>
       <section className="relative overflow-hidden bg-white">
 
-        <div className="md:hidden relative h-[600px] w-full bg-[url('/MyGuide.png')] bg-cover bg-[30%_center]">
+        <div className="md:hidden relative h-[600px] w-full">
+          {/* LCP IMAGE */}
+          <Image
+            src="/MyGuide.png"
+            alt="Travel with Local Tour Guides around different places of the world"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[30%_center]"
+          />
           <div className="absolute inset-0 bg-white/80" />
           <div className="absolute inset-0 flex flex-col justify-center items-start px-6 py-12 space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm text-blue-600 font-medium">
@@ -18,11 +27,11 @@ export const Hero = () => {
               Explore the world!
             </div>
             <h1 className="text-3xl font-bold leading-snug text-gray-900">
-             Travel with <span className="text-blue-500">Local Tour Guides </span> around different places of the world
+              Travel with <span className="text-blue-500">Local Tour Guides </span> around different places of the world
             </h1>
 
             <p className="text-gray-700 text-base max-w-md">
-             Embark on authentic journeys with experienced local guides who reveal hidden gems, cultural treasures, and unforgettable experiences across the globe. Travel like a local, wherever you go
+              Embark on authentic journeys with experienced local guides who reveal hidden gems, cultural treasures, and unforgettable experiences across the globe. Travel like a local, wherever you go
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -87,6 +96,7 @@ export const Hero = () => {
                         alt="City travel"
                         fill
                         className="object-cover"
+                        priority
                       />
                       <div className="absolute bottom-2 left-2 bg-white p-3 rounded-full shadow-md">
                         <Plane className="w-4 h-4 text-blue-500" />
@@ -99,6 +109,7 @@ export const Hero = () => {
                         alt="Luxury pool"
                         fill
                         className="object-cover object-[30%_center]"
+                        priority
                       />
                     </div>
                   </div>
@@ -110,6 +121,7 @@ export const Hero = () => {
                       alt="Island beach"
                       fill
                       className="object-cover"
+                      priority
                     />
                     <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-full shadow-md flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-orange-500" />

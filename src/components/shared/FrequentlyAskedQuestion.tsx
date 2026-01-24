@@ -2,6 +2,7 @@
 
 import { IGuide } from "@/types/guide.interface";
 import { Star } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { useEffect, useRef, useState } from "react";
@@ -117,21 +118,27 @@ export default function SeamlessCarousel({
                 </h3>
 
                 <div className="relative w-full h-64 rounded-3xl overflow-hidden mb-4">
-                  <img
+                  <Image
                     src={guide.data.picture ?? ""}
                     alt={guide.data.name}
                     className="w-full h-full object-cover pointer-events-none"
                     draggable={false}
+                    width={500}
+                    height={500}
+                    priority
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-                      <img
+                      <Image
                         src={guide.data.picture ?? ""}
                         alt={guide.data.name}
                         className="w-full h-full object-cover"
+                        width={500}
+                        height={500}
+                        priority
                       />
                     </div>
 

@@ -95,10 +95,13 @@ export default function AboutPage() {
                 key={item.text}
                 className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition"
               >
-                <img
+                <Image
                   src={item.icon}
                   className="mx-auto mb-3"
                   alt={item.text}
+                  width={48}
+                  height={48}
+                  priority
                 />
                 <p className="font-medium">{item.text}</p>
               </div>
@@ -113,10 +116,13 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-8">About the Developer</h2>
 
           <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-            <img
+            <Image
               src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400"
               alt="Developer"
               className="w-40 h-40 mx-auto object-cover rounded-full shadow-md"
+              width={400}
+              height={400}
+              priority
             />
 
             <h4 className="mt-6 text-xl font-semibold">
